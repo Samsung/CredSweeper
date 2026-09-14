@@ -81,8 +81,9 @@ class TextContentProvider(ContentProvider):
                 # append line ending for correct xml line numeration
                 xml_lines = [f"{line}\n" for line in self.lines]
                 lines, line_nums = Util.get_xml_from_lines(xml_lines)
-            except Exception as exc:
-                logger.warning("Cannot parse to xml %s", exc)
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                # fallback
+                logger.warning("Cannot parse to xml %s:%s", type(exc), exc)
 
         if lines is None:
             lines = self.lines

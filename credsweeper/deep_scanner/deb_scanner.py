@@ -56,6 +56,7 @@ class DebScanner(AbstractScanner, ABC):
                 deb_candidates = self.recursive_scan(deb_content_provider, depth, recursive_limit_size)
                 candidates.extend(deb_candidates)
             return candidates
-        except Exception as exc:
-            logger.warning(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

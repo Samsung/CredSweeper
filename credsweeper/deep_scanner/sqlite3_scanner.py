@@ -81,6 +81,7 @@ class Sqlite3Scanner(AbstractScanner, ABC):
                 if new_candidates := self.structure_scan(struct_content_provider, depth, new_limit):
                     candidates.extend(new_candidates)
             return candidates
-        except Exception as exc:
-            logger.warning(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

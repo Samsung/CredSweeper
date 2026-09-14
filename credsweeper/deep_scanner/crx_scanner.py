@@ -42,6 +42,7 @@ class CrxScanner(AbstractScanner, ABC):
                                                        info=f"{data_provider.info}|CRX")
             crx_candidates = self.recursive_scan(zip_content_provider, depth, recursive_limit_size)
             return crx_candidates
-        except Exception as exc:
-            logger.warning(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

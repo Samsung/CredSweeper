@@ -83,7 +83,7 @@ class LexerScanner(AbstractScanner, ABC):
             for _lexer in LexerScanner.GUESSED_LEXERS:
                 rv = _lexer.analyse_text(_text)
                 if 0.0 < rv and best_rv < rv:
-                    best_lexer = cast(type[Lexer], _lexer)
+                    best_lexer = _lexer
             lexer = best_lexer()
         return lexer
 
@@ -180,6 +180,7 @@ class LexerScanner(AbstractScanner, ABC):
                                                          info=f"{data_provider.info}|{lexer}")
             candidates = self.scanner.scan(string_data_provider)
             return candidates
-        except Exception as lex_c_exc:
-            logger.warning("%s:%s", data_provider.file_path, lex_c_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

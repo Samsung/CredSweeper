@@ -51,6 +51,7 @@ class TmxScanner(AbstractScanner, ABC):
                                                       file_type=data_provider.file_type,
                                                       info=f"{data_provider.info}|TMX")
             return self.scanner.scan(tmx_data_provider)
-        except Exception as exc:
-            logger.warning("Cannot processed tmX file %s %s", str(data_provider.file_path), str(exc))
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

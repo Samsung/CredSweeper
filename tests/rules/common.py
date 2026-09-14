@@ -23,7 +23,7 @@ class BaseTestRule:
 
 class BaseTestNoQuotesRule:
     """
-    If secret declared in a code file (".cpp", ".py", etc) in should be escaped with quotes. Otherwise it cannot be a
+    If secret declared in a code file (".cpp", ".py", etc.) in should be escaped with quotes. Otherwise it cannot be a
      string secret, as no string literal declared.
     Exceptions: comments. In comment secret can be unquoted
 
@@ -44,7 +44,7 @@ class BaseTestNoQuotesRule:
 
 class BaseTestCommentRule:
     """
-    If secret declared in a code file (".cpp", ".py", etc) in should be escaped with quotes. Otherwise it cannot be a
+    If secret declared in a code file (".cpp", ".py", etc.) in should be escaped with quotes. Otherwise it cannot be a
      string secret, as no string literal declared.
     Exceptions: comments. In comment secret can be unquoted
 

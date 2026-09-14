@@ -139,8 +139,9 @@ class DiffContentProvider(ContentProvider):
                 return deleted_files
             logger.error("Change type should be one of: '%s', '%s'; but received %s", DiffRowType.ADDED,
                          DiffRowType.DELETED, change_type)
-        except Exception as exc:
-            logger.warning(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s", type(exc), exc)
         return {}
 
     @staticmethod
