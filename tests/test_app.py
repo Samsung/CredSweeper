@@ -425,7 +425,7 @@ class TestMain(unittest.TestCase):
 
     def test_bzip2_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            test_filename = os.path.join(tmp_dir, __name__)
+            test_filename = os.path.join(tmp_dir, "test_bzip2_bad_sample")
             self.assertFalse(os.path.exists(test_filename))
             with open(test_filename, "wb") as f:
                 f.write(b"\x42\x5A\x68\x35\x31\x41\x59\x26\x53\x59")
@@ -436,7 +436,7 @@ class TestMain(unittest.TestCase):
                 _ = content_provider.get_scannable_files(cred_sweeper.config)[0].descriptor
                 mocked_logger.assert_called_with("%s:%s:%s", ANY, ANY, ANY)
                 args, _ = mocked_logger.call_args
-                self.assertTrue(any(test_filename in str(x) for x in args), args)
+                self.assertTrue(any("test_bzip2_bad_sample" in str(x) for x in args), args)
                 self.assertTrue(any("EOFError" in str(x) for x in args), args)
                 self.assertTrue(
                     any("Compressed file ended before the end-of-stream marker was reached" in str(x) for x in args),
