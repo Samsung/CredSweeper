@@ -293,7 +293,7 @@ class AbstractScanner(ABC):
         for scan_class in deep_scanners:
             new_candidates = scan_class.data_scan(self, data_provider, depth, recursive_limit_size)
             if new_candidates is None:
-                # scanner did not recognise the content type
+                # scanner did not recognize the content type
                 continue
             augment_candidates(candidates, new_candidates)
             # this scan is successful, so fallback is not necessary

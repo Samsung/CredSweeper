@@ -20,11 +20,11 @@ class CandidateKey:
     def __hash__(self):
         return hash(self.key)
 
-    def __eq__(self, other):
-        return self.key == other.key
+    def __eq__(self, other: object):
+        return isinstance(other, CandidateKey) and self.key == other.key
 
-    def __ne__(self, other):
-        return not bool(self == other)
+    def __lt__(self, other):
+        return self.key < other.key
 
     def __repr__(self) -> str:
         return f"{self.key}:{self.__line}"

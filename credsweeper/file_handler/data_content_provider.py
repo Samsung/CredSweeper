@@ -165,9 +165,9 @@ class DataContentProvider(ContentProvider):
         return None
 
     def _check_multiline_cell(self, cell: Tag) -> Optional[Tuple[int, str]]:
-        """multiline cell will be analysed as text or return single line from cell
+        """multiline cell will be analyzed as text or return single line from cell
         returns line number and one line for analysis
-        If there are no text or the text will be analysed as multiline - it returns None"""
+        If there are no text or the text will be analyzed as multiline - it returns None"""
         # use not stripped get_text, otherwise all format is cleaned
         cell_text = cell.get_text()
         cell_lines = cell_text.splitlines()

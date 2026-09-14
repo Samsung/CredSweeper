@@ -83,7 +83,7 @@ class LexerScanner(AbstractScanner, ABC):
             for _lexer in LexerScanner.GUESSED_LEXERS:
                 rv = _lexer.analyse_text(_text)
                 if 0.0 < rv and best_rv < rv:
-                    best_lexer = cast(type[Lexer], _lexer)
+                    best_lexer = _lexer
             lexer = best_lexer()
         return lexer
 
