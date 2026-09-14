@@ -241,10 +241,10 @@ class Util:
                 return text
             except UnicodeError:
                 binary_suggest = True
-                logger.debug("UnicodeError: Can't decode content as %s.", encoding)
+                logger.debug("UnicodeError: Can not decode content as %s.", encoding)
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 # fallback
-                logger.error("Unexpected Error: Can't read content as %s. %s:%s", encoding, type(exc), exc)
+                logger.error("Unexpected Error: Can not read content as %s. %s:%s", encoding, type(exc), exc)
         return None
 
     @staticmethod
