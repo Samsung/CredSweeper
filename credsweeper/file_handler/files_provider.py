@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class FilesProvider(AbstractProvider):
-    """Provider of plain os files to be analysed."""
+    """Provider of plain os files to be analyzed."""
 
     def __init__(self,
                  paths: Sequence[Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]]],

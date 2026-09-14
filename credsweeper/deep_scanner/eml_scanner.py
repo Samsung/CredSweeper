@@ -70,6 +70,7 @@ class EmlScanner(AbstractScanner, ABC):
                         logger.warning("%s:%s:%s cannot be supported", data_provider.file_path, content_type,
                                        type(body))
             return candidates
-        except Exception as eml_exc:
-            logger.warning("%s:%s", data_provider.file_path, eml_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

@@ -13,7 +13,7 @@ class EntropyEvaluation(Feature):
     """
     Renyi, Shannon entropy evaluation with Hartley entropy normalization.
     Augmentation with possible set of chars (hex, base64, etc.)
-    Analyse only begin of the value
+    Analyze only begin of the value
 
     See next link for details:
     https://digitalassets.lib.berkeley.edu/math/ucb/text/math_s4_v1_article-27.pdf

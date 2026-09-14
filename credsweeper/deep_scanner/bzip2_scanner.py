@@ -33,7 +33,7 @@ class Bzip2Scanner(AbstractScanner, ABC):
             if data_provider.file_type.endswith((".bz2", ".tb2", ".tbz")):
                 file_type = data_provider.file_type[:-4]
             elif data_provider.file_type.endswith(".tbz2"):
-                # .tar.bz2 synonim
+                # .tar.bz2 synonym
                 file_type = data_provider.file_type[:-5]
             else:
                 file_type = data_provider.file_type
@@ -46,8 +46,9 @@ class Bzip2Scanner(AbstractScanner, ABC):
                 bzip2_candidates = self.recursive_scan(bzip2_content_provider, depth, recursive_limit_size)
                 return bzip2_candidates
         except AbstractScanner.LimitError as bzip2_limit_exc:
-            logger.warning("%s %s", data_provider.descriptor, bzip2_limit_exc)
+            logger.info("%s:%s:%s", type(bzip2_limit_exc), bzip2_limit_exc, data_provider.descriptor)
             return []
-        except Exception as bzip2_exc:
-            logger.warning("%s:%s", data_provider.descriptor, bzip2_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

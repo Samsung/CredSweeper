@@ -113,6 +113,7 @@ class SnkScanner(AbstractScanner, ABC):
                 candidate.line_data_list[0].value_start = 0
                 candidate.line_data_list[0].value_end = len(value)
                 return [candidate]
-        except Exception as exc:
-            logger.warning(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None
