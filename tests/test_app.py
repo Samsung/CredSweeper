@@ -1,5 +1,4 @@
 import io
-import io
 import logging
 import os
 import random
@@ -11,7 +10,6 @@ import threading
 import unittest
 import uuid
 from pathlib import Path
-from tarfile import ReadError
 from typing import List, Any, Dict
 from unittest.mock import patch, call, ANY, MagicMock
 

@@ -1,5 +1,4 @@
 import os.path
-import re
 import tempfile
 import unittest
 from typing import List
