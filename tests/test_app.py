@@ -459,7 +459,7 @@ class TestMain(unittest.TestCase):
         # may be tested with
         # https://www.dcc.edu/documents/administration/offices/information-technology/password-examples.pdf
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.pdf"])
-        cred_sweeper = CredSweeper(depth=7, ml_threshold=ZERO_ML_THRESHOLD)
+        cred_sweeper = CredSweeper(ml_threshold=ZERO_ML_THRESHOLD, time_limit=1, depth=7)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertSetEqual({"Password", "Token", "Github Classic Token"}, set(i.rule_name for i in found_credentials))
@@ -471,7 +471,7 @@ class TestMain(unittest.TestCase):
 
     def test_pdf_n(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.pdf"])
-        cred_sweeper = CredSweeper()
+        cred_sweeper = CredSweeper(ml_threshold=ZERO_ML_THRESHOLD, time_limit=0.0001)
         cred_sweeper.run(content_provider=content_provider)
         self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
