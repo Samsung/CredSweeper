@@ -288,9 +288,9 @@ class CredSweeper:
         """Performs scan in main thread"""
         logger.info("Scan for %s providers", len(content_providers))
         total = len(content_providers)
+        if progress_callback:
+            progress_callback(" file", 0, total)
         for n, provider in enumerate(content_providers, start=1):
-            if progress_callback:
-                progress_callback(" file", n, total)
             if self.time_limit:
                 provider_candidates = CredSweeper.scan_time_limit(self.file_scan, provider, self.time_limit)
             else:
@@ -298,6 +298,8 @@ class CredSweeper:
             self.credential_manager.extend_credentials(provider_candidates)
             if self.thrifty:
                 provider.free()
+            if progress_callback:
+                progress_callback(" file", n, total)
         logger.info("Completed: processed %s providers with %s candidates", total,
                     self.credential_manager.len_credentials())
 
