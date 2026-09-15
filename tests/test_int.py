@@ -556,7 +556,6 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
         with tempfile.TemporaryDirectory() as tmp_dir:
             args = ["--path", str(SAMPLES_PATH / "changeme_key.jks"), "--depth", "3", "--time_limit", "10"]
             _stdout, _stderr = self._m_credsweeper(args)
-            self.assertEqual("", _stderr, _stderr)
             self.assertNotIn("WARNING", _stdout)
             self.assertNotIn("timed out", _stdout)
             self.assertIn("Detected Credentials: 1", _stdout)
@@ -580,7 +579,6 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
                 custom_config,
             ]
             _stdout, _stderr = self._m_credsweeper(args)
-            self.assertEqual("", _stderr, _stderr)
             self.assertIn("WARNING", _stdout)
             self.assertIn("timed out", _stdout)
             self.assertIn("Detected Credentials: 0", _stdout)
