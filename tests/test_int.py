@@ -292,6 +292,7 @@ class TestInt(TestCase):
                    " [--log LOG_LEVEL]" \
                    " [--progress | --no-progress]" \
                    " [--size_limit SIZE_LIMIT]" \
+                   " [--time_limit POSITIVE_FLOAT]" \
                    " [--banner] " \
                    " [--version] " \
                    "python -m credsweeper: error: one of the arguments" \
@@ -548,3 +549,36 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
             self.assertNotIn("WARNING", _stdout)
             self.assertNotIn("ERROR", _stdout)
             self.assertNotIn("CRITICAL", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_timeout_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            args = ["--path", str(SAMPLES_PATH / "changeme_key.jks"), "--depth", "3", "--time_limit", "10"]
+            _stdout, _stderr = self._m_credsweeper(args)
+            self.assertNotIn("WARNING", _stdout)
+            self.assertNotIn("timed out", _stdout)
+            self.assertIn("Detected Credentials: 1", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_timeout_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            config = Util.json_load(APP_PATH / "secret" / "config.json")
+            config["bruteforce_list"] = ["banana"] * 1_000_000
+            custom_config = os.path.join(tmp_dir, f"{__name__}.json")
+            Util.json_dump(config, custom_config)
+            args = [
+                "--path",
+                str(SAMPLES_PATH / "changeme_key.jks"),
+                "--depth",
+                "3",
+                "--time_limit",
+                "0.1",
+                "--config",
+                custom_config,
+            ]
+            _stdout, _stderr = self._m_credsweeper(args)
+            self.assertIn("WARNING", _stdout)
+            self.assertIn("timed out", _stdout)
+            self.assertIn("Detected Credentials: 0", _stdout)

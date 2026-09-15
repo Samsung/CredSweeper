@@ -141,7 +141,7 @@ class MlValidator:
     def encode(self, text: str, limit: int) -> np.ndarray:
         """Encodes prepared text to array"""
         result_array: np.ndarray = np.zeros(shape=(limit, self.num_classes), dtype=np.float32)
-        if text is None:
+        if not text:
             return result_array
         for i, c in enumerate(text):
             if i >= limit:
@@ -272,6 +272,8 @@ class MlValidator:
         value_input_list = []
         features_list = []
         len_group_list = len(group_list)
+        if progress_callback:
+            progress_callback(" ml", 0, len_group_list)
         probability: np.ndarray = np.zeros(len_group_list, dtype=np.float32)
         head = tail = 0
         for n, (_group_key, candidates) in enumerate(group_list, start=1):

@@ -19,6 +19,16 @@ def positive_int(value: Any) -> int:
     return int_value
 
 
+def positive_float(value: Any) -> float:
+    """Check if value is a positive float"""
+    with contextlib.suppress(ValueError):
+        float_value = float(value)
+        if 0.0 < float_value:
+            return float_value
+    logger.error("Time limit must be a positive number: %s", value)
+    raise ArgumentTypeError(f"{value} should be positive")
+
+
 def threshold_or_float_or_zero(arg: str) -> Union[int, float, ThresholdPreset]:
     """Return ThresholdPreset or a float from the input string
 
@@ -268,6 +278,12 @@ def parse_arguments(argv: List[str]) -> Namespace:
                         help="set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)",
                         dest="size_limit",
                         default=None)
+    parser.add_argument("--time_limit",
+                        help="set time limit per file in scanning sequence (float seconds)",
+                        dest="time_limit",
+                        type=float,
+                        default=None,
+                        metavar="POSITIVE_FLOAT")
     parser.add_argument("--banner",
                         help="show version and crc32 sum of CredSweeper files at start",
                         action="store_const",

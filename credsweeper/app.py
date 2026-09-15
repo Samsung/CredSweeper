@@ -1,10 +1,12 @@
 import contextlib
+import ctypes
 import json
 import logging
 import multiprocessing
 import queue
 import signal
 import threading
+import time
 from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple, Callable
 
@@ -68,6 +70,7 @@ class CredSweeper:
         severity: Union[Severity, str] = Severity.INFO,
         confidence: Union[Confidence, str] = Confidence.WEAK,
         size_limit: Optional[str] = None,
+        time_limit: Optional[float] = None,
         exclude_lines: Optional[List[str]] = None,
         exclude_values: Optional[List[str]] = None,
         thrifty: bool = False,
@@ -101,6 +104,7 @@ class CredSweeper:
             severity: Severity - minimum severity level of rule
             confidence: Confidence - minimum confidence level of rule
             size_limit: optional string integer or human-readable format to skip oversize files
+            time_limit: optional positive float value to limit scan time per file
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
             exclude_values: values to omit in scan. Will be added to the values already in config
             thrifty: free provider resources after scan to reduce memory consumption
@@ -143,6 +147,7 @@ class CredSweeper:
         self.ml_providers = ml_providers
         self.ml_threads_limit = ml_threads_limit
         self.thrifty = thrifty
+        self.time_limit = time_limit
         self.log_level = log_level
         self.__progress_queue: Optional[queue.Queue] = None
         self.__ml_validator: Optional[MlValidator] = None
@@ -283,13 +288,18 @@ class CredSweeper:
         """Performs scan in main thread"""
         logger.info("Scan for %s providers", len(content_providers))
         total = len(content_providers)
+        if progress_callback:
+            progress_callback(" file", 0, total)
         for n, provider in enumerate(content_providers, start=1):
-            if progress_callback:
-                progress_callback(" file", n, total)
-            provider_candidates = self.file_scan(provider)
+            if self.time_limit:
+                provider_candidates = CredSweeper.scan_time_limit(self.file_scan, provider, self.time_limit)
+            else:
+                provider_candidates = self.file_scan(provider)
             self.credential_manager.extend_credentials(provider_candidates)
             if self.thrifty:
                 provider.free()
+            if progress_callback:
+                progress_callback(" file", n, total)
         logger.info("Completed: processed %s providers with %s candidates", total,
                     self.credential_manager.len_credentials())
 
@@ -366,7 +376,10 @@ class CredSweeper:
         for provider in content_providers:
             if self.__progress_queue:
                 self.__progress_queue.put(1)
-            provider_candidates = self.file_scan(provider)
+            if self.time_limit:
+                provider_candidates = CredSweeper.scan_time_limit(self.file_scan, provider, self.time_limit)
+            else:
+                provider_candidates = self.file_scan(provider)
             candidates.extend(provider_candidates)
             if self.thrifty:
                 provider.free()
@@ -394,7 +407,6 @@ class CredSweeper:
                                                             content_provider.file_type, content_provider.info,
                                                             FilePathExtractor.FIND_BY_EXT_RULE)
             candidates.append(dummy_candidate)
-
         else:
             if self.config.depth or self.config.doc:
                 # deep scan with possible data representation
@@ -519,3 +531,47 @@ class CredSweeper:
         if self.stdout:
             for credential in credentials:
                 print(credential.to_str(hashed=self.hashed, subtext=self.subtext))
+
+    @staticmethod
+    def scan_time_limit(file_scan, provider: ContentProvider, time_limit: float) -> List[Candidate]:
+        """Run file scan with a time limit."""
+        start_time = time.perf_counter()
+        _queue: queue.Queue[Union[Exception, List[Candidate]]] = queue.Queue()
+
+        def time_limited_thread(_provider):
+            try:
+                _queue.put(file_scan(_provider))
+            except Exception as _exc:  # pylint: disable=broad-exception-caught
+                # all exceptions are passed to main process through queue
+                _queue.put(_exc)
+
+        thread = threading.Thread(target=time_limited_thread, args=(provider, ), daemon=True)
+        thread.start()
+        thread.join(time_limit)
+        if thread.is_alive() and (thread_id := thread.ident) and thread_id is not None:
+            result = ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id),
+                                                                ctypes.py_object(TimeoutError))
+            if 0 == result:
+                raise ValueError("Wrong thread id")
+            if 1 < result:
+                ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id), None)
+                raise SystemError("PyThreadState_SetAsyncExc multiple threads executions")
+            # second chance with the same time limit
+            thread.join(time_limit)
+
+        try:
+            result = _queue.get_nowait()
+            if isinstance(result, list):
+                logger.info("Scan for '%s' completed in %.3f seconds", provider.descriptor,
+                            time.perf_counter() - start_time)
+                return result
+            raise result
+        except (queue.Empty, TimeoutError):
+            logger.warning("Scan for '%s' timed out in %.3f seconds", provider.descriptor,
+                           time.perf_counter() - start_time)
+            return []
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.exception(exc)
+            result = exc
+        raise result

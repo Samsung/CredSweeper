@@ -33,6 +33,7 @@ Get all argument list:
                                  [--log LOG_LEVEL]
                                  [--progress | --no-progress]
                                  [--size_limit SIZE_LIMIT]
+                                 [--time_limit POSITIVE_FLOAT]
                                  [--banner] [--version]
 
     options:
@@ -91,6 +92,8 @@ Get all argument list:
                             display runtime process
       --size_limit SIZE_LIMIT
                             set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
+      --time_limit POSITIVE_FLOAT
+                            set time limit per file in scanning sequence (float seconds)
       --banner              show version and crc32 sum of CredSweeper files at start
       --version, -V         show program's version number and exit
 
