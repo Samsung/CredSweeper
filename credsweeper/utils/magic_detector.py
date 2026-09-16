@@ -25,6 +25,10 @@ class MagicDetector:
             # weird case
             (b"\x00\x00\xff\xff\x00\x00\x64\x86", None),
         ],
+        0x01: [
+            # https://fontforge.org/docs/techref/pcf-format.html
+            (b"\x01fcp", None),
+        ],
         0x03: [
             # Android Binary XML
             (b"\x03\x00\x08\x00", None),
@@ -70,6 +74,8 @@ class MagicDetector:
             (b"BM", re.compile(b"BM[\x00-\xFF]{2,4}\x00{4}")),
             # netasm
             (b"BSJB\x01\x00\x01\x00\x00\x00\x00\x00", None),
+            # https://rocm.docs.amd.com/projects/llvm-project/en/latest/LLVM/llvm/html/BitCodeFormat.html
+            (b"BC\xC0\xDE", None),
         ],
         0x43: [
             # .swf with ZLIB compression
@@ -84,6 +90,8 @@ class MagicDetector:
             # .swf
             (b"FWS",
              re.compile(b"FWS[\x01-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            # https://grub.gibibit.com/New_font_format
+            (b"FILE\x00\x00\x00\x04PFF2", None),
         ],
         0x47: [
             # GIF
@@ -217,7 +225,7 @@ class MagicDetector:
         ],
         0xAC: [
             # Serialized Java Data
-            (b"\xAC\xED\x00\x05[\x70-\x7E]", None),
+            (b"\xAC\xED\x00\x05", re.compile(b"\xAC\xED\x00\x05[\x70-\x7E]")),
         ],
         0xCE: [
             # Mach-O Executable (reverse 32 bit)
@@ -246,6 +254,8 @@ class MagicDetector:
             (b"\xFF", re.compile(b"\xFF(\xD8\xFF[\xDB\xEE\xE1\xE0\x51]|[\xFB\xF3\xF2])")),
             # GIT: Version 2 pack-*.idx
             (b"\xFFtOc\x00\x00\x00", None),
+            # https://github.com/llvm/llvm-project/blob/main/llvm/include/llvm/ProfileData/InstrProf.h
+            (b"\xFFlprofi\x81", None),
         ]
     }
 
