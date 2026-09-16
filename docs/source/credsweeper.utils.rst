@@ -12,6 +12,14 @@ credsweeper.utils.hop\_stat module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.utils.magic\_detector module
+----------------------------------------
+
+.. automodule:: credsweeper.utils.magic_detector
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.utils.pem\_key\_detector module
 -------------------------------------------
 

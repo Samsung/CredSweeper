@@ -4,7 +4,6 @@ from hypothesis import given, strategies
 
 from credsweeper.deep_scanner.deep_scanner import DeepScanner
 from credsweeper.file_handler.descriptor import Descriptor
-from tests import AZ_DATA, AZ_STRING
 
 
 class TestDeepScanner(unittest.TestCase):
@@ -20,38 +19,3 @@ class TestDeepScanner(unittest.TestCase):
         x, y = DeepScanner.get_deep_scanners(data, Descriptor('', '', ''), 0, 0)
         # no fallback scanners for depth=0
         self.assertListEqual([], y)
-
-    def test_is_media_n(self):
-        with self.assertRaises(TypeError):
-            self.assertFalse(DeepScanner.is_media(None))
-        with self.assertRaises(IndexError):
-            self.assertFalse(DeepScanner.is_media(b''))
-        self.assertFalse(DeepScanner.is_media(AZ_STRING))
-        self.assertFalse(DeepScanner.is_media(AZ_DATA))
-        self.assertFalse(DeepScanner.is_media(b"\0\0\0\0"))
-        self.assertFalse(DeepScanner.is_media(b"III. Password is Gehe1mnis!"))
-        self.assertFalse(DeepScanner.is_media(b"\xFF\xFEu\x00t\x00f\x001\x006\x00"))
-        self.assertFalse(DeepScanner.is_media(b"GIF89a format cannot store data inside\n\tHowever a picture can\r\n"))
-        self.assertFalse(DeepScanner.is_media(b"BMP is a picture"))
-
-    def test_is_media_p(self):
-        self.assertTrue(DeepScanner.is_media(b"\x7fELF\x02\x01\x01{\x03\x00\x00\x00\x00\x00\x00\x00\x07\x00>"))
-        self.assertTrue(DeepScanner.is_media(b'\x00\x00\x00\x18ftypqt   \x07\t\x00qt  niko\x99@{\xeamdat'))
-        self.assertTrue(DeepScanner.is_media(b"RIFF\xf8&\n\x00WAVEfmt \x10\x00\x01\x00\x00\x01\x00\x02\x00D\t\x00"))
-        self.assertTrue(DeepScanner.is_media(b"\x89PNG\x0D\x0A\x1A\x0A...can store text chunks"))
-        self.assertTrue(DeepScanner.is_media(b"\xFF\xD8\xFF\xE1+\x84Exif\0\0*\0"))
-        self.assertTrue(DeepScanner.is_media(b"GIF89a null terminated string\0"))
-        self.assertTrue(DeepScanner.is_media(b"BMP!\0\0\0\0"))
-        self.assertTrue(DeepScanner.is_media(b"ttcf\x00\x01\x00\x00\x00\x00\x00\n\x00\x00\x004\x00\x03X\x00\x00\x04d"))
-        self.assertTrue(DeepScanner.is_media(b"MThd\x00\x00\x00\x06\x00\x01\x00\x03\xe0MTrk\x00\x00\x00\x05Seq-1\x00"))
-        self.assertTrue(DeepScanner.is_media(b"VCLMTF\x01\x001\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"))
-        self.assertTrue(DeepScanner.is_media(b"wvpk\x81\xff\x00\x00\x10\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00"))
-
-    def test_is_media_patterns_p(self):
-        n = m = 0
-        for k, v in DeepScanner.MEDIA_PATTERNS.items():
-            m += 1
-            for i in v:
-                self.assertEqual(k, i[0][0], (k, v))
-                n += 1
-        self.assertTrue(0 < m < n, (m, n))
