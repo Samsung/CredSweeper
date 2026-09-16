@@ -1,3 +1,4 @@
+import re
 import unittest
 
 from credsweeper.utils.magic_detector import MagicDetector
@@ -38,3 +39,14 @@ class TestMagicDetector(unittest.TestCase):
             MagicDetector.detect(b"MThd\x00\x00\x00\x06\x00\x01\x00\x03\xe0MTrk\x00\x00\x00\x05Seq-1\x00"))
         self.assertTrue(MagicDetector.detect(b"VCLMTF\x01\x001\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"))
         self.assertTrue(MagicDetector.detect(b"wvpk\x81\xff\x00\x00\x10\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00"))
+
+    def test_patterns_check_p(self):
+        regex_prefixes = total_prefixes = 0
+        for k, v in MagicDetector.MAGIC_PATTERNS.items():
+            for i in v:
+                self.assertEqual(k, i[0][0], (k, v))
+                total_prefixes += 1
+                if isinstance(i[1], re.Pattern):
+                    self.assertEqual(k, i[1].pattern[0], (k, v))
+                    regex_prefixes += 1
+        self.assertTrue(0 < regex_prefixes < total_prefixes, (regex_prefixes, total_prefixes))

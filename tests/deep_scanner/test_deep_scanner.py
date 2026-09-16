@@ -19,12 +19,3 @@ class TestDeepScanner(unittest.TestCase):
         x, y = DeepScanner.get_deep_scanners(data, Descriptor('', '', ''), 0, 0)
         # no fallback scanners for depth=0
         self.assertListEqual([], y)
-
-    def test_is_media_patterns_p(self):
-        n = m = 0
-        for k, v in DeepScanner.MEDIA_PATTERNS.items():
-            m += 1
-            for i in v:
-                self.assertEqual(k, i[0][0], (k, v))
-                n += 1
-        self.assertTrue(0 < m < n, (m, n))
