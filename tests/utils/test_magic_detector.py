@@ -33,10 +33,8 @@ class TestMagicDetector(unittest.TestCase):
         self.assertTrue(MagicDetector.detect(b"\xFF\xD8\xFF\xE1+\x84Exif\0\0*\0"))
         self.assertTrue(MagicDetector.detect(b"GIF89a null terminated string\0"))
         self.assertTrue(MagicDetector.detect(b"BMP!\0\0\0\0"))
-        self.assertTrue(
-            MagicDetector.detect(b"ttcf\x00\x01\x00\x00\x00\x00\x00\n\x00\x00\x004\x00\x03X\x00\x00\x04d"))
-        self.assertTrue(
-            MagicDetector.detect(b"MThd\x00\x00\x00\x06\x00\x01\x00\x03\xe0MTrk\x00\x00\x00\x05Seq-1\x00"))
+        self.assertTrue(MagicDetector.detect(b"ttcf\x00\x01\x00\x00\x00\x00\x00\n\x00\x00\x004\x00\x03X\x00\x00\x04d"))
+        self.assertTrue(MagicDetector.detect(b"MThd\x00\x00\x00\x06\x00\x01\x00\x03\xe0MTrk\x00\x00\x00\x05Seq-1\x00"))
         self.assertTrue(MagicDetector.detect(b"VCLMTF\x01\x001\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"))
         self.assertTrue(MagicDetector.detect(b"wvpk\x81\xff\x00\x00\x10\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00"))
 

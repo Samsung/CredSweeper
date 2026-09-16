@@ -119,7 +119,6 @@ class DeepScanner(
     def scanner(self) -> Scanner:
         return self.__scanner
 
-
     @staticmethod
     def get_deep_scanners(data: bytes, descriptor: Descriptor, depth: int, limit: int) -> Tuple[List[Any], List[Any]]:
         """Returns possibly scan methods for the data depends on content and fallback scanners"""
