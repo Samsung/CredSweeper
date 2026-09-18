@@ -1,0 +1,2 @@
+TRACE = 5
+SILENCE = 60

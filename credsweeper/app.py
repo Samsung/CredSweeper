@@ -16,6 +16,7 @@ from colorama import Style
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
 
+from credsweeper.logger import TRACE, SILENCE
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType, DEFAULT_ENCODING, Confidence
 from credsweeper.config.config import Config
@@ -230,6 +231,8 @@ class CredSweeper:
     @staticmethod
     def pool_initializer(log_kwargs) -> None:
         """Ignore SIGINT in child processes."""
+        logging.addLevelName(TRACE, "TRACE")
+        logging.addLevelName(SILENCE, "SILENCE")
         logging.basicConfig(**log_kwargs)
         signal.signal(signal.SIGINT, signal.SIG_IGN)
 
@@ -316,8 +319,6 @@ class CredSweeper:
         log_kwargs = {"format": yapfix}
         if isinstance(self.log_level, str):
             # is not None
-            if "SILENCE" == self.log_level:
-                logging.addLevelName(60, "SILENCE")
             log_kwargs["level"] = self.log_level
         len_providers = len(content_providers)
         pool_count = min(self.pool_count, len_providers)
@@ -424,9 +425,9 @@ class CredSweeper:
     def post_processing(self, progress_callback: Optional[Callable[[str, int, int], None]]) -> None:
         """Machine learning validation for received credential candidates."""
         if purged := self.credential_manager.purge_duplicates():
-            logger.info("Purged %s duplicates", purged)
+            logger.debug("Purged %s duplicates", purged)
         if self._use_ml_validation():
-            logger.info("Grouping %s candidates", len(self.credential_manager.candidates))
+            logger.debug("Grouping %s candidates", len(self.credential_manager.candidates))
             new_cred_list: List[Candidate] = []
             cred_groups = self.credential_manager.group_credentials()
             ml_cred_groups: List[Tuple[CandidateKey, List[Candidate]]] = []

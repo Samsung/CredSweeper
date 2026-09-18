@@ -5,15 +5,15 @@ from typing import Optional
 
 from credsweeper.app import APP_PATH
 from credsweeper.utils.util import Util
+from . import TRACE, SILENCE
 
 
 class Logger:
     """Class that used to configure logging in CredSweeper."""
 
-    SILENCE = 60
-
     LEVELS = {
         "NOTSET": logging.NOTSET,
+        "TRACE": TRACE,
         "DEBUG": logging.DEBUG,
         "INFO": logging.INFO,
         "WARN": logging.WARNING,
@@ -39,6 +39,8 @@ class Logger:
         level = Logger.LEVELS.get(log_level.upper())
         if level is None:
             raise ValueError(f"log level given: {log_level} -- must be one of: {' | '.join(Logger.LEVELS.keys())}")
+        logging.addLevelName(TRACE, "TRACE")
+        logging.addLevelName(SILENCE, "SILENCE")
         log_config_path = APP_PATH / "secret" / "log.yaml" if file_path is None else Path(file_path)
         logging_config = Util.yaml_load(log_config_path)
         if logging_config is None:
