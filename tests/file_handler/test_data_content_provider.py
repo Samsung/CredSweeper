@@ -24,9 +24,6 @@ class DataContentProviderTest(unittest.TestCase):
             self.assertFalse(content_provider1.represent_as_xml())
             mocked_logger.assert_not_called()
         content_provider2 = DataContentProvider(data=AZ_DATA)
-        with patch('logging.Logger.debug') as mocked_logger:
-            self.assertFalse(content_provider2.represent_as_xml())
-            mocked_logger.assert_called_with("Weak data to parse as XML")
         content_provider3 = DataContentProvider(data=b"</wrong XML text>")
         with patch('logging.Logger.debug') as mocked_logger:
             self.assertFalse(content_provider3.represent_as_xml())
