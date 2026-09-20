@@ -324,7 +324,7 @@ class TestInt(TestCase):
             str(SAMPLES_PATH),
             "not_existed_path_for_warning",
         ])
-        if "Windows" != sys.platform:
+        if "Windows" != platform.system():
             self.assertEqual('', _stderr, _stderr)
 
         self.assertIn("| TRACE |", _stdout)
@@ -380,12 +380,15 @@ class TestInt(TestCase):
             str(SAMPLES_PATH),
             "not_existed_path_for_warning",
         ])
-        if "[W:onnxruntime:Default," in _stderr:
-            # github action issue
-            for line in _stderr:
-                if "[W:onnxruntime:Default," in line and "Skipping pci_bus_id for PCI path" in line:
-                    continue
-                self.assertEqual('', line)
+
+        # workaround for GitHub Action
+        if all(x in _stderr for x in [
+                "[W:onnxruntime:Default",
+                "Skipping pci_bus_id for PCI path at",
+                "because filename",
+                "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
+        ]):
+            pass
         else:
             self.assertEqual('', _stderr)
 
@@ -574,15 +577,15 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
             _stdout, _stderr = self._m_credsweeper(["--path", sqlite_filename, "--depth", "3", "--log", "DEBUG"])
 
             # workaround for GitHub Action
-            for i in _stderr.splitlines():
-                if all(x in i for x in [
+            if all(x in _stderr for x in [
                     "[W:onnxruntime:Default",
                     "Skipping pci_bus_id for PCI path at",
                     "because filename",
                     "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
-                ]):
-                    continue
-                self.assertEqual('', i)
+            ]):
+                pass
+            else:
+                self.assertEqual('', _stderr)
 
             self.assertNotIn("WARNING", _stdout)
             self.assertNotIn("ERROR", _stdout)
