@@ -48,12 +48,22 @@ class Logger:
         logging_config = Util.yaml_load(log_config_path)
         if logging_config is None:
             raise RuntimeError("Logger init error - check config")
+
+        if root_logger := logging_config.get("root"):
+            _handlers = root_logger.get("handlers", [])
+        else:
+            _handlers = []
+        for log_module, log_config in logging_config.get("loggers", {}).items():
+            _handlers.extend(log_config.get("handlers", []))
+        used_handlers = set(_handlers)
+
         if "handlers" in logging_config and isinstance(logging_config["handlers"], dict):
             # log directories have to be created before usage
             for handler_name, handler_value in logging_config["handlers"].items():
                 if "console" == handler_name:
                     handler_value["level"] = level
-                elif "filename" in handler_value:
+                elif "filename" in handler_value and handler_name in used_handlers:
+                    # create parent dir for used handler only
                     log_dir = Path(handler_value["filename"]).resolve().parent
                     log_dir.mkdir(exist_ok=True, parents=True)
         logging.config.dictConfig(logging_config)
