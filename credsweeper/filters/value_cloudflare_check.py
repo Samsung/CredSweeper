@@ -1,7 +1,5 @@
 import contextlib
-from typing import Optional
 
-from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters import ValueAtlassianTokenCheck
@@ -9,9 +7,6 @@ from credsweeper.filters import ValueAtlassianTokenCheck
 
 class ValueCloudFlareCheck(ValueAtlassianTokenCheck):
     """Check that candidate have a known structure"""
-
-    def __init__(self, config: Optional[Config] = None) -> None:
-        super().__init__(config)
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
         """Run filter checks on received token with CRC32
