@@ -21,11 +21,8 @@ class ValueCloudFlareCheck(ValueAtlassianTokenCheck):
         """
         value = line_data.value
         with contextlib.suppress(Exception):
-            # atlassian integer:bytes from base64
             if value.startswith("cfk_"):
-                # CloudFlare
                 return ValueAtlassianTokenCheck.check_crc32_struct(value[4:])
             if value.startswith(("cfat_", "cfut_")):
-                # Bitbucket HTTP Access Token & CloudFlare
                 return ValueAtlassianTokenCheck.check_crc32_struct(value[5:])
         return True
