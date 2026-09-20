@@ -22,10 +22,19 @@ class CrxScanner(AbstractScanner, ABC):
 
     @staticmethod
     def zip_extract(data: bytes) -> bytes:
-        """Extracts zip payload after signature block"""
-        pubkey_length = struct.unpack("<I", data[8:12])
-        signature_length = struct.unpack("<I", data[12:16])
-        zip_offset = 16 + pubkey_length[0] + signature_length[0]
+        """Extracts ZIP payload after the version-specific CRX header"""
+        version = struct.unpack("<I", data[4:8])[0]
+        if 2 == version:
+            pubkey_length = struct.unpack("<I", data[8:12])[0]
+            signature_length = struct.unpack("<I", data[12:16])[0]
+            zip_offset = 16 + pubkey_length + signature_length
+        elif 3 == version:
+            header_length = struct.unpack("<I", data[8:12])[0]
+            zip_offset = 12 + header_length
+        else:
+            raise ValueError(f"Unsupported CRX version: {version}")
+        if len(data) < zip_offset:
+            raise ValueError(f"CRX header exceeds file size: {zip_offset} > {len(data)}")
         return data[zip_offset:]
 
     def data_scan(
