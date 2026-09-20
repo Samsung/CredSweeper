@@ -5,6 +5,7 @@ import logging
 import multiprocessing
 import queue
 import signal
+import sys
 import threading
 import time
 from pathlib import Path
@@ -16,7 +17,7 @@ from colorama import Style
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
 
-from credsweeper.logger import TRACE, SILENCE
+from credsweeper.logger.logger import SILENCE, TRACE
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType, DEFAULT_ENCODING, Confidence
 from credsweeper.config.config import Config
@@ -46,36 +47,36 @@ class CredSweeper:
     """
 
     def __init__(
-        self,
-        rule_path: Union[None, str, Path] = None,
-        config_path: Optional[str] = None,
-        json_filename: Union[None, str, Path] = None,
-        xlsx_filename: Union[None, str, Path] = None,
-        stdout: bool = False,
-        color: bool = False,
-        hashed: bool = False,
-        subtext: bool = False,
-        sort_output: bool = False,
-        use_filters: bool = True,
-        pool_count: int = 1,
-        ml_batch_size: Optional[int] = None,
-        ml_threshold: Union[int, float, ThresholdPreset] = ThresholdPreset.medium,
-        ml_config: Union[None, str, Path] = None,
-        ml_model: Union[None, str, Path] = None,
-        ml_providers: Optional[str] = None,
-        ml_threads_limit: Optional[int] = None,
-        find_by_ext: bool = False,
-        pedantic: bool = False,
-        depth: int = 0,
-        doc: bool = False,
-        severity: Union[Severity, str] = Severity.INFO,
-        confidence: Union[Confidence, str] = Confidence.WEAK,
-        size_limit: Optional[str] = None,
-        time_limit: Optional[float] = None,
-        exclude_lines: Optional[List[str]] = None,
-        exclude_values: Optional[List[str]] = None,
-        thrifty: bool = False,
-        log_level: Optional[str] = None,
+            self,  #
+            rule_path: Union[None, str, Path] = None,  #
+            config_path: Optional[str] = None,  #
+            json_filename: Union[None, str, Path] = None,  #
+            xlsx_filename: Union[None, str, Path] = None,  #
+            stdout: bool = False,  #
+            color: bool = False,  #
+            hashed: bool = False,  #
+            subtext: bool = False,  #
+            sort_output: bool = False,  #
+            use_filters: bool = True,  #
+            pool_count: int = 1,  #
+            ml_batch_size: Optional[int] = None,  #
+            ml_threshold: Union[int, float, ThresholdPreset] = ThresholdPreset.medium,  #
+            ml_config: Union[None, str, Path] = None,  #
+            ml_model: Union[None, str, Path] = None,  #
+            ml_providers: Optional[str] = None,  #
+            ml_threads_limit: Optional[int] = None,  #
+            find_by_ext: bool = False,  #
+            pedantic: bool = False,  #
+            depth: int = 0,  #
+            doc: bool = False,  #
+            severity: Union[Severity, str] = Severity.INFO,  #
+            confidence: Union[Confidence, str] = Confidence.WEAK,  #
+            size_limit: Optional[str] = None,  #
+            time_limit: Optional[float] = None,  #
+            exclude_lines: Optional[List[str]] = None,  #
+            exclude_values: Optional[List[str]] = None,  #
+            thrifty: bool = False,  #
+            log_level: Optional[str] = None,  #
     ) -> None:
         """Initialize Advanced credential scanner.
 
@@ -228,20 +229,10 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @staticmethod
-    def pool_initializer(log_kwargs) -> None:
-        """Ignore SIGINT in child processes."""
-        logging.addLevelName(TRACE, "TRACE")
-        logging.addLevelName(SILENCE, "SILENCE")
-        logging.basicConfig(**log_kwargs)
-        signal.signal(signal.SIGINT, signal.SIG_IGN)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def run(
-        self,
-        content_provider: AbstractProvider,
-        progress_callback: Optional[Callable[[str, int, int], None]] = None,
+            self,  #
+            content_provider: AbstractProvider,  #
+            progress_callback: Optional[Callable[[str, int, int], None]] = None,  #
     ) -> int:
         """Run an analysis of 'content_provider' object.
 
@@ -265,9 +256,9 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def scan(
-        self,
-        content_providers: Sequence[ContentProvider],
-        progress_callback: Optional[Callable[[str, int, int], None]],
+            self,  #
+            content_providers: Sequence[ContentProvider],  #
+            progress_callback: Optional[Callable[[str, int, int], None]],  #
     ) -> None:
         """Run scanning of files from an argument "content_providers".
 
@@ -284,9 +275,9 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def single_job_scan(
-        self,
-        content_providers: Sequence[ContentProvider],
-        progress_callback: Optional[Callable[[str, int, int], None]],
+            self,  #
+            content_providers: Sequence[ContentProvider],  #
+            progress_callback: Optional[Callable[[str, int, int], None]],  #
     ) -> None:
         """Performs scan in main thread"""
         logger.info("Scan for %s providers", len(content_providers))
@@ -308,15 +299,32 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @staticmethod
+    def _pool_initializer(log_kwargs) -> None:
+        """Ignore SIGINT in child processes."""
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+        logging.addLevelName(TRACE, "TRACE")
+        logging.addLevelName(SILENCE, "SILENCE")
+        log_kwargs["stream"] = sys.stdout
+        log_kwargs["force"] = True
+        logging.basicConfig(**log_kwargs)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def multi_jobs_scan(
-        self,
-        content_providers: Sequence[ContentProvider],
-        progress_callback: Optional[Callable[[str, int, int], None]],
+            self,  #
+            content_providers: Sequence[ContentProvider],  #
+            progress_callback: Optional[Callable[[str, int, int], None]],  #
     ) -> None:
         """Performs scan with multiple jobs"""
-        # use this separation to satisfy YAPF formatter
-        yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"
-        log_kwargs = {"format": yapfix}
+        for handler in logger.handlers:
+            if isinstance(handler, logging.StreamHandler) and handler.stream is sys.stdout:
+                _f = handler.formatter._fmt  # pylint: disable=W0212
+                break
+        else:
+            # use this separation to satisfy YAPF formatter
+            _f = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)d | %(message)s"
+        log_kwargs = {"format": _f}
         if isinstance(self.log_level, str):
             # is not None
             log_kwargs["level"] = self.log_level
@@ -349,7 +357,7 @@ class CredSweeper:
             progress_thread = None
             progress_manager = None
         with ctx.Pool(processes=pool_count,
-                      initializer=CredSweeper.pool_initializer,
+                      initializer=CredSweeper._pool_initializer,
                       initargs=(log_kwargs,)) as pool:  # yapf: disable
             try:
                 for scan_results in pool.imap_unordered(self.files_scan,

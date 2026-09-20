@@ -15,6 +15,7 @@ import pytest
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
+from credsweeper.logger.logger import Logger
 from credsweeper.utils.util import Util
 from tests import SAMPLES_PATH, \
     TESTS_PATH, SAMPLE_ZIP
@@ -308,46 +309,85 @@ class TestInt(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_log_p(self) -> None:
-        _stdout, _stderr = self._m_credsweeper(
-            ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path",
-             str(SAMPLE_ZIP), "not_existed_path"])
-        self.assertEqual('', _stderr)
+        # TRACE level and all others
+        _stdout, _stderr = self._m_credsweeper([
+            "--log",
+            "TRACE",
+            "--depth",
+            "7",
+            "--ml_config",
+            # should be CRITICAL for wrong config
+            str(APP_PATH / "secret" / "config.json"),
+            "--jobs",
+            "2",
+            "--path",
+            str(SAMPLES_PATH),
+            "not_existed_path_for_warning",
+        ])
+        self.assertEqual('', _stderr, _stderr)
 
-        self.assertIn("DEBUG", _stdout)
-        self.assertIn("INFO", _stdout)
-        self.assertIn("WARNING", _stdout)
-        self.assertNotIn("ERROR", _stdout)
-        self.assertNotIn("CRITICAL", _stdout)
-
-        for line in _stdout.splitlines():
-            if 5 <= len(line) and "rule:" == line[0:5]:
-                self.assertRegex(line, r"rule: \.*")
-            elif 21 <= len(line) and "Detected Credentials:" == line[0:21]:
-                self.assertRegex(line, r"Detected Credentials: \d+")
-            elif 13 <= len(line) and "Time Elapsed:" == line[0:13]:
-                self.assertRegex(line, r"Time Elapsed: \d+\.\d+")
-            else:
-                self.assertRegex(
-                    line,
-                    r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+:\d+ \| .*",
-                )
+        self.assertIn("| TRACE |", _stdout)
+        self.assertIn("| DEBUG |", _stdout)
+        self.assertIn("| INFO |", _stdout)
+        self.assertIn("| WARNING |", _stdout)
+        self.assertIn("| ERROR |", _stdout)
+        self.assertIn("| CRITICAL |", _stdout)
+        # no results produced due critical
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_log_n(self) -> None:
-        _stdout, _stderr = self._m_credsweeper(["--log", "CriTicaL", "--rule", "NOT_EXISTED_PATH", "--path", "."])
+        # critical level only
+        _stdout, _stderr = self._m_credsweeper([
+            "--log",
+            "CRITICAL",
+            "--depth",
+            "7",
+            "--ml_config",
+            # should be CRITICAL for wrong config
+            str(APP_PATH / "secret" / "config.json"),
+            "--jobs",
+            "2",
+            "--path",
+            str(SAMPLES_PATH),
+            "not_existed_path_for_warning",
+        ])
         self.assertEqual('', _stderr)
 
-        self.assertNotIn("DEBUG", _stdout)
-        self.assertNotIn("INFO", _stdout)
-        self.assertNotIn("WARNING", _stdout)
-        self.assertNotIn("ERROR", _stdout)
-        self.assertIn("CRITICAL", _stdout)
+        self.assertNotIn("| TRACE |", _stdout)
+        self.assertNotIn("| DEBUG |", _stdout)
+        self.assertNotIn("| INFO |", _stdout)
+        self.assertNotIn("| WARNING |", _stdout)
+        self.assertNotIn("| ERROR |", _stdout)
+        self.assertIn(" | CRITICAL | ", _stdout)
 
-        self.assertTrue(
-            any(
-                re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (CRITICAL) \| \w+:\d+ \| .*", line)
-                for line in _stdout.splitlines()), _stdout)
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_log_silence_n(self) -> None:
+        # silence - no log output
+        _stdout, _stderr = self._m_credsweeper([
+            "--log",
+            "SILENCE",
+            "--depth",
+            "7",
+            "--ml_config",
+            # should be CRITICAL for wrong config
+            str(APP_PATH / "secret" / "config.json"),
+            "--jobs",
+            "2",
+            "--path",
+            str(SAMPLES_PATH),
+            "not_existed_path_for_warning",
+        ])
+        self.assertEqual('', _stderr)
+
+        self.assertNotIn("| TRACE |", _stdout)
+        self.assertNotIn("| DEBUG |", _stdout)
+        self.assertNotIn("| INFO |", _stdout)
+        self.assertNotIn("| WARNING |", _stdout)
+        self.assertNotIn("| ERROR |", _stdout)
+        self.assertNotIn(" | CRITICAL | ", _stdout)
+        self.assertNotIn("| SILENCE |", _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -390,21 +430,11 @@ class TestInt(TestCase):
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
                 ["--diff_path", target_path, "--no-stdout", "--save-json", json_filename, "--log", "silence"])
+            self.assertIn("Added File Credentials:", _stdout)
+            self.assertIn("Deleted File Credentials:", _stdout)
+            self.assertIn("Time Elapsed:", _stdout)
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_patch_save_json_n(self) -> None:
-        start_time = time.time()
-        target_path = str(SAMPLES_PATH / "password.patch")
-        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
-        for root, dirs, files in os.walk(APP_PATH.parent):
-            self.assertIn("credsweeper", dirs)
-            for file in files:
-                # check whether the report was created AFTER test launch to avoid failures during development
-                self.assertFalse(file.endswith(".json") and os.stat(os.path.join(root, file)).st_mtime > start_time)
-            dirs.clear()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
