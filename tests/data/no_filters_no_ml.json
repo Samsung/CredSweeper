@@ -1928,126 +1928,126 @@
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaDx4mIbbM4",
+                "line": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaD06f546f9",
                 "line_num": 2,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaDx4mIbbM4",
+                "value": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaD06f546f9",
                 "value_start": 0,
                 "value_end": 53,
-                "entropy": 4.855
+                "entropy": 4.65945
             }
         ]
     },
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiuOKCYyDMJ",
+                "line": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiu5bdbfa91",
                 "line_num": 3,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiuOKCYyDMJ",
+                "value": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiu5bdbfa91",
                 "value_start": 0,
                 "value_end": 53,
-                "entropy": 4.94472
+                "entropy": 4.97558
             }
         ]
     },
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj1Ui1koxj",
+                "line": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rjb5043cbd",
                 "line_num": 4,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj1Ui1koxj",
+                "value": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rjb5043cbd",
                 "value_start": 0,
                 "value_end": 52,
-                "entropy": 5.05093
+                "entropy": 5.09448
             }
         ]
     },
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRktokenexample",
+                "line": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaD00000000",
                 "line_num": 6,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRktokenexample",
+                "value": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaD00000000",
                 "value_start": 0,
                 "value_end": 53,
-                "entropy": 4.83887
+                "entropy": 4.48312
             }
         ]
     },
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZiktokenexample",
+                "line": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiu00000000",
                 "line_num": 7,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZiktokenexample",
+                "value": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiu00000000",
                 "value_start": 0,
                 "value_end": 53,
-                "entropy": 4.93047
+                "entropy": 4.68057
             }
         ]
     },
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpvtokenexample",
+                "line": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj00000000",
                 "line_num": 8,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpvtokenexample",
+                "value": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj00000000",
                 "value_start": 0,
                 "value_end": 52,
-                "entropy": 5.10391
+                "entropy": 4.81507
             }
         ]
     },

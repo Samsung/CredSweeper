@@ -1367,13 +1367,12 @@
 
 - name: CloudFlare API Token
   severity: high
-  confidence: moderate
+  confidence: strong
   type: pattern
   values:
-    - (?P<value>cf(at|ut|k)_[0-9A-Za-z]{48})
+    - (?P<value>cf(at|ut|k)_[0-9A-Za-z]{40}[0-9a-f]{8})
   filter_type:
-    - ValuePatternCheck
-    - ValueMorphemesCheck
+    - ValueCloudFlareCheck
   min_line_len: 24
   required_substrings:
     - cfat_

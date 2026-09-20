@@ -1,23 +1,20 @@
-import binascii
 import contextlib
-import struct
 from typing import Optional
 
-from credsweeper.common.constants import ASCII
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
-from credsweeper.filters.filter import Filter
+from credsweeper.filters import ValueAtlassianTokenCheck
 
 
-class ValueGrafanaServiceCheck(Filter):
+class ValueCloudFlareCheck(ValueAtlassianTokenCheck):
     """Check that candidate have a known structure"""
 
     def __init__(self, config: Optional[Config] = None) -> None:
-        pass
+        super().__init__(config)
 
     def run(self, line_data: LineData, target: AnalysisTarget) -> bool:
-        """Run filter checks on received token which might be structured.
+        """Run filter checks on received token with CRC32
 
         Args:
             line_data: credential candidate data
@@ -27,10 +24,13 @@ class ValueGrafanaServiceCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
+        value = line_data.value
         with contextlib.suppress(Exception):
-            checksum = struct.unpack("<I", bytes.fromhex(line_data.value[-8:]))[0]
-            data = line_data.value[:-9].encode(ASCII)
-            crc32 = binascii.crc32(data)
-            if checksum == crc32:
-                return False
+            # atlassian integer:bytes from base64
+            if value.startswith("cfk_"):
+                # CloudFlare
+                return ValueAtlassianTokenCheck.check_crc32_struct(value[4:])
+            if value.startswith(("cfat_", "cfut_")):
+                # Bitbucket HTTP Access Token & CloudFlare
+                return ValueAtlassianTokenCheck.check_crc32_struct(value[5:])
         return True

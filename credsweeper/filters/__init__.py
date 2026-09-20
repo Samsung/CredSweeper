@@ -14,6 +14,7 @@ from credsweeper.filters.value_basic_auth_check import ValueBasicAuthCheck
 from credsweeper.filters.value_bech32_check import ValueBech32Check
 from credsweeper.filters.value_blocklist_check import ValueBlocklistCheck
 from credsweeper.filters.value_camel_case_check import ValueCamelCaseCheck
+from credsweeper.filters.value_cloudflare_check import ValueCloudFlareCheck
 from credsweeper.filters.value_dictionary_keyword_check import ValueDictionaryKeywordCheck
 from credsweeper.filters.value_discord_bot_check import ValueDiscordBotCheck
 from credsweeper.filters.value_entropy_base32_check import ValueEntropyBase32Check
