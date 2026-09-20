@@ -1367,13 +1367,12 @@
 
 - name: CloudFlare API Token
   severity: high
-  confidence: moderate
+  confidence: strong
   type: pattern
   values:
-    - (?P<value>cf(at|ut|k)_[0-9A-Za-z]{48})
+    - (?P<value>cf(at|ut|k)_[0-9A-Za-z]{40}[0-9a-f]{8})
   filter_type:
-    - ValuePatternCheck
-    - ValueMorphemesCheck
+    - ValueCloudFlareCheck
   min_line_len: 24
   required_substrings:
     - cfat_
@@ -1602,6 +1601,28 @@
   min_line_len: 84
   required_substrings:
     - xai-
+  target:
+    - code
+    - doc
+
+- name: Composio Credentials
+  severity: high
+  confidence: weak
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>(?:[ou]?a|c)k_[0-9A-Za-z_-]{16,80})
+  filter_type:
+    - ValueMorphemesCheck(1)
+    - ValueBase64DataCheck
+    - ValueTokenBase64Check
+    - ValueEntropyBase64Check
+    - ValuePatternCheck
+    - ValueNotPartEncodedCheck
+    - ValueBase64PartCheck
+  min_line_len: 19
+  required_substrings:
+    - ak_
+    - ck_
   target:
     - code
     - doc
