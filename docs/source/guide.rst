@@ -87,7 +87,7 @@ Get all argument list:
       --subtext, --no-subtext
                             line text will be stripped in 128 symbols but value and variable are kept
       --sort, --no-sort     enable output sorting
-      --log, -l LOG_LEVEL   provide logging level of ['NOTSET', 'DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE'] (default: 'warning', case insensitive)
+      --log, -l LOG_LEVEL   provide logging level of ['NOTSET', 'TRACE', 'DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE'] (default: 'warning', case insensitive)
       --progress, --no-progress
                             display runtime process
       --size_limit SIZE_LIMIT

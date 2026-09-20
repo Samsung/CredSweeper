@@ -10,6 +10,8 @@ from credsweeper.config.config import Config
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
+from credsweeper.logger.logger import TRACE
+
 from credsweeper.rules.rule import Rule
 from credsweeper.scanner.scan_type.multi_pattern import MultiPattern
 from credsweeper.scanner.scan_type.pem_key_pattern import PemKeyPattern
@@ -164,8 +166,8 @@ class Scanner:
 
             if not (matched_keyword or matched_pem_key or matched_pattern or matched_multi):
                 # target may be skipped only with length because not all rules have required_substrings
-                logger.debug("Skip too short (%d) line %s:%d", target_line_stripped_len, target.file_path,
-                             target.line_num)
+                logger.log(TRACE, "Skip too short (%d) line %s:%d", target_line_stripped_len, target.file_path,
+                           target.line_num)
                 continue
 
             # cached value to skip the same regex verifying
@@ -187,8 +189,8 @@ class Scanner:
 
                 if new_credentials := scanner.run(self.config, rule, target):
                     credentials.extend(new_credentials)
-                    logger.debug("Candidate for rule: %s in file: %s:%d in line: %s", rule.rule_name, target.file_path,
-                                 target.line_num, target.line)
+                    logger.log(TRACE, "Candidate for rule: %s in file: %s:%d in line: %s", rule.rule_name,
+                               target.file_path, target.line_num, target.line)
         return credentials
 
     @staticmethod
