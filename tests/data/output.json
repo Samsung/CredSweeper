@@ -1580,6 +1580,90 @@
         ]
     },
     {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ak_ppda4WEZA4P9k42oYRQD",
+                "line_num": 3,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ak_ppda4WEZA4P9k42oYRQD",
+                "value_start": 0,
+                "value_end": 23,
+                "entropy": 4.05596
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "oak_B-Nk3XEYumqGlUR6nFrL",
+                "line_num": 5,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "oak_B-Nk3XEYumqGlUR6nFrL",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.50163
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "uak_aQHDUyPscrh5VjHV7kQ2",
+                "line_num": 7,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "uak_aQHDUyPscrh5VjHV7kQ2",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.1683
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ck_MJti8N-s9sAlyTs7K3yw",
+                "line_num": 9,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ck_MJti8N-s9sAlyTs7K3yw",
+                "value_start": 0,
+                "value_end": 23,
+                "entropy": 4.22987
+            }
+        ]
+    },
+    {
         "rule": "Contentful Credentials",
         "severity": "high",
         "confidence": "strong",

@@ -2241,6 +2241,132 @@
         ]
     },
     {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ak_ppda4WEZA4P9k42oYRQD",
+                "line_num": 3,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ak_ppda4WEZA4P9k42oYRQD",
+                "value_start": 0,
+                "value_end": 23,
+                "entropy": 4.05596
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "oak_B-Nk3XEYumqGlUR6nFrL",
+                "line_num": 5,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "oak_B-Nk3XEYumqGlUR6nFrL",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.50163
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "uak_aQHDUyPscrh5VjHV7kQ2",
+                "line_num": 7,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "uak_aQHDUyPscrh5VjHV7kQ2",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.1683
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ck_MJti8N-s9sAlyTs7K3yw",
+                "line_num": 9,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ck_MJti8N-s9sAlyTs7K3yw",
+                "value_start": 0,
+                "value_end": 23,
+                "entropy": 4.22987
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "uak_mock_toolkits_info",
+                "line_num": 13,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "uak_mock_toolkits_info",
+                "value_start": 0,
+                "value_end": 22,
+                "entropy": 3.48171
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "Z6LFm1lXkFasHYdoXp6YyQa/ak_ppda4WEZA4P9k42oYRQD4tZrm7Px42+CTOgYR",
+                "line_num": 15,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ak_ppda4WEZA4P9k42oYRQD4tZrm7Px42",
+                "value_start": 24,
+                "value_end": 57,
+                "entropy": 4.32895
+            }
+        ]
+    },
+    {
         "rule": "Contentful Credentials",
         "severity": "high",
         "confidence": "strong",
