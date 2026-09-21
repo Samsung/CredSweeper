@@ -23,13 +23,13 @@ class CrxScanner(AbstractScanner, ABC):
     @staticmethod
     def zip_extract(data: bytes) -> bytes:
         """Extracts ZIP payload after the version-specific CRX header"""
-        version = struct.unpack("<I", data[4:8])[0]
+        version = struct.unpack_from("<I", data, offset=4)[0]
         if 2 == version:
-            pubkey_length = struct.unpack("<I", data[8:12])[0]
-            signature_length = struct.unpack("<I", data[12:16])[0]
+            pubkey_length = struct.unpack_from("<I", data, offset=8)[0]
+            signature_length = struct.unpack_from("<I", data, offset=12)[0]
             zip_offset = 16 + pubkey_length + signature_length
         elif 3 == version:
-            header_length = struct.unpack("<I", data[8:12])[0]
+            header_length = struct.unpack_from("<I", data, offset=8)[0]
             zip_offset = 12 + header_length
         else:
             raise ValueError(f"Unsupported CRX version: {version}")
@@ -49,7 +49,7 @@ class CrxScanner(AbstractScanner, ABC):
                                                        file_path=data_provider.file_path,
                                                        file_type=data_provider.file_type,
                                                        info=f"{data_provider.info}|CRX")
-            crx_candidates = self.recursive_scan(zip_content_provider, depth, recursive_limit_size)
+            crx_candidates = self.recursive_scan(zip_content_provider, depth, recursive_limit_size - len(zip_data))
             return crx_candidates
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
