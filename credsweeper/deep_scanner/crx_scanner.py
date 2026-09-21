@@ -33,8 +33,8 @@ class CrxScanner(AbstractScanner, ABC):
             zip_offset = 12 + header_length
         else:
             raise ValueError(f"Unsupported CRX version: {version}")
-        if len(data) < zip_offset:
-            raise ValueError(f"CRX header exceeds file size: {zip_offset} > {len(data)}")
+        if len(data) <= zip_offset:
+            raise ValueError(f"CRX header offset ({zip_offset}) exceeds file size ({len(data)})")
         return data[zip_offset:]
 
     def data_scan(
