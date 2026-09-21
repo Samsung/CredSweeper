@@ -1330,63 +1330,63 @@
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaDx4mIbbM4",
+                "line": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaD06f546f9",
                 "line_num": 2,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaDx4mIbbM4",
+                "value": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaD06f546f9",
                 "value_start": 0,
                 "value_end": 53,
-                "entropy": 4.855
+                "entropy": 4.65945
             }
         ]
     },
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiuOKCYyDMJ",
+                "line": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiu5bdbfa91",
                 "line_num": 3,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiuOKCYyDMJ",
+                "value": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiu5bdbfa91",
                 "value_start": 0,
                 "value_end": 53,
-                "entropy": 4.94472
+                "entropy": 4.97558
             }
         ]
     },
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj1Ui1koxj",
+                "line": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rjb5043cbd",
                 "line_num": 4,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj1Ui1koxj",
+                "value": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rjb5043cbd",
                 "value_start": 0,
                 "value_end": 52,
-                "entropy": 5.05093
+                "entropy": 5.09448
             }
         ]
     },
@@ -1576,6 +1576,90 @@
                 "value_start": 26,
                 "value_end": 41,
                 "entropy": 3.5899
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ak_ppda4WEZA4P9k42oYRQD",
+                "line_num": 3,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ak_ppda4WEZA4P9k42oYRQD",
+                "value_start": 0,
+                "value_end": 23,
+                "entropy": 4.05596
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "oak_B-Nk3XEYumqGlUR6nFrL",
+                "line_num": 5,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "oak_B-Nk3XEYumqGlUR6nFrL",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.50163
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "uak_aQHDUyPscrh5VjHV7kQ2",
+                "line_num": 7,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "uak_aQHDUyPscrh5VjHV7kQ2",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.1683
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ck_MJti8N-s9sAlyTs7K3yw",
+                "line_num": 9,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ck_MJti8N-s9sAlyTs7K3yw",
+                "value_start": 0,
+                "value_end": 23,
+                "entropy": 4.22987
             }
         ]
     },

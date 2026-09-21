@@ -10,6 +10,8 @@ from onnxruntime import InferenceSession, SessionOptions
 from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.credentials.candidate_key import CandidateKey
+from credsweeper.logger.logger import TRACE
+
 from credsweeper.ml_model import features
 from credsweeper.utils.util import Util
 
@@ -95,7 +97,7 @@ class MlValidator:
             logger.info("Init ML validator with providers: '%s' ; threads:%s ; model:'%s' md5:%s ; config:'%s' md5:%s",
                         self.ml_providers, self.__ml_threads_limit, ml_config_path, config_md5, ml_model_path,
                         model_md5)
-            logger.debug(str(model_config))
+            logger.log(TRACE, "%s", str(model_config))
         for feature_definition in model_config["features"]:
             feature_class = feature_definition["type"]
             kwargs = feature_definition.get("kwargs", {})
@@ -298,9 +300,9 @@ class MlValidator:
             probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                             features_list)
         is_cred = self.threshold <= probability
-        if logger.isEnabledFor(logging.DEBUG):
+        if logger.isEnabledFor(TRACE):
             for i, decision in enumerate(is_cred):
-                logger.debug("ML decision: %s with prediction: %s for value: %s", decision, probability[i],
-                             group_list[i][0])
+                logger.log(TRACE, "ML decision: %s with prediction: %s for value: %s", decision, probability[i],
+                           group_list[i][0])
         # apply cast to float to avoid json export issue
         return is_cred, probability.astype(float)

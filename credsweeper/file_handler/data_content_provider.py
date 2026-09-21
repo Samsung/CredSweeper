@@ -10,6 +10,8 @@ from bs4 import BeautifulSoup, Tag, XMLParsedAsHTMLWarning
 from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
+from credsweeper.logger.logger import TRACE
+
 from credsweeper.utils.util import Util
 
 warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning, module='bs4')
@@ -108,7 +110,7 @@ class DataContentProvider(ContentProvider):
                 if self.__is_structure():
                     return True
         else:
-            logger.debug("Data do not contain { - weak JSON")
+            logger.log(TRACE, "Data do not contain { - weak JSON")
 
         # # # Python
         try:
@@ -118,7 +120,7 @@ class DataContentProvider(ContentProvider):
                 self.structure = Util.parse_python(self.text)
                 logger.debug("CONVERTED from Python")
             else:
-                logger.debug("Data do not contain line feed - weak PYTHON")
+                logger.log(TRACE, "Data do not contain line feed - weak PYTHON")
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
             logger.debug("Cannot parse as Python %s:%s %s", type(exc), exc, self.descriptor)
@@ -131,7 +133,7 @@ class DataContentProvider(ContentProvider):
                 self.structure = yaml.safe_load(self.text)
                 logger.debug("CONVERTED from yaml")
             else:
-                logger.debug("Data do not contain colon mark - weak YAML")
+                logger.log(TRACE, "Data do not contain colon mark - weak YAML")
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
             logger.debug("Cannot parse as yaml %s:%s %s", type(exc), exc, self.descriptor)
@@ -158,7 +160,7 @@ class DataContentProvider(ContentProvider):
                 self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
                 logger.debug("CONVERTED from xml")
                 return bool(self.lines and self.line_numbers)
-            logger.debug("Weak data to parse as XML")
+            logger.log(TRACE, "Weak data to parse as XML")
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
             logger.debug("Cannot parse as XML %s:%s %s", type(exc), exc, self.descriptor)
@@ -378,7 +380,7 @@ class DataContentProvider(ContentProvider):
                                                      keywords_required_substrings_check)
                     logger.debug("CONVERTED from html")
             else:
-                logger.debug("Data do not contain specific tags - weak HTML")
+                logger.log(TRACE, "Data do not contain specific tags - weak HTML")
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
             logger.debug("Cannot parse as HTML %s:%s %s", type(exc), exc, self.descriptor)

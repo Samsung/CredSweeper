@@ -49,7 +49,7 @@ class GritScanner(AbstractScanner, ABC):
                             payload = brotli.decompress(payload[8:])
                         except Exception as exc:  # pylint: disable=broad-exception-caught
                             # fallback
-                            logger.error("%s:%s %d %d", type(exc), exc, resource_offset, resource_id)
+                            logger.warning("%s:%s %d %d", type(exc), exc, resource_offset, resource_id)
                             payload = None
                     else:
                         logger.warning("Skip oversized %d", size)
