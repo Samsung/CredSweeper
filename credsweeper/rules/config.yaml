@@ -35,7 +35,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<wrap>[\"'`(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!e[dns]|ing|ion|age)|pswd|pwd?\b|\bp/w\b|token(?!ize)|secret|key(?!word|board|pad)|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[\"'`]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])\s*)(?P<quote>[\"'`]{1,6})?(?P<value>(?(quote)(?(wrap)[^\"'`)]{4,8000}|[^\"'`]{4,8000})|(?(wrap)[^\"'`)]{4,8000}|\S{4,8000})))
+    - (?P<wrap>[\"'`(])?\s*(?P<variable>(\w*(?i:(?<!by)passw?o?r?d?s?(?!e[dns]|ing|ion|age)|pswd|pwd?\b|\bp/w\b|token(?!ize)|secret|key(?!word|board|pad)|credential)\w*|비밀번호|비번|패스워드|키|암호화?|토큰))[\"'`]*(\s+(?i:is|are|was|were)(\s*[:-])?\s+|\s*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|(%|\\u00)3[dD])\s*)(?P<quote>[\"'`]{1,6})?(?P<value>(?(quote)(?(wrap)[^\"'`)]{4,8000}|[^\"'`]{4,8000})|(?(wrap)[^\"'`)]{4,8000}|\S{4,8000})))
   filter_type:
     - ValueAllowlistCheck
     - ValueBlocklistCheck
@@ -71,7 +71,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[\"'`]?(?i:token|secret|key|키|암호화?|토큰)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)((?(quote)[^)\"'`]{1,8000}|([0-9A-Za-z/_+=~!@#$%^&*;:?-]{1,8000}|\b))|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
+    - (?P<variable>[\"'`]?(?i:token|secret|key|키|암호화?|토큰)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|(%|\\u00)3[dD])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,80}(?(a)(?(b)(?(c)((?(quote)[^)\"'`]{1,8000}|([0-9A-Za-z/_+=~!@#$%^&*;:?-]{1,8000}|\b))|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck(4)
@@ -95,7 +95,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?P<variable>[\"'`]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pswd|pwd?|p/w|비밀번호|비번|패스워드|암호)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|%3[Dd])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,64}(?(a)(?(b)(?(c)((?(quote)[^)\"'`]{1,8000}|([0-9A-Za-z/_+=~!@#$%^&*;:?-]{1,8000}|\b))|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
+    - (?P<variable>[\"'`]?(?i:(?<!id[ :/])pa[as]swo?r?ds?|pswd|pwd?|p/w|비밀번호|비번|패스워드|암호)[\"'`]?)((\s)*(?P<separator>설정은|:=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|(%|\\u00)3[dD])(\s)*)(?P<quote>[\"'`(])?(?P<value>(?-i:(?P<a>[A-Z])|(?P<b>[a-z])|(?P<c>[0-9/_+=~!@#$%^&*;:?-])){8,64}(?(a)(?(b)(?(c)((?(quote)[^)\"'`]{1,8000}|([0-9A-Za-z/_+=~!@#$%^&*;:?-]{1,8000}|\b))|$)|(?!x)x)|(?!x)x)|(?!x)x))(?(quote)[)\"'`])
   filter_type:
     - ValueAllowlistCheck
     - ValuePatternCheck(4)
@@ -1097,7 +1097,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>ATCTT3xFfGN0[0-9A-Za-z_-]{80,800}(\\?=|%3[dD])[A-F0-9]{8})
+    - (?P<value>ATCTT3xFfGN0[0-9A-Za-z_-]{80,800}(\\?=|(%|\\u00)3[dD])[A-F0-9]{8})
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 160
@@ -1145,7 +1145,7 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>ATATT3xFfGF0[0-9A-Za-z_-]{80,800}(\\?=|%3[dD])[A-F0-9]{8})
+    - (?P<value>ATATT3xFfGF0[0-9A-Za-z_-]{80,800}(\\?=|(%|\\u00)3[dD])[A-F0-9]{8})
   filter_type:
     - ValueAtlassianTokenCheck
   min_line_len: 160
@@ -1306,7 +1306,7 @@
   confidence: moderate
   type: pattern
   values:
-    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>AAAAAAAAAAAAAAAAAAAAA[0-9A-Za-z%]{40,42}%3D[0-9A-Za-z]{50})(?![=0-9A-Za-z_/+-])
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>AAAAAAAAAAAAAAAAAAAAA[0-9A-Za-z%]{40,42}(%|\\u00)3[dD][0-9A-Za-z]{50})(?![=0-9A-Za-z_/+-])
   filter_type: [ ]
   min_line_len: 100
   required_substrings:
