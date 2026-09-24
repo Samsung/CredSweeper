@@ -30,10 +30,26 @@ credsweeper.app module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.cli module
+----------------------
+
+.. automodule:: credsweeper.cli
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 credsweeper.main module
 -----------------------
 
 .. automodule:: credsweeper.main
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+credsweeper.progress module
+---------------------------
+
+.. automodule:: credsweeper.progress
    :members:
    :show-inheritance:
    :undoc-members:

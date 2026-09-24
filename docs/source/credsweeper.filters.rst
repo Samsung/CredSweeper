@@ -129,8 +129,8 @@ credsweeper.filters.value\_bech32\_check module
 
 .. automodule:: credsweeper.filters.value_bech32_check
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 credsweeper.filters.value\_blocklist\_check module
 --------------------------------------------------
@@ -153,8 +153,8 @@ credsweeper.filters.value\_cloudflare\_check module
 
 .. automodule:: credsweeper.filters.value_cloudflare_check
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 credsweeper.filters.value\_dictionary\_keyword\_check module
 ------------------------------------------------------------
@@ -337,8 +337,8 @@ credsweeper.filters.value\_sealed\_secret\_check module
 
 .. automodule:: credsweeper.filters.value_sealed_secret_check
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 credsweeper.filters.value\_search\_check module
 -----------------------------------------------

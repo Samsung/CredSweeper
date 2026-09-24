@@ -17,8 +17,8 @@ credsweeper.utils.magic\_detector module
 
 .. automodule:: credsweeper.utils.magic_detector
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 credsweeper.utils.pem\_key\_detector module
 -------------------------------------------
