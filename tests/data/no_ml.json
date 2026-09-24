@@ -10167,6 +10167,27 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
+        "ml_probability": 0.994,
+        "line_data_list": [
+            {
+                "line": "\"pswrd\\u003D\\\"Zf2Fv\\u0025s2\\\";\\u000D\"",
+                "line_num": 43,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "variable": "pswrd",
+                "variable_start": 1,
+                "variable_end": 6,
+                "value": "Zf2Fv\\u0025s2",
+                "value_start": 14,
+                "value_end": 27,
+                "entropy": 3.18083
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -14931,6 +14952,48 @@
                 "value_start": 39,
                 "value_end": 54,
                 "entropy": 3.64022
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.881,
+        "line_data_list": [
+            {
+                "line": "    \"line\": \"\\\"pswrd\\\\u003D\\\\\\\"Zf2Fv\\\\u0025s2\\\\\\\";\\\\u000D\\\"\",",
+                "line_num": 2,
+                "path": "./tests/samples/sample.json",
+                "info": "",
+                "variable": "pswrd",
+                "variable_start": 15,
+                "variable_end": 20,
+                "value": "Zf2Fv\\\\u0025s2",
+                "value_start": 31,
+                "value_end": 45,
+                "entropy": 3.18201
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.966,
+        "line_data_list": [
+            {
+                "line": "    \".properties\" : \"pswrd\\u003DZfF2v\\\\u0025s2\\n\"",
+                "line_num": 3,
+                "path": "./tests/samples/sample.json",
+                "info": "",
+                "variable": "pswrd",
+                "variable_start": 21,
+                "variable_end": 26,
+                "value": "ZfF2v\\\\u0025s2",
+                "value_start": 32,
+                "value_end": 46,
+                "entropy": 3.18201
             }
         ]
     },

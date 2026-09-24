@@ -35,8 +35,10 @@ class ValueAtlassianTokenCheck(Filter):
                 return ValueAtlassianTokenCheck.check_atlassian_struct(value[5:])
             if value.startswith("AT"):
                 # Bitbucket App password
-                while "\\=" in value or "%3d" in value or "%3D" in value:
+                while "\\=" in value or "%3d" in value or "%3D" in value or "\\u003d" in value or "\\u003D" in value:
                     # = sign may be escaped in URL https://www.rfc-editor.org/rfc/rfc3986
+                    value = value.replace('\\u003d', '=')
+                    value = value.replace('\\u003D', '=')
                     value = value.replace('\\', '')
                     value = value.replace('%3d', '=')
                     value = value.replace('%3D', '=')

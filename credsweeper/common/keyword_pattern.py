@@ -16,7 +16,7 @@ class KeywordPattern:
                 r")"  # <variable>
     separator = r"(?(directive)|(\s|\\{1,8}[tnr])*\]?(\s|\\{1,8}[tnr])*)" \
                 r"(?P<separator>:(\s[a-z]{3,9}[?]?\s)?=|:(?!:)|=(>|&gt;|(\\\\*u00|%)26gt;)|!==|!=|===|==|=~|=|<<<" \
-                r"|(?(directive)(,|\\t|\s|\((?!\))){1,80}|%3d))" \
+                r"|(?(directive)(,|\\t|\s|\((?!\))){1,80}|(%|\\u00)3d))" \
                 r"(\s|\\{1,8}[tnr])*"
     # might be curly, square or parenthesis with words before
     wrap = r"(?P<wrap>(" \

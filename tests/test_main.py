@@ -219,7 +219,7 @@ class TestMain(unittest.TestCase):
                     cvs_checksum = hashlib.md5(f.read()).digest()
                 checksum = bytes(a ^ b for a, b in zip(checksum, cvs_checksum))
         # update the checksum manually and keep line endings in the samples as is (git config core.autocrlf false)
-        self.assertEqual("6874be2526b627be7d77d2b15037c222", binascii.hexlify(checksum).decode())
+        self.assertEqual("4f684eba85a84aa1504869c572994cfc", binascii.hexlify(checksum).decode())
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
@@ -336,7 +336,7 @@ class TestMain(unittest.TestCase):
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
-            self.assertEqual("58f6ee6ea32f63a53dbe5de00269e912", checksum)
+            self.assertEqual("15bcb3685d215292d8e2073d2ae43075", checksum)
             rules_set = set([i["name"] for i in rules if "code" in i["target"]])
             self.assertSetEqual(rules_set, report_set)
             self.assertEqual(SAMPLES_POST_CRED_COUNT, len(report))
