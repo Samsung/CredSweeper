@@ -147,14 +147,16 @@ ML_HUNK = 64
 
 # values according https://docs.python.org/3/library/codecs.html
 UTF_8 = "utf_8"
-UTF_16 = "utf_16"
 LATIN_1 = "latin_1"
 ASCII = "ascii"
+# 16-bits codecs may be detected during decoding
+UTF_16_LE = "utf_16_le"
+UTF_16_BE = "utf_16_be"
 
 DEFAULT_ENCODING = UTF_8
 
 # LATIN_1 has to be placed at end to apply binary file detection
-AVAILABLE_ENCODINGS = [UTF_8, UTF_16, LATIN_1]
+AVAILABLE_ENCODINGS = [UTF_8, LATIN_1]
 
 # to limit memory usage in case of recursive scan
 RECURSIVE_SCAN_LIMITATION = 1 << 30

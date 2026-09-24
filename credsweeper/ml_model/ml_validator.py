@@ -2,14 +2,16 @@ import hashlib
 import json
 import logging
 from pathlib import Path
-from typing import List, Tuple, Union, Optional, Dict
+from typing import List, Tuple, Union, Optional, Dict, Callable
 
 import numpy as np
-from onnxruntime import InferenceSession
+from onnxruntime import InferenceSession, SessionOptions
 
 from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.credentials.candidate_key import CandidateKey
+from credsweeper.logger.logger import TRACE
+
 from credsweeper.ml_model import features
 from credsweeper.utils.util import Util
 
@@ -31,7 +33,9 @@ class MlValidator:
             threshold: Union[float, ThresholdPreset],  #
             ml_config: Union[None, str, Path] = None,  #
             ml_model: Union[None, str, Path] = None,  #
-            ml_providers: Optional[str] = None) -> None:
+            ml_providers: Optional[str] = None,  #
+            ml_threads_limit: Optional[int] = None,  #
+    ) -> None:
         """Init
 
         Args:
@@ -39,7 +43,9 @@ class MlValidator:
             ml_config: path to ml config
             ml_model: path to ml model
             ml_providers: coma separated list of providers https://onnxruntime.ai/docs/execution-providers/
+            ml_threads_limit: throttling prevention limits
         """
+        self.__ml_threads_limit = ml_threads_limit
         self.__session: Optional[InferenceSession] = None
 
         if ml_config:
@@ -59,9 +65,9 @@ class MlValidator:
             self.__ml_model_data = f.read()
 
         if ml_providers:
-            self.providers = ml_providers.split(',')
+            self.ml_providers = ml_providers.split(',')
         else:
-            self.providers = ["CPUExecutionProvider"]
+            self.ml_providers = ["CPUExecutionProvider"]
 
         if isinstance(threshold, float):
             self.threshold = threshold
@@ -88,9 +94,10 @@ class MlValidator:
         if logger.isEnabledFor(logging.INFO):
             config_md5 = hashlib.md5(__ml_config_data).hexdigest()
             model_md5 = hashlib.md5(self.__ml_model_data).hexdigest()
-            logger.info("Init ML validator with providers: '%s' ; model:'%s' md5:%s ; config:'%s' md5:%s",
-                        self.providers, ml_config_path, config_md5, ml_model_path, model_md5)
-            logger.debug(str(model_config))
+            logger.info("Init ML validator with providers: '%s' ; threads:%s ; model:'%s' md5:%s ; config:'%s' md5:%s",
+                        self.ml_providers, self.__ml_threads_limit, ml_config_path, config_md5, ml_model_path,
+                        model_md5)
+            logger.log(TRACE, "%s", str(model_config))
         for feature_definition in model_config["features"]:
             feature_class = feature_definition["type"]
             kwargs = feature_definition.get("kwargs", {})
@@ -118,7 +125,17 @@ class MlValidator:
     def session(self) -> InferenceSession:
         """session getter to prevent pickle error"""
         if not self.__session:
-            self.__session = InferenceSession(self.__ml_model_data, providers=self.providers)
+            if isinstance(self.__ml_threads_limit, int) and 0 < self.__ml_threads_limit:
+                sess_options = SessionOptions()
+                sess_options.intra_op_num_threads = self.__ml_threads_limit
+                sess_options.inter_op_num_threads = self.__ml_threads_limit
+                sess_options.use_per_session_threads = True
+            else:
+                # default options
+                sess_options = None
+            self.__session = InferenceSession(self.__ml_model_data,
+                                              sess_options=sess_options,
+                                              providers=self.ml_providers)
         if not self.__session:
             raise RuntimeError("InferenceSession was not initialized!")
         return self.__session
@@ -126,7 +143,7 @@ class MlValidator:
     def encode(self, text: str, limit: int) -> np.ndarray:
         """Encodes prepared text to array"""
         result_array: np.ndarray = np.zeros(shape=(limit, self.num_classes), dtype=np.float32)
-        if text is None:
+        if not text:
             return result_array
         for i, c in enumerate(text):
             if i >= limit:
@@ -234,13 +251,18 @@ class MlValidator:
         result = result_call[:, 0]
         return result
 
-    def validate_groups(self, group_list: List[Tuple[CandidateKey, List[Candidate]]],
-                        batch_size: int) -> Tuple[np.ndarray, np.ndarray]:
+    def validate_groups(
+        self,
+        group_list: List[Tuple[CandidateKey, List[Candidate]]],
+        batch_size: int,
+        progress_callback: Optional[Callable[[str, int, int], None]],
+    ) -> Tuple[np.ndarray, np.ndarray]:
         """Use ml model on list of candidate groups.
 
         Args:
             group_list: List of tuples (value, group)
             batch_size: ML model batch
+            progress_callback: callback for progress bar
 
         Return:
             Boolean numpy array with decision based on the threshold,
@@ -251,9 +273,12 @@ class MlValidator:
         variable_input_list = []
         value_input_list = []
         features_list = []
-        probability: np.ndarray = np.zeros(len(group_list), dtype=np.float32)
+        len_group_list = len(group_list)
+        if progress_callback:
+            progress_callback(" ml", 0, len_group_list)
+        probability: np.ndarray = np.zeros(len_group_list, dtype=np.float32)
         head = tail = 0
-        for _group_key, candidates in group_list:
+        for n, (_group_key, candidates) in enumerate(group_list, start=1):
             line_input, variable_input, value_input, feature_array = self.get_group_features(candidates)
             line_input_list.append(line_input)
             variable_input_list.append(variable_input)
@@ -269,13 +294,15 @@ class MlValidator:
                 variable_input_list.clear()
                 value_input_list.clear()
                 features_list.clear()
+            if progress_callback:
+                progress_callback(" ml", n, len_group_list)
         if head != tail:
             probability[head:tail] = self._batch_call_model(line_input_list, variable_input_list, value_input_list,
                                                             features_list)
         is_cred = self.threshold <= probability
-        if logger.isEnabledFor(logging.DEBUG):
+        if logger.isEnabledFor(TRACE):
             for i, decision in enumerate(is_cred):
-                logger.debug("ML decision: %s with prediction: %s for value: %s", decision, probability[i],
-                             group_list[i][0])
+                logger.log(TRACE, "ML decision: %s with prediction: %s for value: %s", decision, probability[i],
+                           group_list[i][0])
         # apply cast to float to avoid json export issue
         return is_cred, probability.astype(float)

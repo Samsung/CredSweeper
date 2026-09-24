@@ -16,9 +16,12 @@ class PkcsScanner(AbstractScanner, ABC):
     """Implements pkcs12 scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> int:
-        """Matched ASN1 structure"""
-        return bool(Util.get_asn1_size(data))
+    def match(data: Union[bytes, bytearray]) -> bool:
+        """Matched ASN1 structure with exactly size"""
+        if 0x80 < Util.get_asn1_size(data):
+            # no real credentials in a file less than 128 bytes
+            return True
+        return False
 
     def data_scan(
             self,  #
@@ -45,6 +48,7 @@ class PkcsScanner(AbstractScanner, ABC):
                     candidate.severity = Severity.HIGH
                     candidate.confidence = Confidence.STRONG
                     return [candidate]
-            except Exception as pkcs_exc:
-                logger.debug("%s:%s:%s", data_provider.file_path, pw_probe, pkcs_exc)
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                # fallback
+                logger.debug("%s:%s:%s:%s", pw_probe, type(exc), exc, data_provider.descriptor)
         return None

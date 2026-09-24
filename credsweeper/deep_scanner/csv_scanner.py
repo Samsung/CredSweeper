@@ -24,7 +24,7 @@ class CsvScanner(AbstractScanner, ABC):
     CSV_PATTERN = re.compile(b"[^\r\n]{1,8000}[,;\t|\x1F][^\r\n]{1,8000}")
 
     @staticmethod
-    def match(data: bytes) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """Check if data MAY be in CSV format"""
         end_pos = data.find(b'\n', 0, MAX_LINE_LENGTH)
         if 0 > end_pos:
@@ -81,6 +81,7 @@ class CsvScanner(AbstractScanner, ABC):
                 new_limit = recursive_limit_size - sum(len(x) for x in rows)
                 struct_candidates = self.structure_scan(struct_content_provider, depth, new_limit)
                 return struct_candidates
-        except Exception as csv_exc:
-            logger.debug("%s:%s", data_provider.file_path, csv_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.debug("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

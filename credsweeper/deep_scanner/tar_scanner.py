@@ -3,7 +3,7 @@ import io
 import logging
 import tarfile
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -18,7 +18,7 @@ class TarScanner(AbstractScanner, ABC):
     """Implements tar scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
         if 512 <= len(data) and 257 == data.find(b"\x75\x73\x74\x61\x72", 257, 262) \
                 and (262 == data.find(b"\x00\x30\x30", 262, 265)
@@ -52,14 +52,12 @@ class TarScanner(AbstractScanner, ABC):
                     with tf.extractfile(tfi) as f:
                         tar_content_provider = DataContentProvider(data=f.read(),
                                                                    file_path=data_provider.file_path,
-                                                                   file_type=Util.get_extension(tfi.name),
+                                                                   file_type=Util.get_type(tfi.name),
                                                                    info=f"{data_provider.info}|TAR:{tfi.name}")
-                        # Nevertheless, use extracted data size
-                        new_limit = recursive_limit_size - len(tar_content_provider.data)
-                        tar_candidates = self.recursive_scan(tar_content_provider, depth, new_limit)
+                        tar_candidates = self.recursive_scan(tar_content_provider, depth, recursive_limit_size)
                         candidates.extend(tar_candidates)
             return candidates
-        except Exception as tar_exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             # too many exception types might be produced with broken tar
-            logger.warning("%s:%s", data_provider.file_path, tar_exc)
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

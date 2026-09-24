@@ -1,7 +1,7 @@
 import io
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 from zipfile import ZipFile
 
 from credsweeper.credentials.candidate import Candidate
@@ -17,9 +17,9 @@ class ZipScanner(AbstractScanner, ABC):
     """Implements zip scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"PK") and 4 <= len(data):
+        if data.startswith(b"PK") and 4 <= len(data):
             if 0x03 == data[2] and 0x04 == data[3]:
                 # normal PK
                 return True
@@ -30,6 +30,28 @@ class ZipScanner(AbstractScanner, ABC):
                 # spanned archive - NOT SUPPORTED
                 return False
         return False
+
+    @staticmethod
+    def get_size(data: bytes | bytearray) -> int:
+        """Evaluate extracted archive size
+
+        Returns: size of data or -1 in failure case"""
+        try:
+            result = 0
+            with ZipFile(io.BytesIO(data)) as zf:
+                for zfl in zf.infolist():
+                    # file names use memory too
+                    result += len(zfl.filename)
+                    if zfl.is_dir():
+                        # skip directory
+                        continue
+                    # effective size
+                    result += zfl.file_size
+            return result
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # too many exception types might be produced with broken zip
+            logger.warning("%s:%s", type(exc), exc)
+        return -1
 
     def data_scan(
             self,  #
@@ -53,14 +75,12 @@ class ZipScanner(AbstractScanner, ABC):
                     with zf.open(zfl) as f:
                         zip_content_provider = DataContentProvider(data=f.read(),
                                                                    file_path=data_provider.file_path,
-                                                                   file_type=Util.get_extension(zfl.filename),
+                                                                   file_type=Util.get_type(zfl.filename),
                                                                    info=f"{data_provider.info}|ZIP:{zfl.filename}")
-                        # nevertheless use extracted data size
-                        new_limit = recursive_limit_size - len(zip_content_provider.data)
-                        zip_candidates = self.recursive_scan(zip_content_provider, depth, new_limit)
+                        zip_candidates = self.recursive_scan(zip_content_provider, depth, recursive_limit_size)
                         candidates.extend(zip_candidates)
             return candidates
-        except Exception as zip_exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             # too many exception types might be produced with broken zip
-            logger.warning("%s:%s", data_provider.file_path, zip_exc)
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

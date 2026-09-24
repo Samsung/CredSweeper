@@ -16,20 +16,24 @@ Get all argument list:
     usage: python -m credsweeper [-h]
                                  (--path PATH [PATH ...] | --diff_path PATH [PATH ...] | --export_config [PATH] | --export_log_config [PATH] | --git PATH)
                                  [--ref REF] [--rules PATH] [--severity SEVERITY]
+                                 [--confidence CONFIDENCE]
                                  [--config PATH] [--log_config PATH]
                                  [--denylist PATH] [--find-by-ext]
                                  [--pedantic | --no-pedantic]
                                  [--depth POSITIVE_INT] [--no-filters] [--doc]
                                  [--ml_threshold THRESHOLD_OR_FLOAT_OR_ZERO]
                                  [--ml_batch_size POSITIVE_INT] [--ml_config PATH]
-                                 [--ml_model PATH] [--ml_providers STR]
+                                 [--ml_model PATH] [--ml_providers STR] [--ml_threads_limit POSITIVE_INT]
                                  [--jobs POSITIVE_INT] [--thrifty | --no-thrifty]
                                  [--skip_ignored] [--error | --no-error]
                                  [--save-json [PATH]] [--save-xlsx [PATH]]
                                  [--stdout | --no-stdout] [--color | --no-color]
                                  [--hashed | --no-hashed]
                                  [--subtext | --no-subtext] [--sort | --no-sort]
-                                 [--log LOG_LEVEL] [--size_limit SIZE_LIMIT]
+                                 [--log LOG_LEVEL]
+                                 [--progress | --no-progress]
+                                 [--size_limit SIZE_LIMIT]
+                                 [--time_limit POSITIVE_FLOAT]
                                  [--banner] [--version]
 
     options:
@@ -46,6 +50,8 @@ Get all argument list:
       --ref REF             scan git repo from the ref, otherwise - all branches were scanned (slow)
       --rules PATH          path of rule config file (default: credsweeper/rules/config.yaml). severity:['critical', 'high', 'medium', 'low', 'info'] type:['keyword', 'pattern', 'pem_key', 'multi']
       --severity SEVERITY   set minimum level for rules to apply ['critical', 'high', 'medium', 'low', 'info'](default: 'Severity.INFO', case insensitive)
+      --confidence CONFIDENCE
+                            set minimum confidence to apply ['strong', 'moderate', 'weak'](default: 'Confidence.WEAK', case insensitive)
       --config PATH         use custom config (default: built-in)
       --log_config PATH     use custom log config (default: built-in)
       --denylist PATH       path to a plain text file with lines or secrets to ignore
@@ -58,12 +64,14 @@ Get all argument list:
       --ml_threshold THRESHOLD_OR_FLOAT_OR_ZERO
                             setup threshold for the ml model. The lower the threshold - the more credentials will be reported. Allowed values: float between 0 and 1, or any of ['lowest', 'low', 'medium', 'high', 'highest'] (default:
                             medium)
-      --ml_batch_size POSITIVE_INT, -b POSITIVE_INT
+      --ml_batch_size, -b POSITIVE_INT
                             batch size for model inference (default: 16)
       --ml_config PATH      use external config for ml model
       --ml_model PATH       use external ml model
       --ml_providers STR    comma separated list of providers for onnx (CPUExecutionProvider is used by default)
-      --jobs POSITIVE_INT, -j POSITIVE_INT
+      --ml_threads_limit POSITIVE_INT
+                            set a fixed number of threads for the ML session (default: None)
+      --jobs, -j POSITIVE_INT
                             number of parallel processes to use (default: 1)
       --thrifty, --no-thrifty
                             clear objects after scan to reduce memory consumption
@@ -79,10 +87,13 @@ Get all argument list:
       --subtext, --no-subtext
                             line text will be stripped in 128 symbols but value and variable are kept
       --sort, --no-sort     enable output sorting
-      --log LOG_LEVEL, -l LOG_LEVEL
-                            provide logging level of ['DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE'] (default: 'warning', case insensitive)
+      --log, -l LOG_LEVEL   provide logging level of ['NOTSET', 'TRACE', 'DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'FATAL', 'CRITICAL', 'SILENCE'] (default: 'warning', case insensitive)
+      --progress, --no-progress
+                            display runtime process
       --size_limit SIZE_LIMIT
                             set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)
+      --time_limit POSITIVE_FLOAT
+                            set time limit per file in scanning sequence (float seconds)
       --banner              show version and crc32 sum of CredSweeper files at start
       --version, -V         show program's version number and exit
 

@@ -23,6 +23,13 @@ class DocxScanner(AbstractScanner, ABC):
     """Implements docx scanning"""
 
     @staticmethod
+    def match(data: bytes | bytearray) -> bool:
+        """Assume, ZIP prefix and common office files were checked before"""
+        if b"word/document.xml" in data:
+            return True
+        return False
+
+    @staticmethod
     def _iter_block_items(block):
         if isinstance(block, Paragraph):
             yield block
@@ -97,6 +104,7 @@ class DocxScanner(AbstractScanner, ABC):
             docx_candidates = self.scanner.scan(string_data_provider)
             return docx_candidates
 
-        except Exception as docx_exc:
-            logger.warning("%s:%s", data_provider.file_path, docx_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

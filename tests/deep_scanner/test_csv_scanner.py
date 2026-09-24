@@ -1,5 +1,6 @@
 import random
 import unittest
+from _csv import Error
 
 from credsweeper.deep_scanner.csv_scanner import CsvScanner
 from tests import AZ_STRING, SAMPLES_PATH, AZ_DATA
@@ -12,8 +13,12 @@ class TestCsvScanner(unittest.TestCase):
 
     def test_match_n(self):
         # even random data may look like a CSV
-        random_data = random.randbytes(random.randint(4, 16))
-        self.assertFalse(CsvScanner.match(random_data), random_data)
+        fp = 0
+        for n in range(1000):
+            random_data = random.randbytes(random.randint(4, 16))
+            if CsvScanner.match(random_data):
+                fp += 1
+        self.assertGreaterEqual(12, fp)
         self.assertFalse(CsvScanner.match(b''))
         self.assertFalse(CsvScanner.match(b'||||'))
         self.assertFalse(CsvScanner.match(AZ_DATA))
@@ -29,15 +34,15 @@ class TestCsvScanner(unittest.TestCase):
             CsvScanner.get_structure('First line,"and escaped,coma"\nSecond,line,with more comas\n')
         with self.assertRaises(ValueError):
             CsvScanner.get_structure("First,line\nSecond,line,with,more,comas")
-        with self.assertRaises(Exception):
+        with self.assertRaises(Error):
             CsvScanner.get_structure(f"{AZ_STRING[:19]}\n{AZ_STRING[20:]}\n")
-        with self.assertRaises(Exception):
+        with self.assertRaises(Error):
             CsvScanner.get_structure("'user and password'\nadmin&tizen\n")
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             CsvScanner.get_structure('')
-        with self.assertRaises(Exception):
+        with self.assertRaises(Error):
             CsvScanner.get_structure("user&password\nadmin&tizen\n")
-        with self.assertRaises(Exception):
+        with self.assertRaises(Error):
             CsvScanner.get_structure('"user and password"\nadmin&tizen\n')
         with self.assertRaises(ValueError):
             CsvScanner.get_structure("user,password\tadmin,tizen\t")
@@ -53,4 +58,4 @@ class TestCsvScanner(unittest.TestCase):
         self.assertEqual(2, len(structure))
         self.assertDictEqual({'password': 'tizen', 'user': 'admin'}, structure[0])
         self.assertDictEqual({'password': '', 'user': 'empty'}, structure[1])
-        #CsvScanner.get_structure("Feuer und Wasser\ncommt nicht zusammen\n")
+        # CsvScanner.get_structure("Feuer und Wasser\ncommt nicht zusammen\n")

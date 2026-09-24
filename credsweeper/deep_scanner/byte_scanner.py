@@ -13,6 +13,11 @@ logger = logging.getLogger(__name__)
 class ByteScanner(AbstractScanner, ABC):
     """Implements plain data scanning"""
 
+    @staticmethod
+    def match(data: bytes | bytearray) -> bool:
+        """Match for any"""
+        return bool(data)
+
     def data_scan(
             self,  #
             data_provider: DataContentProvider,  #

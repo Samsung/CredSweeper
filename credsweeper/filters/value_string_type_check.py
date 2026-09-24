@@ -11,7 +11,7 @@ class ValueStringTypeCheck(Filter):
     r"""Check if line_data is in source code file that require quotes for string declaration.
 
     If it is, then checks if line_data really have string literal declaration.
-    Comment rows in source files (start with //, /\*, etc) ignored.
+    Comment rows in source files (start with //, /\*, etc.) ignored.
     Multiple bytes scenario allowed [123,23,54,67,78,89] or {0xae, 0x54, 0x55, 0xff}
 
     True if:

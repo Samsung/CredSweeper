@@ -1,7 +1,7 @@
 import email
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
@@ -16,7 +16,7 @@ class EmlScanner(AbstractScanner, ABC):
     """Implements eml scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According to https://datatracker.ietf.org/doc/html/rfc822 lookup the fields: Date, From, To or Subject"""
         if (b"\nDate:" in data or data.startswith(b"Date:")) \
                 and (b"\nFrom:" in data or data.startswith(b"From:")) \
@@ -64,12 +64,13 @@ class EmlScanner(AbstractScanner, ABC):
                         html_candidates = self.scanner.scan(string_data_provider)
                         candidates.extend(html_candidates)
                     elif content_type.startswith("application"):
-                        x_candidates = self.recursive_scan(x_data_provider, depth, new_limit)
+                        x_candidates = self.recursive_scan(x_data_provider, depth, recursive_limit_size)
                         candidates.extend(x_candidates)
                     else:
                         logger.warning("%s:%s:%s cannot be supported", data_provider.file_path, content_type,
                                        type(body))
             return candidates
-        except Exception as eml_exc:
-            logger.warning("%s:%s", data_provider.file_path, eml_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

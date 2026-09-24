@@ -10,6 +10,8 @@ from bs4 import BeautifulSoup, Tag, XMLParsedAsHTMLWarning
 from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
+from credsweeper.logger.logger import TRACE
+
 from credsweeper.utils.util import Util
 
 warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning, module='bs4')
@@ -88,8 +90,9 @@ class DataContentProvider(ContentProvider):
             try:
                 self.structure = json.loads(self.text)
                 logger.debug("CONVERTED from json")
-            except Exception as exc:
-                logger.debug("Cannot parse as json:%s %s", exc, self.data)
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                # fallback
+                logger.debug("Cannot parse as json %s:%s %s", type(exc), exc, self.descriptor)
             else:
                 if self.__is_structure():
                     return True
@@ -99,14 +102,15 @@ class DataContentProvider(ContentProvider):
                     # each line must be in json format, otherwise - exception rises
                     self.structure.append(json.loads(line))
                 logger.debug("CONVERTED from ndjson")
-            except Exception as exc:
-                logger.debug("Cannot parse as ndjson:%s %s", exc, self.data)
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                # fallback
+                logger.debug("Cannot parse as ndjson %s:%s %s", type(exc), exc, self.descriptor)
                 self.structure = None
             else:
                 if self.__is_structure():
                     return True
         else:
-            logger.debug("Data do not contain { - weak JSON")
+            logger.log(TRACE, "Data do not contain { - weak JSON")
 
         # # # Python
         try:
@@ -116,9 +120,10 @@ class DataContentProvider(ContentProvider):
                 self.structure = Util.parse_python(self.text)
                 logger.debug("CONVERTED from Python")
             else:
-                logger.debug("Data do not contain line feed - weak PYTHON")
-        except Exception as exc:
-            logger.debug("Cannot parse as Python:%s %s", exc, self.data)
+                logger.log(TRACE, "Data do not contain line feed - weak PYTHON")
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.debug("Cannot parse as Python %s:%s %s", type(exc), exc, self.descriptor)
         else:
             if self.__is_structure():
                 return True
@@ -128,9 +133,10 @@ class DataContentProvider(ContentProvider):
                 self.structure = yaml.safe_load(self.text)
                 logger.debug("CONVERTED from yaml")
             else:
-                logger.debug("Data do not contain colon mark - weak YAML")
-        except Exception as exc:
-            logger.debug("Cannot parse as yaml:%s %s", exc, self.data)
+                logger.log(TRACE, "Data do not contain colon mark - weak YAML")
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.debug("Cannot parse as yaml %s:%s %s", type(exc), exc, self.descriptor)
         else:
             if self.__is_structure():
                 return True
@@ -154,15 +160,16 @@ class DataContentProvider(ContentProvider):
                 self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
                 logger.debug("CONVERTED from xml")
                 return bool(self.lines and self.line_numbers)
-            logger.debug("Weak data to parse as XML")
-        except Exception as exc:
-            logger.debug("Cannot parse as XML:%s %s", exc, self.data)
+            logger.log(TRACE, "Weak data to parse as XML")
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.debug("Cannot parse as XML %s:%s %s", type(exc), exc, self.descriptor)
         return None
 
     def _check_multiline_cell(self, cell: Tag) -> Optional[Tuple[int, str]]:
-        """multiline cell will be analysed as text or return single line from cell
+        """multiline cell will be analyzed as text or return single line from cell
         returns line number and one line for analysis
-        If there are no text or the text will be analysed as multiline - it returns None"""
+        If there are no text or the text will be analyzed as multiline - it returns None"""
         # use not stripped get_text, otherwise all format is cleaned
         cell_text = cell.get_text()
         cell_lines = cell_text.splitlines()
@@ -249,13 +256,18 @@ class DataContentProvider(ContentProvider):
                     if td_numbered_line := self._check_multiline_cell(cell):
                         td_text = td_numbered_line[1]
                         td_text_has_keywords = keywords_required_substrings_check(td_text.lower())
+                        rowspan_header = int(cell.get("rowspan", 1))
                         for _ in range(colspan_header):
-                            rowspan_header = int(cell.get("rowspan", 1))
                             rowspan_columns.append(rowspan_header)
                             if td_text_has_keywords:
                                 table_header.append(td_text)
+                                self.__html_lines_size += len(td_text)
                             else:
                                 table_header.append(None)
+                            # approximate size for auxiliary objects (pointer, types, etc.)
+                            self.__html_lines_size += 128
+                            if recursive_limit_size < self.__html_lines_size:
+                                break
                         if record_leading is None:
                             if td_text_has_keywords:
                                 record_leading = td_text
@@ -264,17 +276,22 @@ class DataContentProvider(ContentProvider):
                         else:
                             record_numbers.append(td_numbered_line[0])
                             record_lines.append(f"{record_leading} : {td_text}")
+                            self.__html_lines_size += 128 + len(td_text)
+
                         # add single text to lines for analysis
                         self.line_numbers.append(td_numbered_line[0])
                         self.lines.append(td_text)
-                        self.__html_lines_size += len(td_text)
+                        self.__html_lines_size += 128 + len(td_text)
                     else:
                         # empty cell or multiline cell
+                        # number of columns is defined with header only
+                        rowspan_header = int(cell.get("rowspan", 1))
                         for _ in range(colspan_header):
-                            # number of columns is defined with header only
-                            rowspan_header = int(cell.get("rowspan", 1))
                             rowspan_columns.append(rowspan_header)
                             table_header.append(None)
+                            self.__html_lines_size += 128
+                            if recursive_limit_size < self.__html_lines_size:
+                                break
             else:
                 header_pos = 0
                 # not a first line in table - may be combined with a header
@@ -300,15 +317,20 @@ class DataContentProvider(ContentProvider):
                                 record_leading = ""
                         elif record_leading:
                             record_numbers.append(td_numbered_line[0])
-                            record_lines.append(f"{record_leading} : {td_text}")
+                            record_line = f"{record_leading} : {td_text}"
+                            record_lines.append(record_line)
+                            self.__html_lines_size += 128 + len(record_line)
+                            if recursive_limit_size < self.__html_lines_size:
+                                break
                         if header_pos < len(table_header):
                             if header_text := table_header[header_pos]:
                                 self.line_numbers.append(td_numbered_line[0])
                                 self.lines.append(f"{header_text} : {td_text}")
-                                self.__html_lines_size += len(td_text)
+                                self.__html_lines_size += 128 + len(td_text)
                     else:
                         # empty cell or multiline cell
                         table_header.append(None)
+                        self.__html_lines_size += 64
                     header_pos += colspan_cell
             if record_lines:
                 # add combinations with left column
@@ -358,9 +380,10 @@ class DataContentProvider(ContentProvider):
                                                      keywords_required_substrings_check)
                     logger.debug("CONVERTED from html")
             else:
-                logger.debug("Data do not contain specific tags - weak HTML")
-        except Exception as exc:
-            logger.debug("Cannot parse as HTML:%s %s", exc, self.data)
+                logger.log(TRACE, "Data do not contain specific tags - weak HTML")
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.debug("Cannot parse as HTML %s:%s %s", type(exc), exc, self.descriptor)
         else:
             return bool(self.lines and self.line_numbers)
         return None

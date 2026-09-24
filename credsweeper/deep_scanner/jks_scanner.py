@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 import jks
 
@@ -16,7 +16,7 @@ class JksScanner(AbstractScanner, ABC):
     """Implements jks scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - jks"""
         if data.startswith(b"\xFE\xED\xFE\xED"):
             return True
@@ -55,6 +55,9 @@ class JksScanner(AbstractScanner, ABC):
                 candidate.line_data_list[0].value_start = 0
                 candidate.line_data_list[0].value_end = len(value)
                 return [candidate]
-            except Exception as jks_exc:
-                logger.debug("%s:%s:%s", data_provider.file_path, pw_probe, jks_exc)
+            except jks.util.KeystoreException as jks_exc:
+                logger.debug("%s:%s:%s:%s", pw_probe, type(jks_exc), jks_exc, data_provider.descriptor)
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                # fallback
+                logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

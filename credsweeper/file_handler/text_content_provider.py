@@ -55,12 +55,12 @@ class TextContentProvider(ContentProvider):
         """lines getter for TextContentProvider"""
         if self.__lines is None:
             text = Util.decode_text(self.data)
-            if text is None:
+            if isinstance(text, str):
+                self.__lines = Util.split_text(text)
+            elif isinstance(self.__data, bytes):
                 logger.warning("Binary file detected %s %s %s", self.file_path, self.info,
                                repr(self.__data[:32]) if isinstance(self.__data, bytes) else "NONE")
                 self.__lines = []
-            else:
-                self.__lines = Util.split_text(text)
         return self.__lines if self.__lines is not None else []
 
     def yield_analysis_target(self, min_len: int) -> Generator[AnalysisTarget, None, None]:
@@ -81,8 +81,9 @@ class TextContentProvider(ContentProvider):
                 # append line ending for correct xml line numeration
                 xml_lines = [f"{line}\n" for line in self.lines]
                 lines, line_nums = Util.get_xml_from_lines(xml_lines)
-            except Exception as exc:
-                logger.warning("Cannot parse to xml %s", exc)
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                # fallback
+                logger.warning("Cannot parse to xml %s:%s", type(exc), exc)
 
         if lines is None:
             lines = self.lines

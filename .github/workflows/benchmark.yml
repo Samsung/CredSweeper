@@ -23,15 +23,15 @@ jobs:
     steps:
 
       - name: Harden Runner
-        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0 - 2026.03.16
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4 - 2026.05.21
         with:
           egress-policy: audit
 
       - name: Checkout CredData
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredData
-          ref: c2e5761aa1923330eaf7460e44a20bdd0dc86926
+          ref: c09c0c52fc6dae4ae5438ae69ba486f9f8059f0d
 
       - name: Markup hashing
         run: |
@@ -50,7 +50,7 @@ jobs:
 
       - name: Set up Python 3.11
         if: steps.cache-data.outputs.cache-hit != 'true'
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
         with:
           python-version: "3.11"
 
@@ -79,15 +79,15 @@ jobs:
     steps:
 
       - name: Harden Runner
-        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0 - 2026.03.16
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4 - 2026.05.21
         with:
           egress-policy: audit
 
       - name: Checkout CredData
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredData
-          ref: c2e5761aa1923330eaf7460e44a20bdd0dc86926
+          ref: c09c0c52fc6dae4ae5438ae69ba486f9f8059f0d
 
       - name: Markup hashing
         run: |
@@ -113,7 +113,7 @@ jobs:
         run: ls -al . && ls -al data
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
         with:
           python-version: "3.11"
 
@@ -124,7 +124,7 @@ jobs:
         run: python -m pip install --requirement requirements.txt
 
       - name: Checkout CredSweeper
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: temp/CredSweeper
@@ -144,21 +144,21 @@ jobs:
 
       - name: Upload CredSweeper log
         if: always()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0 - 2025.12.12
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1 - 2026.04.10
         with:
           name: credsweeper
           path: credsweeper.${{ github.event.pull_request.head.sha }}.log
 
       - name: Upload CredSweeper report
         if: always()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0 - 2025.12.12
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1 - 2026.04.10
         with:
           name: report
           path: report.${{ github.event.pull_request.head.sha }}.json
 
       - name: Upload benchmark output
         if: always()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0 - 2025.12.12
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1 - 2026.04.10
         with:
           name: benchmark
           path: benchmark.${{ github.event.pull_request.head.sha }}.log
@@ -182,15 +182,15 @@ jobs:
     steps:
 
       - name: Harden Runner
-        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0 - 2026.03.16
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4 - 2026.05.21
         with:
           egress-policy: audit
 
       - name: Checkout CredData
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredData
-          ref: c2e5761aa1923330eaf7460e44a20bdd0dc86926
+          ref: c09c0c52fc6dae4ae5438ae69ba486f9f8059f0d
 
       - name: Markup hashing
         run: |
@@ -216,7 +216,7 @@ jobs:
         run: rm -rf data/0* data/2* data/7* data/8* data/a* data/b* data/d* data/e* data/f*
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -236,7 +236,8 @@ jobs:
       - name: Run performance benchmark RELEASE
         run: |
           START_TIME=$(date +%s)
-          /usr/bin/time --verbose credsweeper --log error --path data --no-stdout --save-json /dev/null
+          # todo: apply ``--ml_threads_limit $(nproc)`` after release
+          /usr/bin/time --verbose credsweeper --jobs $(nproc) --log error --path data --no-stdout --save-json /dev/null
           FINISH_TIME=$(date +%s)
           RELEASE_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
           if [ 0 -lt ${RELEASE_TIME} ]; then
@@ -252,7 +253,7 @@ jobs:
           python -m pip uninstall -y credsweeper
 
       - name: Checkout base CredSweeper
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           ref: ${{ github.event.pull_request.base.sha }}
           path: temp/CredSweeper.base
@@ -266,7 +267,8 @@ jobs:
       - name: Run performance benchmark BASE
         run: |
           START_TIME=$(date +%s)
-          /usr/bin/time --verbose credsweeper --log error --path data --no-stdout --save-json /dev/null
+          # todo: apply ``--ml_threads_limit $(nproc)`` after merge
+          /usr/bin/time --verbose credsweeper --jobs $(nproc) --log error --path data --no-stdout --save-json /dev/null
           FINISH_TIME=$(date +%s)
           BASE_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
           if [ 0 -lt ${BASE_TIME} ]; then
@@ -278,7 +280,7 @@ jobs:
           echo "BASE_TIME=${BASE_TIME}" >> $GITHUB_ENV
 
       - name: Checkout current CredSweeper
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: temp/CredSweeper.head
@@ -292,7 +294,7 @@ jobs:
       - name: Run performance benchmark CURRENT
         run: |
           START_TIME=$(date +%s)
-          /usr/bin/time --verbose credsweeper --log error --path data --no-stdout --save-json /dev/null
+          /usr/bin/time --verbose credsweeper --jobs $(nproc) --ml_threads_limit $(nproc) --log error --path data --no-stdout --save-json /dev/null
           FINISH_TIME=$(date +%s)
           HEAD_TIME=$(( ${FINISH_TIME} - ${START_TIME} ))
           if [ 0 -lt ${HEAD_TIME} ]; then
@@ -370,15 +372,15 @@ jobs:
     steps:
 
       - name: Harden Runner
-        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0 - 2026.03.16
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4 - 2026.05.21
         with:
           egress-policy: audit
 
       - name: Checkout CredData
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredData
-          ref: c2e5761aa1923330eaf7460e44a20bdd0dc86926
+          ref: c09c0c52fc6dae4ae5438ae69ba486f9f8059f0d
 
       - name: Markup hashing
         run: |
@@ -408,7 +410,7 @@ jobs:
           mv meta ${{ github.workspace }}/CredData/
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
         with:
           python-version: "3.11"
 
@@ -416,7 +418,7 @@ jobs:
         run: python -m pip install --upgrade pip
 
       - name: Checkout current CredSweeper
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: CredSweeper.head
@@ -452,7 +454,7 @@ jobs:
             exit 1
           fi
           # run quick scan
-          python -m credsweeper --ml_providers AzureExecutionProvider,CPUExecutionProvider --log debug --path ../tests/samples --no-stdout --save-json
+          python -m credsweeper --jobs $(nproc) --ml_threads_limit $(nproc) --ml_providers AzureExecutionProvider,CPUExecutionProvider --log debug --path ../tests/samples --no-stdout --save-json
           NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)
           if [ 10 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
             echo "Failure: found ${NEW_MODEL_FOUND_SAMPLES} credentials"

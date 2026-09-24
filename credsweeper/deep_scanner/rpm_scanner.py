@@ -1,7 +1,7 @@
 import io
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 import rpmfile
 
@@ -18,7 +18,7 @@ class RpmScanner(AbstractScanner, ABC):
     """Implements rpm scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures"""
         if data.startswith(b"\xED\xAB\xEE\xDB"):
             return True
@@ -45,12 +45,12 @@ class RpmScanner(AbstractScanner, ABC):
                         continue
                     rpm_content_provider = DataContentProvider(data=rpm_file.extractfile(member).read(),
                                                                file_path=data_provider.file_path,
-                                                               file_type=Util.get_extension(member.name),
+                                                               file_type=Util.get_type(member.name),
                                                                info=f"{data_provider.info}|RPM:{member.name}")
-                    new_limit = recursive_limit_size - len(rpm_content_provider.data)
-                    rpm_candidates = self.recursive_scan(rpm_content_provider, depth, new_limit)
+                    rpm_candidates = self.recursive_scan(rpm_content_provider, depth, recursive_limit_size)
                     candidates.extend(rpm_candidates)
             return candidates
-        except Exception as rpm_exc:
-            logger.warning("%s:%s", data_provider.file_path, rpm_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

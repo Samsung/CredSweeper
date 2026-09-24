@@ -10,6 +10,7 @@ class TestPdfScanner(unittest.TestCase):
         self.assertTrue(PdfScanner.match(b'%PDF-!'))
 
     def test_match_n(self):
-        self.assertFalse(PdfScanner.match(None))
+        with self.assertRaises(AttributeError):
+            self.assertFalse(PdfScanner.match(None))
         self.assertFalse(PdfScanner.match(b''))
         self.assertFalse(PdfScanner.match(b'%PDF+'))

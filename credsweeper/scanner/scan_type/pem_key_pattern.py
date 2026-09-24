@@ -32,9 +32,8 @@ class PemKeyPattern(ScanType):
         if RuleType.PEM_KEY != rule.rule_type:
             raise ValueError(f"Rule `{rule}` provided to `{cls.__name__}`.run "
                              f"should have pattern_type equal to `{RuleType.PEM_KEY.value}`")
-        if candidates := cls._get_candidates(config, rule, target):
-            candidate = candidates[0]
-            if pem_lines := PemKeyDetector.detect_pem_key(config, target):
+        for candidate in cls._get_candidates(config, rule, target):
+            if pem_lines := PemKeyDetector(config).detect_pem_key(candidate.line_data_list[0], target):
                 candidate.line_data_list = pem_lines
                 return [candidate]
 

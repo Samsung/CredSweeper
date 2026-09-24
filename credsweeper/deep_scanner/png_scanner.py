@@ -15,7 +15,7 @@ class PngScanner(AbstractScanner, ABC):
     """Implements PNG scanning for text chunks"""
 
     @staticmethod
-    def match(data: bytes) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """Returns True if prefix match"""
         if data.startswith(b"\x89PNG\r\n\x1a\n"):
             return True
@@ -80,10 +80,10 @@ class PngScanner(AbstractScanner, ABC):
                                                            file_path=data_provider.file_path,
                                                            file_type=data_provider.file_type,
                                                            info=f"{data_provider.info}|{chunk_type}:0x{offset:x}")
-                new_limit = recursive_limit_size - len(data)
-                png_candidates = self.recursive_scan(png_content_provider, depth, new_limit)
+                png_candidates = self.recursive_scan(png_content_provider, depth, recursive_limit_size)
                 candidates.extend(png_candidates)
             return candidates
-        except Exception as exc:
-            logger.warning(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

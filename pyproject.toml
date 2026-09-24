@@ -7,6 +7,8 @@ authors = [
 dependencies = [
     "base58",
     "beautifulsoup4>=4.11.0",
+    "bech32",
+    "brotli",
     "colorama",
     "cryptography",
     "GitPython",
@@ -19,15 +21,20 @@ dependencies = [
     "pandas",
     "pdfminer.six",
     "pybase62",
+    "pygments",
     "pyjks",
     "python-dateutil",
     "python-docx",
     "python-pptx",
+    "PySquashfsImage",
     "PyYAML",
+    "pyxlsb",
     "rpmfile",
     "striprtf",
+    "tqdm",
     "whatthepatch",
     "xlrd",
+    "zstandard; python_version < '3.14'",
 ]
 requires-python = ">=3.11"
 readme = "README.md"
@@ -59,6 +66,10 @@ path = "credsweeper/__init__.py"
 [tool.hatch.build.targets.sdist]
 ignore-vcs = true
 only-include = ["/credsweeper"]
+core-metadata-version = "2.4"
+
+[tool.hatch.build.targets.wheel]
+core-metadata-version = "2.4"
 
 [project.scripts]
 credsweeper = "credsweeper.__main__:main"

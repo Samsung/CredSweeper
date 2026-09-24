@@ -1,6 +1,6 @@
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from striprtf import striprtf
 
@@ -17,7 +17,7 @@ class RtfScanner(AbstractScanner, ABC):
     """Implements squash file system scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - Rich Text Format"""
         if data.startswith(b"{\\rtf1") and data.endswith(b"}"):
             return True
@@ -43,6 +43,7 @@ class RtfScanner(AbstractScanner, ABC):
                                                          info=f"{data_provider.info}|RTF")
             rtf_candidates = self.scanner.scan(string_data_provider)
             return rtf_candidates
-        except Exception as rtf_exc:
-            logger.warning("%s:%s", data_provider.file_path, rtf_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

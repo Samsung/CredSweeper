@@ -44,6 +44,19 @@ class TestKeywordPattern:
             # ['''password=f"\\"secret=2\\""''', '''\\"secret=2\\"'''],  # todo
             # ['''password=r"\\\\"secret=3\\\\""''', '''\\"secret=3\\"'''],  # todo
             # ['''"password = 'sec;$2`\\'[\\/*;ret';";''', '''sec;$2`\\'[\\/*;ret'''],  # todo
+            # ['''echo MyPS5VVord >password.txt''', '''MyPS5VVord'''],  # todo
+            ['cat > password.txt <<< "MyPS5VVord"', 'MyPS5VVord'],
+            ['PW=0123456789', "0123456789"],
+            ['PWD=0123456789', "0123456789"],
+            ['PSWD=0123456789', "0123456789"],
+            ['PSSWD=0123456789', "0123456789"],
+            ['PSWRD=0123456789', "0123456789"],
+            ['PSWoRD=0123456789', "0123456789"],
+            ['PSSWRD=0123456789', "0123456789"],
+            ['PSSWoRD=0123456789', "0123456789"],
+            ['PASWD="0123456789"', "0123456789"],
+            ['PASWRD="0123456789"', "0123456789"],
+            ['PASWoRD="0123456789"', "0123456789"],
             ['PASSWORD = os.environ.get("PASSWORD") or "at5G6zi!m"', "at5G6zi!m"],
             ["deFINE \\n\\t('DB_PASSWORD',\\n\\t'devSeCrEt');", "devSeCrEt"],
             ['''...log=1;User ID=X3;password=Quantum42!\\""''', '''Quantum42!'''],
@@ -193,6 +206,7 @@ class TestKeywordPattern:
                 "Dmdkesfdsq452%23%40!"
             ],
             ["password%3dDmsfdsq452!&user%5Bpassword_", "Dmsfdsq452!"],
+            ['\\"password\\"\\u003D\\"msfd5sq42\\"', "msfd5sq42"],
             ["MY_TEST_PASSWORD={MY_TEST_PASSWORD}", "MY_TEST_PASSWORD"],
             ["MY_TEST_PASSWORD=(MY_TEST_PASSWORD)", "MY_TEST_PASSWORD"],
             ["MY_TEST_PASSWORD=<MY_TEST_PASSWORD>", "<MY_TEST_PASSWORD>"],  # <> are used in future to detect a template

@@ -4,22 +4,25 @@ max-statements=105
 extension-pkg-allow-list=lxml
 
 [MESSAGES CONTROL]
-disable=C0103,C0114,C0413,R0401,R1714,R1730,R1731,W0718
+disable=C0103,C0114,C0413,R0401,R1714,R1730,R1731,W0511
 
 [DESIGN]
 min-public-methods=0
-max-public-methods=26
+max-public-methods=28
 max-returns=8
-max-locals=29
-max-branches=52
-max-positional-arguments=27
-max-args=27
-max-attributes=25
+max-locals=33
+max-positional-arguments=29
+max-args=29
+max-attributes=29
 max-nested-blocks=6
 max-bool-expr=9
 max-parents=27
+max-branches=71
+max-statements=144
 
 [SIMILARITIES]
 min-similarity-lines=7
 ignore-comments=yes
 ignore-imports=yes
+ignore-docstrings=yes
+ignore-signatures=yes

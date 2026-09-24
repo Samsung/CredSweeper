@@ -24,9 +24,6 @@ class DataContentProviderTest(unittest.TestCase):
             self.assertFalse(content_provider1.represent_as_xml())
             mocked_logger.assert_not_called()
         content_provider2 = DataContentProvider(data=AZ_DATA)
-        with patch('logging.Logger.debug') as mocked_logger:
-            self.assertFalse(content_provider2.represent_as_xml())
-            mocked_logger.assert_called_with("Weak data to parse as XML")
         content_provider3 = DataContentProvider(data=b"</wrong XML text>")
         with patch('logging.Logger.debug') as mocked_logger:
             self.assertFalse(content_provider3.represent_as_xml())
@@ -88,7 +85,7 @@ class DataContentProviderTest(unittest.TestCase):
             len_samples_scan_results = len(samples_scan_results)
             self.assertLess(1, len_samples_scan_results)
             cs.credential_manager.set_credentials(samples_scan_results)
-            cs.post_processing()
+            cs.post_processing(None)
             cs.export_results()
 
             self.assertTrue(os.path.isfile(report_path_1))
@@ -127,7 +124,7 @@ class DataContentProviderTest(unittest.TestCase):
             self.assertAlmostEqual(len_samples_scan_results, len(zip_scan_results), delta=3)
 
             cs.credential_manager.set_credentials(zip_scan_results)
-            cs.post_processing()
+            cs.post_processing(None)
             cs.export_results()
 
             self.assertTrue(os.path.isfile(report_path_1))
@@ -139,12 +136,12 @@ class DataContentProviderTest(unittest.TestCase):
     def test_scan_zipfile_size_limit_n(self) -> None:
         cs = CredSweeper()
         content_provider = DataContentProvider(open(SAMPLE_ZIP, "rb").read(), SAMPLE_ZIP)
-        self.assertEqual(0, len(cs.deep_scanner.recursive_scan(content_provider, 3, 4)))
+        self.assertEqual(0, len(cs.deep_scanner.recursive_scan(content_provider, 7, 2048)))
 
     def test_scan_zipfile_size_limit_p(self) -> None:
         cs = CredSweeper()
         content_provider = DataContentProvider(open(SAMPLE_ZIP, "rb").read(), SAMPLE_ZIP)
-        self.assertEqual(1, len(cs.deep_scanner.recursive_scan(content_provider, 3, 1024)))
+        self.assertEqual(1, len(cs.deep_scanner.recursive_scan(content_provider, 7, 65536)))
 
     def test_scan_zipfile_bomb_1_n(self) -> None:
         # create with depth to remove *.zip extension

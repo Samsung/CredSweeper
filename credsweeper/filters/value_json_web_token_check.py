@@ -2,6 +2,7 @@ import contextlib
 import json
 from typing import Optional
 
+from credsweeper.common import static_keyword_checklist
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -58,7 +59,10 @@ class ValueJsonWebTokenCheck(Filter):
                         # any other payloads are allowed
                 elif header_check and payload_check and not signature_check:
                     # signature check or skip encrypted part
-                    signature_check = not Util.is_ascii_entropy_validate(data)
+                    bit_length = len(part).bit_length()
+                    morpheme_threshold = 1 if 4 >= bit_length else bit_length - 3
+                    signature_check = (not Util.is_ascii_entropy_validate(data) and
+                                       not static_keyword_checklist.check_morphemes(part.lower(), morpheme_threshold))
                 else:
                     break
         if header_check and payload_check and signature_check:

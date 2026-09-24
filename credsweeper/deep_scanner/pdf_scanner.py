@@ -1,7 +1,7 @@
 import io
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import LAParams, LTText, LTItem
@@ -18,9 +18,9 @@ class PdfScanner(AbstractScanner, ABC):
     """Implements pdf scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - pdf"""
-        if isinstance(data, (bytes, bytearray)) and data.startswith(b"%PDF-"):
+        if data.startswith(b"%PDF-"):
             return True
         return False
 
@@ -45,8 +45,8 @@ class PdfScanner(AbstractScanner, ABC):
                                     file_path=data_provider.file_path,
                                     file_type=data_provider.file_type,
                                     info=f"{data_provider.info}|PDF:{page.pageid}")
-                                new_limit = recursive_limit_size - len(pdf_content_provider.data)
-                                element_candidates = self.recursive_scan(pdf_content_provider, depth, new_limit)
+                                element_candidates = self.recursive_scan(pdf_content_provider, depth,
+                                                                         recursive_limit_size)
                                 candidates.extend(element_candidates)
                         else:
                             string_data_provider = StringContentProvider(lines=[element_text],
@@ -60,6 +60,7 @@ class PdfScanner(AbstractScanner, ABC):
                     else:
                         logger.warning("Unsupported %s", element)
             return candidates
-        except Exception as pdf_exc:
-            logger.warning("%s:%s", data_provider.file_path, pdf_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

@@ -13,6 +13,11 @@ logger = logging.getLogger(__name__)
 class LangScanner(AbstractScanner, ABC):
     """Implements scanning of data if it is a script of some markup language"""
 
+    @staticmethod
+    def match(data: bytes | bytearray) -> bool:
+        """Applied in represent_as_structure"""
+        return True
+
     def data_scan(
             self,  #
             data_provider: DataContentProvider,  #
@@ -24,5 +29,6 @@ class LangScanner(AbstractScanner, ABC):
                                                          file_path=data_provider.file_path,
                                                          file_type=data_provider.file_type,
                                                          info=f"{data_provider.info}|STRUCT")
-            return self.structure_scan(struct_data_provider, depth, recursive_limit_size)
+            new_limit = recursive_limit_size - len(data_provider.data)
+            return self.structure_scan(struct_data_provider, depth, new_limit)
         return None if result is None else []

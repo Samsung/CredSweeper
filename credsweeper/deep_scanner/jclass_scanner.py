@@ -2,7 +2,7 @@ import io
 import logging
 import struct
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from credsweeper.common.constants import UTF_8
 from credsweeper.credentials.candidate import Candidate
@@ -17,7 +17,7 @@ class JclassScanner(AbstractScanner, ABC):
     """Implements java .class scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/List_of_file_signatures - java class"""
         if data.startswith(b"\xCA\xFE\xBA\xBE"):
             return True
@@ -78,6 +78,7 @@ class JclassScanner(AbstractScanner, ABC):
             new_limit = recursive_limit_size - sum(len(x) for x in constants)
             candidates = self.structure_scan(struct_content_provider, depth, new_limit)
             return candidates
-        except Exception as jclass_exc:
-            logger.warning("%s:%s", data_provider.file_path, jclass_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

@@ -1,7 +1,7 @@
 import logging
 import struct
 from abc import ABC
-from typing import List, Optional, Generator, Tuple, Union
+from typing import List, Optional, Generator, Tuple
 
 from credsweeper.common.constants import MIN_DATA_LEN, UTF_8
 from credsweeper.credentials.candidate import Candidate
@@ -18,7 +18,7 @@ class DebScanner(AbstractScanner, ABC):
     __header_size = 60
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """According https://en.wikipedia.org/wiki/Deb_(file_format)"""
         if data.startswith(b"!<arch>\n"):
             return True
@@ -50,13 +50,13 @@ class DebScanner(AbstractScanner, ABC):
             candidates: List[Candidate] = []
             for offset, name, data in DebScanner.walk_deb(data_provider.data):
                 deb_content_provider = DataContentProvider(data=data,
-                                                           file_path=f"{data_provider.file_path}/{name}",
-                                                           file_type=Util.get_extension(name),
-                                                           info=f"{data_provider.info}|DEB:0x{offset:x}")
-                new_limit = recursive_limit_size - len(data)
-                deb_candidates = self.recursive_scan(deb_content_provider, depth, new_limit)
+                                                           file_path=data_provider.file_path,
+                                                           file_type=Util.get_type(name),
+                                                           info=f"{data_provider.info}|DEB:0x{offset:x}:{name}")
+                deb_candidates = self.recursive_scan(deb_content_provider, depth, recursive_limit_size)
                 candidates.extend(deb_candidates)
             return candidates
-        except Exception as exc:
-            logger.warning(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

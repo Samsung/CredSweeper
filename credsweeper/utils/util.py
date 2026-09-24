@@ -8,11 +8,15 @@ import os
 import random
 import re
 import string
+import warnings
 from pathlib import Path
 from typing import Any, Dict, List, Tuple, Optional, Union
 
 import numpy as np
 import yaml
+from cryptography.utils import CryptographyDeprecationWarning
+
+warnings.filterwarnings("ignore", category=CryptographyDeprecationWarning)  # TODO: remove with DH
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives.asymmetric.dh import DHPrivateKey, DHPublicKey
@@ -29,7 +33,7 @@ from cryptography.hazmat.primitives.serialization.pkcs12 import load_key_and_cer
 from lxml import etree
 
 from credsweeper.common.constants import AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII
+    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII, UTF_16_LE, UTF_16_BE
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +46,12 @@ class Util:
         """Return extension of file in lower case by default e.g.: '.txt', '.JPG'"""
         _, extension = os.path.splitext(str(file_path))
         return extension.lower() if lower else extension
+
+    @staticmethod
+    def get_type(file_path: str, lower=True) -> str:
+        """Return all extension of file in lower case by default e.g.: '.txt', '.JPG'"""
+        extensions = ''.join(Path(file_path).suffixes)
+        return extensions.lower() if lower else extensions
 
     @staticmethod
     def get_regex_combine_or(re_strs: List[str]) -> str:
@@ -147,7 +157,7 @@ class Util:
         Returns True when two zeroes sequence is found in begin of data.
         The sequence never exists in text format (UTF-8, UTF-16). UTF-32 is not supported.
         """
-        if isinstance(data, (bytes, bytearray)) and 0 <= data.find(b"\0\0", 0, MAX_LINE_LENGTH):
+        if 0 <= data.find(b"\0\0", 0, MAX_LINE_LENGTH):
             return True
         return False
 
@@ -183,11 +193,12 @@ class Util:
             if none of the encodings match, an empty list will be returned
 
         """
-        data = Util.read_data(path)
-        return Util.decode_bytes(data, encodings)
+        if data := Util.read_data(path):
+            return Util.decode_bytes(data, encodings)
+        return []
 
     @staticmethod
-    def decode_text(content: bytes, encodings: Optional[List[str]] = None) -> Optional[str]:
+    def decode_text(content: Optional[bytes], encodings: Optional[List[str]] = None) -> Optional[str]:
         """Decode content using different encodings.
 
         Try to decode bytes according to the list of encodings "encodings"
@@ -202,27 +213,39 @@ class Util:
             or None when binary data detected
 
         """
-        text = None
+        if content is None:
+            return None
         binary_suggest = False
-        if encodings is None:
-            encodings = AVAILABLE_ENCODINGS
-        for encoding in encodings:
+        if encodings:
+            # use exactly defined encodings
+            _encodings = encodings
+        elif content.startswith(b"\xFF\xFE") or 1 < len(content) and 0 == content[1]:
+            _encodings = [UTF_16_LE]
+        elif content.startswith(b"\xFE\xFF") or content.startswith(b'\x00'):
+            _encodings = [UTF_16_BE]
+        else:
+            _encodings = AVAILABLE_ENCODINGS
+        for encoding in _encodings:
             try:
                 if binary_suggest and LATIN_1 == encoding and (Util.is_binary(content) or not Util.is_latin1(content)):
                     # LATIN_1 may convert data (bytes in range 0x80:0xFF are transformed)
                     break
-                _text = content.decode(encoding=encoding, errors="strict")
-                if content != _text.encode(encoding=encoding, errors="strict"):
-                    # the check helps to detect a real encoding
-                    raise UnicodeError
-                text = _text
-                break
+                text = content.decode(encoding=encoding, errors="strict")
+                if content != text.encode(encoding=encoding, errors="strict"):
+                    # the refurbish test helps to detect a real encoding
+                    binary_suggest = True
+                    continue
+                # the case decoding is good
+                if UTF_16_LE == encoding or UTF_16_BE == encoding:
+                    return text.lstrip('\uFEFF')
+                return text
             except UnicodeError:
                 binary_suggest = True
-                logger.info("UnicodeError: Can't decode content as %s.", encoding)
-            except Exception as exc:
-                logger.error("Unexpected Error: Can't read content as %s. Error message: %s", encoding, exc)
-        return text
+                logger.debug("UnicodeError: Can not decode content as %s.", encoding)
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                # fallback
+                logger.error("Unexpected Error: Can not read content as %s. %s:%s", encoding, type(exc), exc)
+        return None
 
     @staticmethod
     def split_text(text: str) -> List[str]:
@@ -230,7 +253,7 @@ class Util:
         return text.replace("\r\n", '\n').replace('\r', '\n').split('\n')
 
     @staticmethod
-    def decode_bytes(content: bytes, encodings: Optional[List[str]] = None) -> List[str]:
+    def decode_bytes(content: Optional[bytes], encodings: Optional[List[str]] = None) -> List[str]:
         """Decode content using different encodings.
 
         Try to decode bytes according to the list of encodings "encodings"
@@ -247,17 +270,15 @@ class Util:
 
         """
         if text := Util.decode_text(content, encodings):
-            lines = Util.split_text(text)
-        else:
-            lines = []
-        return lines
+            return Util.split_text(text)
+        return []
 
     @staticmethod
     def get_asn1_size(data: Union[bytes, bytearray]) -> int:
         """Only sequence type 0x30 and size correctness are checked
-        Returns size of ASN1 data over 128 bytes or 0 if no interested data
+        Returns size of ASN1 data over 128 bytes or -1 if no interested data
         """
-        if isinstance(data, (bytes, bytearray)) and 2 <= len(data) and 0x30 == data[0]:
+        if 2 <= len(data) and 0x30 == data[0]:
             # https://www.oss.com/asn1/resources/asn1-made-simple/asn1-quick-reference/basic-encoding-rules.html#Lengths
             length = data[1]
             if 0x80 == length:
@@ -280,8 +301,8 @@ class Util:
                 # length is less than 0x80
                 if len(data) >= length + 2:
                     return length + 2
-        # fallback - unsupported
-        return 0
+        # fallback - unsupported, wrong asn1 format
+        return -1
 
     @staticmethod
     def read_data(path: Union[str, Path]) -> Optional[bytes]:
@@ -301,12 +322,13 @@ class Util:
         try:
             with open(path, "rb") as file:
                 return file.read()
-        except Exception as exc:
-            logger.error("Unexpected Error: Can not read '%s'. Error message: '%s'", path, exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.error("Unexpected Error: Can not read '%s'. %s:%s", path, type(exc), exc)
         return None
 
     @staticmethod
-    def get_xml_from_lines(xml_lines: List[str]) -> Tuple[Optional[List[str]], Optional[List[int]]]:
+    def get_xml_from_lines(xml_lines: List[str]) -> Tuple[List[str], List[int]]:
         """Parse xml data from list of string and return List of str.
 
         Args:
@@ -354,8 +376,9 @@ class Util:
         try:
             with open(file_path, "r", encoding=encoding) as f:
                 return json.load(f)
-        except Exception as exc:
-            logging.error("Failed to read: %s %s", file_path, exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logging.error("Failed to read: %s %s:%s", file_path, type(exc), exc)
         return None
 
     @staticmethod
@@ -364,8 +387,9 @@ class Util:
         try:
             with open(file_path, "w", encoding=encoding) as f:
                 json.dump(obj, f, indent=indent)
-        except Exception as exc:
-            logging.error("Failed to write: %s %s", file_path, exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logging.error("Failed to write: %s %s:%s", file_path, type(exc), exc)
 
     @staticmethod
     def yaml_load(file_path: Union[str, Path], encoding=DEFAULT_ENCODING) -> Any:
@@ -373,8 +397,9 @@ class Util:
         try:
             with open(file_path, "r", encoding=encoding) as f:
                 return yaml.safe_load(f)
-        except Exception as exc:
-            logger.error("Failed to read %s %s", file_path, exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.error("Failed to read %s %s:%s", file_path, type(exc), exc)
         return None
 
     @staticmethod
@@ -383,15 +408,18 @@ class Util:
         try:
             with open(file_path, "w", encoding=encoding) as f:
                 yaml.dump(obj, f)
-        except Exception as exc:
-            logging.error("Failed to write: %s %s", file_path, exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logging.error("Failed to write: %s %s:%s", file_path, type(exc), exc)
 
     @staticmethod
     def parse_python(source: str) -> List[Any]:
-        """Parse python source and back to remove strings merge and line wrap"""
-        src = ast.parse(source)
-        result = ast.unparse(src).splitlines()
-        return result
+        """Parse Python source and back to remove strings merge and line wrap"""
+        with warnings.catch_warnings(record=True):
+            warnings.simplefilter("error", SyntaxWarning)
+            src = ast.parse(source)
+            result = ast.unparse(src).splitlines()
+            return result
 
     PEM_CLEANING_PATTERN = re.compile(r"\\[tnrvf]")
     WHITESPACE_TRANS_TABLE = str.maketrans('', '', string.whitespace)
@@ -508,3 +536,24 @@ class Util:
                 name = f"{chr(ord('A') + remain)}{name}"
                 column_index -= 1
         return name
+
+    @staticmethod
+    def read_varuint(data: bytes | bytearray, offset: int, limit: int) -> Tuple[int, int]:
+        """Reads variable length unsigned integer from offset up to limit
+
+        Returns: used bytes (-1 when overflow), the value
+        """
+        data_len = len(data)
+        counter = value = shift = 0
+        for i in range(offset, offset + limit):
+            if i < data_len and limit > counter:
+                counter += 1
+                d = data[i]
+                if 0x7F < d:
+                    value |= (0x7F & d) << shift
+                    shift += 7
+                    continue
+                value |= d << shift
+                return counter, value
+            break
+        return -1, 0

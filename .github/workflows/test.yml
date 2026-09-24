@@ -9,7 +9,7 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    - cron: '0 2 * * *'
+    - cron: '59 23 * * 0'
 
 permissions:
   contents: read
@@ -30,21 +30,22 @@ jobs:
     steps:
 
       - name: Harden Runner
-        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0 - 2026.03.16
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4 - 2026.05.21
         with:
           egress-policy: audit
 
       - name: Set git to use line endings as is
         run: |
           git config --global core.autocrlf false
+          git config --global core.eol lf
 
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
@@ -78,7 +79,7 @@ jobs:
 
       - name: Install test framework dependencies
         run: |
-          pip install pytest pytest-random-order deepdiff hypothesis
+          pip install pytest pytest-random-order deepdiff hypothesis psutil
 
       - name: UnitTest with pytest
         run: |
@@ -98,7 +99,7 @@ jobs:
     steps:
 
       - name: Harden Runner
-        uses: step-security/harden-runner@fa2e9d605c4eeb9fcad4c99c224cee0c6c7f3594 # v2.16.0 - 2026.03.16
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4 - 2026.05.21
         with:
           egress-policy: audit
 
@@ -107,12 +108,12 @@ jobs:
           git config --global core.autocrlf false
 
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2 - 2026.01.09
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0 - 2026.01.22
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -129,6 +130,8 @@ jobs:
 
       - name: UnitTest with pytest and coverage
         run: |
+          # apply the limit for test too
+          ulimit -v 4194304
           mkdir -vp xmlcov
           python -m \
             pytest \
@@ -138,7 +141,7 @@ jobs:
               --ignore=docs \
               --ignore=experiment \
               --ignore=fuzz \
-              --ignore=tests/test_app.py \
+              --ignore=tests/test_int.py \
               --cov=credsweeper \
               --cov-report html:coverage_html/ \
               --cov-report xml:xmlcov/coverage.xml \
@@ -153,7 +156,7 @@ jobs:
               --verbose \
               --random-order \
               --random-order-bucket=global \
-              tests/test_app.py
+              tests/test_int.py
 
       - name: ApplicationTest with pytest for Python3.14
         if: ${{ matrix.python-version == '3.14' }}
@@ -163,8 +166,8 @@ jobs:
               --verbose \
               --random-order \
               --random-order-bucket=global \
-              -k 'not (test_log_p or test_log_n or test_rules_ml_p or test_rules_ml_n or test_it_works_n or test_no_filters_p or test_external_ml_p or test_external_ml_n or test_import_config_p or test_import_config_n)' \
-              tests/test_app.py
+              -k 'not (test_log_p or test_log_n or test_it_works_n or test_external_ml_p or test_external_ml_n or test_import_config_p or test_import_config_n)' \
+              tests/test_int.py
 
       - name: Check unit-test coverage
         run: |
@@ -177,8 +180,8 @@ jobs:
           COVERAGE=$(python -c "print (round(100 * ${COVERED} / ${VALID}, 2))")
           DESCRIPTION="Coverage of lines: ${COVERED} : ${VALID} = ${COVERAGE}%"
           echo "${DESCRIPTION}"
-          if [ $(( 1000 * ${COVERED} / ${VALID} )) -lt 800 ]; then
-              echo "Coverage should be not less than 80% !"
+          if [ $(( 10000 * ${COVERED} / ${VALID} )) -lt 9000 ]; then
+              echo "Coverage should be not less than 90.00% !"
               exit 1
           else
               echo "Satisfied coverage"
@@ -186,14 +189,14 @@ jobs:
 
       - name: HTML coverage reports
         if: always()
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0 - 2025.12.12
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1 - 2026.04.10
         with:
           name: coverage_html-${{ matrix.python-version }}
           path: coverage_html
 
       - name: Upload coverage reports to Codecov
         if: ${{ matrix.python-version == '3.11' }}
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5.5.2 - 2025.12.09
+        uses: codecov/codecov-action@fb8b3582c8e4def4969c97caa2f19720cb33a72f # v7.0.0 - 2026.06.07
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: xmlcov/coverage.xml

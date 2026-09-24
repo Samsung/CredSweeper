@@ -130,17 +130,18 @@ class DiffContentProvider(ContentProvider):
                 for change in patch.changes:
                     change_dict = cast(DiffDict, change._asdict())
                     changes.append(change_dict)
-
-                added_files[patch.header.new_path] = changes
-                deleted_files[patch.header.old_path] = changes
+                if patch.header:
+                    added_files[patch.header.new_path] = changes
+                    deleted_files[patch.header.old_path] = changes
             if change_type == DiffRowType.ADDED:
                 return added_files
             if change_type == DiffRowType.DELETED:
                 return deleted_files
             logger.error("Change type should be one of: '%s', '%s'; but received %s", DiffRowType.ADDED,
                          DiffRowType.DELETED, change_type)
-        except Exception as exc:
-            logger.error(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s", type(exc), exc)
         return {}
 
     @staticmethod
@@ -173,7 +174,7 @@ class DiffContentProvider(ContentProvider):
         """Returns True if the change is wrong"""
         for i in ["line", "new", "old"]:
             if i not in change:
-                logger.error("Skipping wrong change %s", change)
+                logger.warning("Skipping wrong change %s", change)
                 return True
         return False
 
@@ -196,13 +197,16 @@ class DiffContentProvider(ContentProvider):
         for change in changes:
             if DiffContentProvider.wrong_change(change):
                 continue
-            line = change["line"]
-            if isinstance(line, str):
-                rows_data.extend(DiffContentProvider.preprocess_diff_rows(change.get("new"), change.get("old"), line))
-            elif isinstance(line, (bytes, bytearray)):
-                logger.warning("The feature is available with the deep scan option")
+            if text := change["line"]:
+                if isinstance(text, str):
+                    diff_rows = DiffContentProvider.preprocess_diff_rows(change.get("new"), change.get("old"), text)
+                    rows_data.extend(diff_rows)
+                elif isinstance(text, (bytes, bytearray)):
+                    logger.warning("The feature is available with the deep scan option")
+                else:
+                    logger.warning("Unknown type of line %s", type(text))
             else:
-                logger.error("Unknown type of line %s", type(line))
+                logger.debug("Change has no valuable text %s", change)
 
         return rows_data
 

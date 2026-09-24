@@ -28,6 +28,22 @@ credsweeper.deep\_scanner.bzip2\_scanner module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.deep\_scanner.cpio\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.cpio_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.deep\_scanner.crx\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.crx_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.csv\_scanner module
 ---------------------------------------------
 
@@ -52,6 +68,14 @@ credsweeper.deep\_scanner.deep\_scanner module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.deep\_scanner.dex\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.dex_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.docx\_scanner module
 ----------------------------------------------
 
@@ -75,6 +99,14 @@ credsweeper.deep\_scanner.encoder\_scanner module
    :members:
    :show-inheritance:
    :undoc-members:
+
+credsweeper.deep\_scanner.grit\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.grit_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 credsweeper.deep\_scanner.gzip\_scanner module
 ----------------------------------------------
@@ -116,6 +148,14 @@ credsweeper.deep\_scanner.lang\_scanner module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.deep\_scanner.lexer\_scanner module
+-----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.lexer_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.lzma\_scanner module
 ----------------------------------------------
 
@@ -131,6 +171,22 @@ credsweeper.deep\_scanner.mxfile\_scanner module
    :members:
    :show-inheritance:
    :undoc-members:
+
+credsweeper.deep\_scanner.ods\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.ods_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.deep\_scanner.pandas\_scanner module
+------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.pandas_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 credsweeper.deep\_scanner.patch\_scanner module
 -----------------------------------------------
@@ -148,6 +204,14 @@ credsweeper.deep\_scanner.pdf\_scanner module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.deep\_scanner.pickle\_scanner module
+------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.pickle_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.pkcs\_scanner module
 ----------------------------------------------
 
@@ -155,6 +219,14 @@ credsweeper.deep\_scanner.pkcs\_scanner module
    :members:
    :show-inheritance:
    :undoc-members:
+
+credsweeper.deep\_scanner.plist\_scanner module
+-----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.plist_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 credsweeper.deep\_scanner.png\_scanner module
 ---------------------------------------------
@@ -172,6 +244,22 @@ credsweeper.deep\_scanner.pptx\_scanner module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.deep\_scanner.protobuf\_scanner module
+--------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.protobuf_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+credsweeper.deep\_scanner.pycache\_scanner module
+-------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.pycache_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.rpm\_scanner module
 ---------------------------------------------
 
@@ -188,6 +276,14 @@ credsweeper.deep\_scanner.rtf\_scanner module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.deep\_scanner.snk\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.snk_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.deep\_scanner.sqlite3\_scanner module
 -------------------------------------------------
 
@@ -195,6 +291,14 @@ credsweeper.deep\_scanner.sqlite3\_scanner module
    :members:
    :show-inheritance:
    :undoc-members:
+
+credsweeper.deep\_scanner.squashfs\_scanner module
+--------------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.squashfs_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 credsweeper.deep\_scanner.strings\_scanner module
 -------------------------------------------------
@@ -219,6 +323,14 @@ credsweeper.deep\_scanner.tmx\_scanner module
    :members:
    :show-inheritance:
    :undoc-members:
+
+credsweeper.deep\_scanner.xls\_scanner module
+---------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.xls_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 credsweeper.deep\_scanner.xlsx\_scanner module
 ----------------------------------------------
@@ -251,6 +363,14 @@ credsweeper.deep\_scanner.zlib\_scanner module
    :members:
    :show-inheritance:
    :undoc-members:
+
+credsweeper.deep\_scanner.zstd\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.zstd_scanner
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Module contents
 ---------------

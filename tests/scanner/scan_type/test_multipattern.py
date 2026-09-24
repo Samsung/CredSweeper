@@ -16,6 +16,7 @@ class TestMultiPattern(unittest.TestCase):
         self.maxDiff = None
         self.config = MagicMock(spec=Config)
         self.config.exclude_lines = []
+        self.config.exclude_patterns = []
         self.config.exclude_values = []
         self.config.use_filters = True
         self.rule = Rule(

@@ -1,5 +1,6 @@
 import base64
 import io
+import struct
 import unittest
 
 from credsweeper.deep_scanner.jclass_scanner import JclassScanner
@@ -36,7 +37,7 @@ class TestJclassScanner(unittest.TestCase):
     def test_get_utf8_constants_n(self):
         with self.assertRaises(AttributeError):
             JclassScanner.get_utf8_constants(None)
-        with self.assertRaises(Exception):
+        with self.assertRaises(struct.error):
             JclassScanner.get_utf8_constants(io.BytesIO(b''))
         self.assertListEqual([], JclassScanner.get_utf8_constants(io.BytesIO(AZ_DATA)))
 

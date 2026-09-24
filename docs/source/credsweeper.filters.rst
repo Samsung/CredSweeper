@@ -124,6 +124,14 @@ credsweeper.filters.value\_basic\_auth\_check module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.filters.value\_bech32\_check module
+-----------------------------------------------
+
+.. automodule:: credsweeper.filters.value_bech32_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_blocklist\_check module
 --------------------------------------------------
 
@@ -139,6 +147,14 @@ credsweeper.filters.value\_camel\_case\_check module
    :members:
    :show-inheritance:
    :undoc-members:
+
+credsweeper.filters.value\_cloudflare\_check module
+---------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_cloudflare_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 credsweeper.filters.value\_dictionary\_keyword\_check module
 ------------------------------------------------------------

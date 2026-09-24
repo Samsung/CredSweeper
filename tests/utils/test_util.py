@@ -1,5 +1,4 @@
 import binascii
-import binascii
 import hashlib
 import os
 import random
@@ -13,7 +12,7 @@ from hypothesis import given, strategies
 from lxml.etree import XMLSyntaxError
 
 from credsweeper.common.constants import Chars, DEFAULT_ENCODING, UTF_8, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, CHUNK_SIZE, \
-    OVERLAP_SIZE, UTF_16
+    OVERLAP_SIZE, UTF_16_LE
 from credsweeper.utils.util import Util
 from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH
 
@@ -111,43 +110,43 @@ class TestUtils(unittest.TestCase):
     """
 
     def test_asn1_n(self):
-        self.assertEqual(0, Util.get_asn1_size(b'0\x84\x01\x00\x00\x00' + b'\xA5' * (1 << 24 - 1)))
-        self.assertEqual(0, Util.get_asn1_size(b'0\x83\x01\x00\x00' + b'\xA5' * (65536 - 1)))
-        self.assertEqual(0, Util.get_asn1_size(b'0\x82\xFF\xFF' + b'\xA5' * (65535 - 1)))
-        self.assertEqual(0, Util.get_asn1_size(b'0\x8F' + b'\xFF' * 200))
-        self.assertEqual(0, Util.get_asn1_size(b'0\x82' + b'\xFF' * 200))
-        self.assertEqual(0, Util.get_asn1_size(b'0\x81' + b'\xFF' * 200))
-        self.assertEqual(0, Util.get_asn1_size(b'0\x80' + b'\xFF' * 200))
-        self.assertEqual(0, Util.get_asn1_size(b'0\x0fabcdef'))
-        self.assertEqual(0, Util.get_asn1_size(b'0\x01'))
-        self.assertEqual(0, Util.get_asn1_size(b''))
+        self.assertEqual(-1, Util.get_asn1_size(b"0\x84\x01\x00\x00\x00" + b'\xA5' * (1 << 24 - 1)))
+        self.assertEqual(-1, Util.get_asn1_size(b"0\x83\x01\x00\x00" + b'\xA5' * (65536 - 1)))
+        self.assertEqual(-1, Util.get_asn1_size(b"0\x82\xFF\xFF" + b'\xA5' * (65535 - 1)))
+        self.assertEqual(-1, Util.get_asn1_size(b'0\x8F' + b'\xFF' * 200))
+        self.assertEqual(-1, Util.get_asn1_size(b'0\x82' + b'\xFF' * 200))
+        self.assertEqual(-1, Util.get_asn1_size(b'0\x81' + b'\xFF' * 200))
+        self.assertEqual(-1, Util.get_asn1_size(b'0\x80' + b'\xFF' * 200))
+        self.assertEqual(-1, Util.get_asn1_size(b"0\x0fabcdef"))
+        self.assertEqual(-1, Util.get_asn1_size(b"0\x01"))
+        self.assertEqual(-1, Util.get_asn1_size(b''))
         based_data = self.PKCS1
         data = Util.decode_base64(based_data)
-        self.assertEqual(0, Util.get_asn1_size(data[:-1]))
+        self.assertEqual(-1, Util.get_asn1_size(data[:-1]))
 
     def test_asn1_p(self):
-        self.assertEqual(16777222, Util.get_asn1_size(b'0\x84\x01\x00\x00\x00' + b'\xA5' * (1 << 24)))
-        self.assertEqual(65541, Util.get_asn1_size(b'0\x83\x01\x00\x00' + b'\xA5' * 65536))
-        self.assertEqual(65539, Util.get_asn1_size(b'0\x82\xFF\xFF' + b'\xA5' * 65535))
-        self.assertEqual(4, Util.get_asn1_size(b'0\x81\x01abcdef'))
-        self.assertEqual(8, Util.get_asn1_size(b'0\x80abcd\000\000'))
-        self.assertEqual(3, Util.get_asn1_size(b'0\x01abcdef'))
-        self.assertEqual(2, Util.get_asn1_size(b'0\x00'))
+        self.assertEqual(16777222, Util.get_asn1_size(b"0\x84\x01\x00\x00\x00" + b'\xA5' * (1 << 24)))
+        self.assertEqual(65541, Util.get_asn1_size(b"0\x83\x01\x00\x00" + b'\xA5' * 65536))
+        self.assertEqual(65539, Util.get_asn1_size(b"0\x82\xFF\xFF" + b'\xA5' * 65535))
+        self.assertEqual(4, Util.get_asn1_size(b"0\x81\x01abcdef"))
+        self.assertEqual(8, Util.get_asn1_size(b"0\x80abcd\000\000"))
+        self.assertEqual(3, Util.get_asn1_size(b"0\x01abcdef"))
+        self.assertEqual(2, Util.get_asn1_size(b"0\x00"))
         data = Util.decode_base64(self.PKCS1)
         self.assertEqual(318, Util.get_asn1_size(data))
         over_data = bytearray(data) + random.randbytes(200)
         self.assertEqual(318, Util.get_asn1_size(over_data))
 
     def test_get_extension_n(self):
-        self.assertEqual("", Util.get_extension(None))
-        self.assertEqual("", Util.get_extension("/"))
-        self.assertEqual("", Util.get_extension("/tmp"))
-        self.assertEqual("", Util.get_extension("tmp"))
-        self.assertEqual("", Util.get_extension("tmp/"))
-        self.assertEqual("", Util.get_extension(".gitignore"))
-        self.assertEqual("", Util.get_extension("/tmp/.hidden"))
-        self.assertEqual("", Util.get_extension("/tmp.ext/"))
-        self.assertEqual("", Util.get_extension("http://127.0.0.1/index"))
+        self.assertEqual('', Util.get_extension(None))
+        self.assertEqual('', Util.get_extension("/"))
+        self.assertEqual('', Util.get_extension("/tmp"))
+        self.assertEqual('', Util.get_extension("tmp"))
+        self.assertEqual('', Util.get_extension("tmp/"))
+        self.assertEqual('', Util.get_extension(".gitignore"))
+        self.assertEqual('', Util.get_extension("/tmp/.hidden"))
+        self.assertEqual('', Util.get_extension("/tmp.ext/"))
+        self.assertEqual('', Util.get_extension("http://127.0.0.1/index"))
 
     def test_get_extension_p(self):
         self.assertEqual(".ext", Util.get_extension("tmp.ext"))
@@ -159,8 +158,26 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(".ß", Util.get_extension("tmp.ß"))
         self.assertEqual(".txt", Util.get_extension("/.hidden.tmp.txt"))
 
+    def test_get_type_n(self):
+        self.assertEqual('', Util.get_type("/"))
+        self.assertEqual('', Util.get_type("/tmp"))
+        self.assertEqual('', Util.get_type("tmp"))
+        self.assertEqual('', Util.get_type("tmp/"))
+        self.assertEqual('', Util.get_type(".gitignore"))
+        self.assertEqual('', Util.get_type("/tmp/.hidden"))
+        self.assertEqual('', Util.get_type("http://127.0.0.1/index"))
+
+    def test_get_type_p(self):
+        self.assertEqual(".ext", Util.get_type("/tmp.ext/"))
+        self.assertEqual(".csharp", Util.get_type("tmp.Csharp"))
+        self.assertEqual("...dbg", Util.get_type("tmp...dbg"))
+        self.assertEqual(".ї.♡.ㅋㅅ", Util.get_type(".ß.Ї.♡.ㅋㅅ", lower=True))
+        self.assertEqual(".Ї.♡.ㅋㅅ", Util.get_type(".ß.Ї.♡.ㅋㅅ", lower=False))
+        self.assertEqual(".tmp.txt", Util.get_type("/.hidden.tmp.txt"))
+        self.assertEqual(".tmp.txt.cpp.bmp.gz", Util.get_type("/.hidden.tmp.txt.cpp.bmp.gz"))
+
     def test_colon_os_n(self):
-        self.assertEqual("", Util.get_extension(":memory:"))
+        self.assertEqual('', Util.get_extension(":memory:"))
         self.assertEqual(".ext", Util.get_extension("c:\\tmp.ext"))
         self.assertEqual(".json", Util.get_extension("c:\\tmp.ext:zip:text.json"))
         self.assertEqual(".json", Util.get_extension("/tmp.ext:zip:text.json"))
@@ -313,7 +330,7 @@ class TestUtils(unittest.TestCase):
             assert read_lines == test_lines
 
     def test_util_read_utf16le_txt_p(self):
-        unicode_text = ""
+        unicode_text = ''
         n = 65536
         while 0 < n:
             try:
@@ -344,7 +361,7 @@ class TestUtils(unittest.TestCase):
             assert read_lines == test_lines
 
     def test_util_read_utf16be_txt_p(self):
-        unicode_text = ""
+        unicode_text = ''
         n = 65536
         while 0 < n:
             try:
@@ -375,8 +392,22 @@ class TestUtils(unittest.TestCase):
             assert 0 < len(read_lines)
             assert read_lines == test_lines
 
+    def test_decode_text_n(self):
+        self.assertIsNone(Util.decode_text(None))
+        self.assertEqual('', Util.decode_text(b''))
+
+    def test_decode_text_p(self):
+        self.assertEqual("BE", Util.decode_text(b"\0B\0E"))
+        self.assertEqual("LE", Util.decode_text(b"L\0E\0"))
+        self.assertEqual("BE", Util.decode_text(b"\xFE\xFF\0B\0E"))
+        self.assertEqual("LE", Util.decode_text(b"\xFF\xFEL\0E\0"))
+        data = AZ_STRING.encode("utf_16")
+        self.assertTrue(data.startswith(b'\xFF') or data.startswith(b'\xFE'), data)  # platform dependent
+        self.assertEqual(AZ_STRING, Util.decode_text(data))
+
     def test_is_binary_n(self):
-        self.assertFalse(Util.is_binary(None))
+        with self.assertRaises(AttributeError):
+            self.assertFalse(Util.is_binary(None))
         self.assertFalse(Util.is_binary(b''))
         self.assertFalse(Util.is_binary(self.DEUTSCH_PANGRAM.encode(UTF_8)))
         self.assertFalse(Util.is_binary(b"\x7Ffew unprintable letters\x00"))
@@ -395,7 +426,7 @@ class TestUtils(unittest.TestCase):
 
     def test_is_latin1_n(self):
         # standard UTF-16 encoding is not recognized as Latin1
-        self.assertFalse(Util.is_latin1(self.DEUTSCH_PANGRAM.encode(UTF_16)))
+        self.assertFalse(Util.is_latin1(self.DEUTSCH_PANGRAM.encode(UTF_16_LE)))
         # standard UTF-8 encoding is not recognized as Latin1 for Hangul
         self.assertFalse(Util.is_latin1(self.KOREAN_PANGRAM.encode(UTF_8)))
         # random data should be not recognized as Latin1
@@ -484,7 +515,7 @@ class TestUtils(unittest.TestCase):
             self.assertIsInstance(data, dict)
 
             with open(file_path, "wb") as f:
-                f.write(b'[]')
+                f.write(b"[]")
             data = Util.json_load(file_path)
             self.assertIsInstance(data, list)
 
@@ -509,13 +540,13 @@ class TestUtils(unittest.TestCase):
             self.assertEqual(rand_float, data)
 
             with open(file_path, "wb") as f:
-                f.write(b'true')
+                f.write(b"true")
             data = Util.json_load(file_path)
             self.assertIsInstance(data, bool)
             self.assertTrue(data)
 
             with open(file_path, "wb") as f:
-                f.write(b'null')
+                f.write(b"null")
             data = Util.json_load(file_path)
             self.assertIsNone(data)
 
@@ -539,19 +570,19 @@ class TestUtils(unittest.TestCase):
                 self.assertEqual(
                     b'{"dummy_int": ' + str(rand_int).encode(DEFAULT_ENCODING) + b', "dummy_str": "' + AZ_DATA + b'"}',
                     f.read())
-            Util.json_dump(test_dict, file_path=file_path, encoding='utf-16', indent=None)
+            Util.json_dump(test_dict, file_path=file_path, encoding="utf-16", indent=None)
             with open(file_path, "rb") as f:
                 read_data = f.read()
                 expected_data = \
                     b'\xff\xfe{\x00"\x00d\x00u\x00m\x00m\x00y\x00_\x00i\x00n\x00t\x00"\x00:\x00 \x00' \
-                    + str(rand_int).encode('utf-16')[2:] + \
+                    + str(rand_int).encode("utf-16")[2:] + \
                     b',\x00 \x00"\x00d\x00u\x00m\x00m\x00y\x00_\x00s\x00t\x00r\x00"\x00:\x00 \x00' \
                     b'"\x00T\x00h\x00e\x00 \x00q\x00u\x00i\x00c\x00k\x00 \x00b\x00r\x00o\x00w\x00n\x00 \x00' \
                     b'f\x00o\x00x\x00 \x00j\x00u\x00m\x00p\x00s\x00 \x00o\x00v\x00e\x00r\x00 \x00t\x00h\x00e\x00 ' \
                     b'\x00l\x00a\x00z\x00y\x00 \x00d\x00o\x00g\x00"\x00}\x00'
                 self.assertEqual(expected_data, read_data)
                 expected_text = f'{{"dummy_int": {rand_int}, "dummy_str": "{AZ_STRING}"}}'
-                read_text = read_data.decode(encoding='utf-16')
+                read_text = read_data.decode(encoding="utf-16")
                 self.assertEqual(expected_text, read_text)
 
     def test_json_dump_n(self):
@@ -572,12 +603,15 @@ class TestUtils(unittest.TestCase):
 
     def test_parse_py_n(self):
         # empty
-        self.assertFalse(Util.parse_python(""))
+        self.assertFalse(Util.parse_python(''))
         # wrong syntax
         with self.assertRaises(SyntaxError):
-            self.assertFalse(Util.parse_python("""<html>"Hello World!"</html>"""))
+            Util.parse_python("""<html>"Hello World!"</html>""")
+        with self.assertRaises(SyntaxError):
+            Util.parse_python("""{'wrong': ': '"\." is syntax warning'}""")
 
     def test_decode_base64_p(self):
+        self.assertTrue(Util.parse_python("""regexa=r'\.'"""))
         self.assertEqual(AZ_DATA, Util.decode_base64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw=="))
         self.assertEqual(b"\xFF\xFF\xFF", Util.decode_base64("////"))
         self.assertEqual(b"\xFB\xEF\xBE", Util.decode_base64("++++"))
@@ -658,8 +692,8 @@ class TestUtils(unittest.TestCase):
             self.assertGreaterEqual(2, max(data))
 
     def test_subtext_n(self):
-        self.assertEqual("", Util.subtext("", 0, 0))
-        self.assertEqual("", Util.subtext(' ' * 42, 0, 0))
+        self.assertEqual('', Util.subtext('', 0, 0))
+        self.assertEqual('', Util.subtext(' ' * 42, 0, 0))
 
     def test_subtext_p(self):
         self.assertEqual(100, len(string.printable))
@@ -688,7 +722,7 @@ class TestUtils(unittest.TestCase):
         self.assertFalse(Util.get_excel_column_name(3.14))
 
     def test_get_excel_column_name_p(self):
-        self.assertEqual("A", Util.get_excel_column_name(0))
+        self.assertEqual('A', Util.get_excel_column_name(0))
         self.assertEqual("AQ", Util.get_excel_column_name(42))
         self.assertEqual("CS", Util.get_excel_column_name(96))
         self.assertEqual("AAA", Util.get_excel_column_name(702))
@@ -713,7 +747,7 @@ class TestUtils(unittest.TestCase):
         self.assertIsNotNone(pkcs8pk)
 
         pkcs8changeme = Util.decode_base64(self.PKCS8_CHANGEME)
-        pkcs8pk_changeme = Util.load_pk(pkcs8changeme, b'changeme')
+        pkcs8pk_changeme = Util.load_pk(pkcs8changeme, b"changeme")
         self.assertIsNotNone(pkcs8pk_changeme)
 
         pkcs12der = Util.decode_base64(self.PKCS12)
@@ -721,7 +755,7 @@ class TestUtils(unittest.TestCase):
         self.assertIsNotNone(pkcs12pk)
 
         pkcs12changeme = Util.decode_base64(self.PKCS12_CHANGEME)
-        pkcs12pk_changeme = Util.load_pk(pkcs12changeme, b'changeme')
+        pkcs12pk_changeme = Util.load_pk(pkcs12changeme, b"changeme")
         self.assertIsNotNone(pkcs12pk_changeme)
 
     def test_check_pk_n(self):
@@ -730,3 +764,20 @@ class TestUtils(unittest.TestCase):
     def test_check_pk_p(self):
         pkcs1der = Util.decode_base64(self.PKCS1)
         self.assertTrue(Util.check_pk(Util.load_pk(pkcs1der)))
+
+    def test_read_varuint_n(self):
+        self.assertGreater((0, 0), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", 0, 10))
+        self.assertGreater((0, 0), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", 5, 10))
+
+    def test_read_varuint_p(self):
+        self.assertEqual((1, 16), Util.read_varuint(b"\x10", 0, 10))
+        self.assertEqual((1, 0), Util.read_varuint(b"\x00", 0, 10))
+        self.assertEqual((1, 1), Util.read_varuint(b"\x01", 0, 10))
+        self.assertEqual((1, 127), Util.read_varuint(b"\x7F", 0, 10))
+        self.assertEqual((2, 128), Util.read_varuint(b"\x80\x01", 0, 10))
+        self.assertEqual((2, 150), Util.read_varuint(b"\xFF\x96\x01\xABc\xDE\xFF", 1, 10))
+        self.assertEqual((5, 31726677630), Util.read_varuint(b"\xFE\xDC\xBA\x98\x76\xFF", 0, 10))
+        self.assertEqual((2, 16383), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 4, 10))
+        self.assertEqual((3, 2097151), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 3, 10))
+        self.assertEqual((4, 268435455), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 2, 10))
+        self.assertEqual((5, 34359738367), Util.read_varuint(b"\xFF\xFF\xFF\xFF\xFF\x7F", 1, 10))
