@@ -143,7 +143,7 @@ def train(
             directory=str(RESULTS_DIR / f"{current_time}.tuner"),
             project_name='ml_tuning',
             seed=random.randint(1, 0xffffffff),
-            max_trials=3,
+            max_trials=30,
         )
         search_early_stopping = EarlyStopping(monitor="val_loss",
                                               patience=patience,
