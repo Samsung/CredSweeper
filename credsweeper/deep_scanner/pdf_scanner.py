@@ -60,6 +60,7 @@ class PdfScanner(AbstractScanner, ABC):
                     else:
                         logger.warning("Unsupported %s", element)
             return candidates
-        except Exception as pdf_exc:
-            logger.warning("%s:%s", data_provider.file_path, pdf_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

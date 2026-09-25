@@ -78,6 +78,7 @@ class JclassScanner(AbstractScanner, ABC):
             new_limit = recursive_limit_size - sum(len(x) for x in constants)
             candidates = self.structure_scan(struct_content_provider, depth, new_limit)
             return candidates
-        except Exception as jclass_exc:
-            logger.warning("%s:%s", data_provider.file_path, jclass_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

@@ -24,7 +24,7 @@ class PatchesProvider(AbstractProvider):
 
         Args:
             paths: file paths list to scan. All files should be in `.patch` format
-            change_type: DiffRowType, type of analyses changes in patch (added or deleted)
+            change_type: DiffRowType, type of analyzes changes in patch (added or deleted)
               of ignored directories from the gitignore file
 
         """
@@ -66,7 +66,7 @@ class PatchesProvider(AbstractProvider):
             config: dict of credsweeper configuration
 
         Return:
-            file objects for analysing
+            file objects for analyzing
 
         """
         diff_data = self.load_patch_data(config)

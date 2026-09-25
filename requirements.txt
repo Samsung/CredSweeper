@@ -2,8 +2,8 @@
 # pip 26.0.1
 
 # build requirement
-build==1.5.0
-hatchling==1.32.0
+build==1.6.1
+hatchling==1.32.4
 # check build
 twine==7.0.0
 
@@ -11,10 +11,10 @@ twine==7.0.0
 base58==2.1.1
 beautifulsoup4==4.15.0
 colorama==0.4.6
-cryptography==50.0.0
-GitPython==3.1.59
+cryptography==50.0.1
+GitPython==3.1.62
 humanfriendly==10.0
-lxml==6.1.2
+lxml==6.1.3
 numpy==2.2.6; python_version == '3.10'
 numpy==2.4.6; python_version == '3.11'
 numpy==2.5.0; python_version > '3.11'
@@ -48,7 +48,7 @@ whatthepatch==1.0.7
 zstandard==0.25.0; python_version < '3.14'
 brotli==1.2.0
 pygments==2.21.0
-tqdm==4.70.0
+tqdm==4.70.1
 
 # Auxiliary packages for development
 # tests

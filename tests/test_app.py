@@ -1,5 +1,4 @@
 import io
-import io
 import logging
 import os
 import random
@@ -11,7 +10,6 @@ import threading
 import unittest
 import uuid
 from pathlib import Path
-from tarfile import ReadError
 from typing import List, Any, Dict
 from unittest.mock import patch, call, ANY, MagicMock
 
@@ -19,6 +17,7 @@ import deepdiff
 import psutil
 import pytest
 
+from credsweeper import Confidence
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.common.constants import ThresholdPreset, Severity, MIN_DATA_LEN
 from credsweeper.file_handler.abstract_provider import AbstractProvider
@@ -182,6 +181,17 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    def test_string_content_provider_p(self) -> None:
+        random.seed(42)
+        ascii_chars = string.digits + string.ascii_letters + string.punctuation + ' '
+        text = ''.join(random.choice(ascii_chars) for _ in range(1 << 20))  # 1Mb dummy text
+        cred_sweeper = CredSweeper(confidence=Confidence.STRONG)
+        provider = StringContentProvider([text])
+        results = cred_sweeper.file_scan(provider)
+        self.assertEqual(0, len(results))  # no strong confidence in random data
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def test_find_by_ext_and_not_ignore_p(self) -> None:
         # checks only exact match (may be wrong for windows)
         config_dict = Util.json_load(APP_PATH / "secret" / "config.json")
@@ -252,7 +262,6 @@ class TestMain(unittest.TestCase):
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]), progress_callback=callback_mock)
             mocked_logger.assert_has_calls([
                 call("Scan in %s processes for %s providers", nproc, SAMPLES_FILES_COUNT - 28),
-                call("Grouping %s candidates", SAMPLES_FILTERED_COUNT),
                 ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
                 call("Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
@@ -281,7 +290,6 @@ class TestMain(unittest.TestCase):
             cred_sweeper.run(content_provider=content_provider, progress_callback=progress.callback)
             mocked_logger.assert_has_calls([
                 call(f"Scan in %s processes for %s providers", nproc, SAMPLES_FILES_COUNT - 28),
-                call(f"Grouping %s candidates", SAMPLES_FILTERED_COUNT),
                 ANY,  # Run ML Validation for \d+ groups
                 # no init
                 call(f"Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
@@ -338,11 +346,11 @@ class TestMain(unittest.TestCase):
         with patch("logging.Logger.warning") as mocked_logger:
             cred_sweeper.run(content_provider=content_provider)
             self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
-            mocked_logger.assert_called_with("%s:%s", ANY, ANY)
+            mocked_logger.assert_called_with("%s:%s:%s", ANY, ANY, ANY)
             args, _ = mocked_logger.call_args
-            self.assertIn("bad.tar.bz2", str(args[1]))
-            self.assertIsInstance(args[2], ReadError)
-            self.assertEqual("unexpected end of data", str(args[2]))
+            self.assertTrue(any("bad.tar.bz2" in str(x) for x in args), args)
+            self.assertTrue(any("tarfile.ReadError" in str(x) for x in args), args)
+            self.assertTrue(any("unexpected end of data" in str(x) for x in args), args)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -415,7 +423,7 @@ class TestMain(unittest.TestCase):
 
     def test_bzip2_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
-            test_filename = os.path.join(tmp_dir, __name__)
+            test_filename = os.path.join(tmp_dir, "test_bzip2_bad_sample")
             self.assertFalse(os.path.exists(test_filename))
             with open(test_filename, "wb") as f:
                 f.write(b"\x42\x5A\x68\x35\x31\x41\x59\x26\x53\x59")
@@ -423,12 +431,14 @@ class TestMain(unittest.TestCase):
             cred_sweeper = CredSweeper(depth=1)
             with patch('logging.Logger.warning') as mocked_logger:
                 cred_sweeper.run(content_provider=content_provider)
-                descriptor = content_provider.get_scannable_files(cred_sweeper.config)[0].descriptor
-                mocked_logger.assert_called_with("%s:%s", ANY, ANY)
+                _ = content_provider.get_scannable_files(cred_sweeper.config)[0].descriptor
+                mocked_logger.assert_called_with("%s:%s:%s", ANY, ANY, ANY)
                 args, _ = mocked_logger.call_args
-                self.assertEqual(test_filename, args[1].path)
-                self.assertIsInstance(args[2], EOFError)
-                self.assertEqual("Compressed file ended before the end-of-stream marker was reached", str(args[2]))
+                self.assertTrue(any("test_bzip2_bad_sample" in str(x) for x in args), args)
+                self.assertTrue(any("EOFError" in str(x) for x in args), args)
+                self.assertTrue(
+                    any("Compressed file ended before the end-of-stream marker was reached" in str(x) for x in args),
+                    args)
             self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -447,7 +457,7 @@ class TestMain(unittest.TestCase):
         # may be tested with
         # https://www.dcc.edu/documents/administration/offices/information-technology/password-examples.pdf
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.pdf"])
-        cred_sweeper = CredSweeper(depth=7, ml_threshold=ZERO_ML_THRESHOLD)
+        cred_sweeper = CredSweeper(ml_threshold=ZERO_ML_THRESHOLD, time_limit=1, depth=7)
         cred_sweeper.run(content_provider=content_provider)
         found_credentials = cred_sweeper.credential_manager.get_credentials()
         self.assertSetEqual({"Password", "Token", "Github Classic Token"}, set(i.rule_name for i in found_credentials))
@@ -459,7 +469,7 @@ class TestMain(unittest.TestCase):
 
     def test_pdf_n(self) -> None:
         content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "sample.pdf"])
-        cred_sweeper = CredSweeper()
+        cred_sweeper = CredSweeper(ml_threshold=ZERO_ML_THRESHOLD, time_limit=0.0001)
         cred_sweeper.run(content_provider=content_provider)
         self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
 

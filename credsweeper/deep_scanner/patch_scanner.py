@@ -48,6 +48,7 @@ class PatchScanner(AbstractScanner, ABC):
                     line_data.path = data_provider.file_path
                     line_data.info = f"{data_provider.info}|PATCH:{line_data.info}"
             return candidates
-        except Exception as patch_exc:
-            logger.warning("%s:%s", data_provider.file_path, patch_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

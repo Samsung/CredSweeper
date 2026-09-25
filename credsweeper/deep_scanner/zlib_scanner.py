@@ -52,6 +52,7 @@ class ZlibScanner(AbstractScanner, ABC):
                                                         info=f"{data_provider.info}|ZLIB:{len(decompressed)}")
             zlib_candidates = self.recursive_scan(zlib_content_provider, depth, recursive_limit_size)
             return zlib_candidates
-        except Exception as zlib_exc:
-            logger.warning("%s:%s", data_provider.file_path, zlib_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

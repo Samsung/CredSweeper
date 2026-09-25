@@ -148,6 +148,14 @@ credsweeper.filters.value\_camel\_case\_check module
    :undoc-members:
    :show-inheritance:
 
+credsweeper.filters.value\_cloudflare\_check module
+---------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_cloudflare_check
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 credsweeper.filters.value\_dictionary\_keyword\_check module
 ------------------------------------------------------------
 

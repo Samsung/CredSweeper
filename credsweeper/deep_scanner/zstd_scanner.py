@@ -64,6 +64,7 @@ class ZstdScanner(AbstractScanner, ABC):
                                                             info=f"{data_provider.info}|ZSTD")
                 zstd_candidates = self.recursive_scan(zstd_content_provider, depth, recursive_limit_size)
                 return zstd_candidates
-        except Exception as zstd_exc:
-            logger.error("%s:%s", data_provider.file_path, zstd_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

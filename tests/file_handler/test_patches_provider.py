@@ -90,7 +90,7 @@ class TestPatchesProvider:
 
         with patch('logging.Logger.debug') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_8)
+            mocked_logger.assert_called_with("UnicodeError: Can not decode content as %s.", UTF_8)
 
         expected = [[
             'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json',  #
@@ -115,7 +115,7 @@ class TestPatchesProvider:
 
         with patch('logging.Logger.debug') as mocked_logger:
             raw_patches = patch_provider.load_patch_data(config)
-            mocked_logger.assert_called_with("UnicodeError: Can't decode content as %s.", UTF_8)
+            mocked_logger.assert_called_with("UnicodeError: Can not decode content as %s.", UTF_8)
 
         expected = [[
             'ëÉÒÉÌÌÉÃÁ',  #

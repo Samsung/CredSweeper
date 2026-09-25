@@ -206,6 +206,7 @@ class TestKeywordPattern:
                 "Dmdkesfdsq452%23%40!"
             ],
             ["password%3dDmsfdsq452!&user%5Bpassword_", "Dmsfdsq452!"],
+            ['\\"password\\"\\u003D\\"msfd5sq42\\"', "msfd5sq42"],
             ["MY_TEST_PASSWORD={MY_TEST_PASSWORD}", "MY_TEST_PASSWORD"],
             ["MY_TEST_PASSWORD=(MY_TEST_PASSWORD)", "MY_TEST_PASSWORD"],
             ["MY_TEST_PASSWORD=<MY_TEST_PASSWORD>", "<MY_TEST_PASSWORD>"],  # <> are used in future to detect a template

@@ -13,8 +13,10 @@ from credsweeper import __version__
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.cli import parse_arguments
 from credsweeper.common.constants import DiffRowType
+from credsweeper.config.config import Config
 from credsweeper.file_handler.abstract_provider import AbstractProvider
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
+from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.files_provider import FilesProvider
 from credsweeper.file_handler.patches_provider import PatchesProvider
 from credsweeper.logger.logger import Logger
@@ -72,6 +74,7 @@ def get_credsweeper(args: Namespace) -> CredSweeper:
         doc=args.doc,
         severity=args.severity,
         size_limit=args.size_limit,
+        time_limit=args.time_limit,
         exclude_lines=denylist,
         exclude_values=denylist,
         thrifty=args.thrifty,
@@ -97,13 +100,14 @@ def scan(args: Namespace, content_provider: AbstractProvider) -> int:
         credsweeper = get_credsweeper(args)
         return credsweeper.run(content_provider=content_provider,
                                progress_callback=Progress().callback if args.progress else None)
-    except Exception as exc:
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        # fallback
         logger.critical(exc, exc_info=True)
         logger.exception(exc)
     return -1
 
 
-def get_commit_providers(commit: Commit, repo: Repo) -> Sequence[ByteContentProvider]:
+def get_commit_providers(commit: Commit, repo: Repo, config: Config) -> Sequence[ByteContentProvider]:
     """Process a commit and for providers"""
     result = {}
     # use the hardcoded sha1 until sha256 objects are not supported by GitPython
@@ -114,11 +118,17 @@ def get_commit_providers(commit: Commit, repo: Repo) -> Sequence[ByteContentProv
             blob_b = diff.b_blob
             if blob_b and blob_b.path not in result:
                 try:
+                    file_path = str(blob_b.path)
+                    if FilePathExtractor.check_exclude_file(config, file_path):
+                        logger.debug("Skip: %s", file_path)
+                        continue
                     result[blob_b.path] = ByteContentProvider(content=blob_b.data_stream.read(),
-                                                              file_path=str(blob_b.path),
+                                                              file_path=file_path,
                                                               info=DiffRowType.ADDED.value)
-                except Exception as exc:
-                    logger.warning("A submodule was not properly initialized or commit was removed: %s", exc)
+                except Exception as exc:  # pylint: disable=broad-exception-caught
+                    # fallback
+                    logger.warning("A submodule was not properly initialized or commit was removed %s:%s", type(exc),
+                                   exc)
     return list(result.values())
 
 
@@ -185,7 +195,7 @@ def drill(args: Namespace) -> Tuple[int, int]:
                 continue
             logger.info("Scan commit: %s %s", commit_sha1, commit.committed_datetime.isoformat())
             # prepare all files to scan in the commit with bytes->IO transformation to avoid a multiprocess issue
-            if providers := get_commit_providers(commit, repo):
+            if providers := get_commit_providers(commit, repo, credsweeper.config):
                 credsweeper.credential_manager.candidates.clear()
                 progress = Progress() if args.progress else None
                 credsweeper.scan(providers, progress_callback=progress.callback if progress else None)
@@ -194,7 +204,8 @@ def drill(args: Namespace) -> Tuple[int, int]:
                 total_credentials += credsweeper.credential_manager.len_credentials()
             total_commits += 1
             scanned.add(commit_sha1)
-    except Exception as exc:
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        # fallback
         logger.critical(exc, exc_info=True)
         return -1, total_commits
     return total_credentials, total_commits

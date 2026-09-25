@@ -30,9 +30,9 @@ class Sqlite3Scanner(AbstractScanner, ABC):
         cursor = sqlite3db.cursor()
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';")
         for table in cursor.fetchall():
-            table_name = table[0]
+            table_name = table[0].replace('"', '""')
             try:
-                cursor.execute(f"SELECT * FROM {table_name}")
+                cursor.execute(f'SELECT * FROM "{table_name}"')
                 for row in cursor:
                     yield table_name, dict(row)
             except sqlite3.DatabaseError as exc:
@@ -81,6 +81,7 @@ class Sqlite3Scanner(AbstractScanner, ABC):
                 if new_candidates := self.structure_scan(struct_content_provider, depth, new_limit):
                     candidates.extend(new_candidates)
             return candidates
-        except Exception as exc:
-            logger.warning(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

@@ -3,7 +3,7 @@ import logging
 from argparse import BooleanOptionalAction, Namespace, ArgumentParser, ArgumentTypeError
 from typing import Any, Union, List
 
-from credsweeper import __version__
+from credsweeper import __version__, Confidence
 from credsweeper.common.constants import ML_HUNK, ThresholdPreset, Severity, RuleType
 from credsweeper.logger.logger import Logger
 
@@ -17,6 +17,16 @@ def positive_int(value: Any) -> int:
         logger.error("Number of parallel processes should be a positive number: %s", value)
         raise ArgumentTypeError(f"{value} should be greater than 0")
     return int_value
+
+
+def positive_float(value: Any) -> float:
+    """Check if value is a positive float"""
+    with contextlib.suppress(ValueError):
+        float_value = float(value)
+        if 0.0 < float_value:
+            return float_value
+    logger.error("Time limit must be a positive number: %s", value)
+    raise ArgumentTypeError(f"{value} should be positive")
 
 
 def threshold_or_float_or_zero(arg: str) -> Union[int, float, ThresholdPreset]:
@@ -74,6 +84,21 @@ def severity_levels(severity_level: str) -> Severity:
         f"Severity level provided: {severity_level} -- must be one of: {' | '.join([i.value for i in Severity])}")
 
 
+def confidence_levels(confidence_level: str) -> Confidence:
+    """Confidence level correctness verification and transformation
+
+    Args:
+        confidence_level: string with level
+
+    Returns Confidence matched provided string or throws ArgumentTypeError exception
+    """
+
+    if confidence := Confidence.get(confidence_level):
+        return confidence
+    raise ArgumentTypeError(
+        f"Confidence level provided: {confidence_level} -- must be one of: {' | '.join([i.value for i in Confidence])}")
+
+
 def parse_arguments(argv: List[str]) -> Namespace:
     """All CLI arguments are defined here"""
     parser = ArgumentParser(prog="python -m credsweeper")
@@ -111,6 +136,12 @@ def parse_arguments(argv: List[str]) -> Namespace:
                         default=Severity.INFO,
                         dest="severity",
                         type=severity_levels)
+    parser.add_argument("--confidence",
+                        help=f"set minimum confidence to apply {[i.value for i in Confidence]}"
+                        f"(default: '{Confidence.WEAK}', case insensitive)",
+                        default=Confidence.WEAK,
+                        dest="confidence",
+                        type=confidence_levels)
     parser.add_argument("--config",
                         help="use custom config (default: built-in)",
                         default=None,
@@ -247,6 +278,12 @@ def parse_arguments(argv: List[str]) -> Namespace:
                         help="set size limit of files that for scanning (eg. 1GB / 10MiB / 1000)",
                         dest="size_limit",
                         default=None)
+    parser.add_argument("--time_limit",
+                        help="set time limit per file in scanning sequence (float seconds)",
+                        dest="time_limit",
+                        type=float,
+                        default=None,
+                        metavar="POSITIVE_FLOAT")
     parser.add_argument("--banner",
                         help="show version and crc32 sum of CredSweeper files at start",
                         action="store_const",

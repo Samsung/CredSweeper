@@ -63,6 +63,27 @@
         ]
     },
     {
+        "rule": "Airtable API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "patSql3jMArWI71qt.f0a46e2ca7b45f3205a9d517b0482543b297e57a38b65c38344c226b901766f2",
+                "line_num": 2,
+                "path": "./tests/samples/airtable",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "patSql3jMArWI71qt.f0a46e2ca7b45f3205a9d517b0482543b297e57a38b65c38344c226b901766f2",
+                "value_start": 0,
+                "value_end": 82,
+                "entropy": 4.47592
+            }
+        ]
+    },
+    {
         "rule": "Akamai Credentials",
         "severity": "high",
         "confidence": "strong",
@@ -1309,63 +1330,63 @@
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaDx4mIbbM4",
+                "line": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaD06f546f9",
                 "line_num": 2,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaDx4mIbbM4",
+                "value": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaD06f546f9",
                 "value_start": 0,
                 "value_end": 53,
-                "entropy": 4.855
+                "entropy": 4.65945
             }
         ]
     },
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiuOKCYyDMJ",
+                "line": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiu5bdbfa91",
                 "line_num": 3,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiuOKCYyDMJ",
+                "value": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiu5bdbfa91",
                 "value_start": 0,
                 "value_end": 53,
-                "entropy": 4.94472
+                "entropy": 4.97558
             }
         ]
     },
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj1Ui1koxj",
+                "line": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rjb5043cbd",
                 "line_num": 4,
                 "path": "./tests/samples/cloudflare",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj1Ui1koxj",
+                "value": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rjb5043cbd",
                 "value_start": 0,
                 "value_end": 52,
-                "entropy": 5.05093
+                "entropy": 5.09448
             }
         ]
     },
@@ -1555,6 +1576,90 @@
                 "value_start": 26,
                 "value_end": 41,
                 "entropy": 3.5899
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ak_ppda4WEZA4P9k42oYRQD",
+                "line_num": 3,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ak_ppda4WEZA4P9k42oYRQD",
+                "value_start": 0,
+                "value_end": 23,
+                "entropy": 4.05596
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "oak_B-Nk3XEYumqGlUR6nFrL",
+                "line_num": 5,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "oak_B-Nk3XEYumqGlUR6nFrL",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.50163
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "uak_aQHDUyPscrh5VjHV7kQ2",
+                "line_num": 7,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "uak_aQHDUyPscrh5VjHV7kQ2",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.1683
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ck_MJti8N-s9sAlyTs7K3yw",
+                "line_num": 9,
+                "path": "./tests/samples/composio",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ck_MJti8N-s9sAlyTs7K3yw",
+                "value_start": 0,
+                "value_end": 23,
+                "entropy": 4.22987
             }
         ]
     },
@@ -1814,7 +1919,7 @@
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.993,
+        "ml_probability": 0.987,
         "line_data_list": [
             {
                 "line": "Activation key : ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
@@ -1824,6 +1929,27 @@
                 "variable": "key",
                 "variable_start": 11,
                 "variable_end": 14,
+                "value": "ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "value_start": 17,
+                "value_end": 46,
+                "entropy": 4.21126
+            }
+        ]
+    },
+    {
+        "rule": "Product Activation Key",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "Activation key : ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "line_num": 2,
+                "path": "./tests/samples/doc_credentials_p",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
                 "value": "ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
                 "value_start": 17,
                 "value_end": 46,
@@ -9390,6 +9516,27 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
+        "ml_probability": 0.994,
+        "line_data_list": [
+            {
+                "line": "\"pswrd\\u003D\\\"Zf2Fv\\u0025s2\\\";\\u000D\"",
+                "line_num": 43,
+                "path": "./tests/samples/password_TRUE",
+                "info": "",
+                "variable": "pswrd",
+                "variable_start": 1,
+                "variable_end": 6,
+                "value": "Zf2Fv\\u0025s2",
+                "value_start": 14,
+                "value_end": 27,
+                "entropy": 3.18083
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -13528,6 +13675,27 @@
         ]
     },
     {
+        "rule": "Product Activation Key",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "P6V3T-M9J7T-GP9CU-VWXY6-GJ7KV",
+                "line_num": 2,
+                "path": "./tests/samples/product_key",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "P6V3T-M9J7T-GP9CU-VWXY6-GJ7KV",
+                "value_start": 0,
+                "value_end": 29,
+                "entropy": 3.9354
+            }
+        ]
+    },
+    {
         "rule": "Pulumi Personal Access Token",
         "severity": "high",
         "confidence": "strong",
@@ -14049,6 +14217,48 @@
                 "value_start": 39,
                 "value_end": 54,
                 "entropy": 3.64022
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.881,
+        "line_data_list": [
+            {
+                "line": "    \"line\": \"\\\"pswrd\\\\u003D\\\\\\\"Zf2Fv\\\\u0025s2\\\\\\\";\\\\u000D\\\"\",",
+                "line_num": 2,
+                "path": "./tests/samples/sample.json",
+                "info": "",
+                "variable": "pswrd",
+                "variable_start": 15,
+                "variable_end": 20,
+                "value": "Zf2Fv\\\\u0025s2",
+                "value_start": 31,
+                "value_end": 45,
+                "entropy": 3.18201
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.966,
+        "line_data_list": [
+            {
+                "line": "    \".properties\" : \"pswrd\\u003DZfF2v\\\\u0025s2\\n\"",
+                "line_num": 3,
+                "path": "./tests/samples/sample.json",
+                "info": "",
+                "variable": "pswrd",
+                "variable_start": 21,
+                "variable_end": 26,
+                "value": "ZfF2v\\\\u0025s2",
+                "value_start": 32,
+                "value_end": 46,
+                "entropy": 3.18201
             }
         ]
     },
@@ -15965,8 +16175,8 @@
         "line_data_list": [
             {
                 "line": "SK4D2F64E2A108CD72F648B1984C3B5A13",
-                "line_num": 1,
-                "path": "./tests/samples/twilio_credentials_p",
+                "line_num": 2,
+                "path": "./tests/samples/twilio_credentials",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,
@@ -15985,9 +16195,85 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "NO4d2f64e2a108cd72f648b1984c3b5a13",
+                "line_num": 3,
+                "path": "./tests/samples/twilio_credentials",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "NO4d2f64e2a108cd72f648b1984c3b5a13",
+                "value_start": 0,
+                "value_end": 34,
+                "entropy": 4.02086
+            }
+        ]
+    },
+    {
+        "rule": "Twilio Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "XR4D2F64E2A108CD72F648B1984C3B5A13",
+                "line_num": 4,
+                "path": "./tests/samples/twilio_credentials",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "XR4D2F64E2A108CD72F648B1984C3B5A13",
+                "value_start": 0,
+                "value_end": 34,
+                "entropy": 4.02086
+            }
+        ]
+    },
+    {
+        "rule": "Twilio Multi",
+        "severity": "critical",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "AC4d2f64e2a108cd72f648b1984c3b5a13",
-                "line_num": 2,
-                "path": "./tests/samples/twilio_credentials_p",
+                "line_num": 1,
+                "path": "./tests/samples/twilio_multi",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AC4d2f64e2a108cd72f648b1984c3b5a13",
+                "value_start": 0,
+                "value_end": 34,
+                "entropy": 4.02086
+            },
+            {
+                "line": "73c1a036711392721c39fdbd43537f21 - POSITIVE",
+                "line_num": 3,
+                "path": "./tests/samples/twilio_multi",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "73c1a036711392721c39fdbd43537f21",
+                "value_start": 0,
+                "value_end": 32,
+                "entropy": 3.50393
+            }
+        ]
+    },
+    {
+        "rule": "Twilio Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AC4d2f64e2a108cd72f648b1984c3b5a13",
+                "line_num": 1,
+                "path": "./tests/samples/twilio_multi",
                 "info": "",
                 "variable": null,
                 "variable_start": -2,

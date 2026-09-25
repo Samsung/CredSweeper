@@ -48,6 +48,7 @@ class PkcsScanner(AbstractScanner, ABC):
                     candidate.severity = Severity.HIGH
                     candidate.confidence = Confidence.STRONG
                     return [candidate]
-            except Exception as pkcs_exc:
-                logger.debug("%s:%s:%s", data_provider.file_path, pw_probe, pkcs_exc)
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                # fallback
+                logger.debug("%s:%s:%s:%s", pw_probe, type(exc), exc, data_provider.descriptor)
         return None

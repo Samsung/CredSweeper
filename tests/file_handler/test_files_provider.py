@@ -22,7 +22,6 @@ class TestFilesProvider(unittest.TestCase):
             io_data = io.BytesIO(AZ_DATA)
 
             config = MagicMock()
-            config.not_allowed_path_pattern.match.return_value = False
             config.exclude_patterns.return_value = []
             config.exclude_paths.return_value = []
             config.exclude_extensions.return_value = []

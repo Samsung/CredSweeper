@@ -55,6 +55,7 @@ class ValueBase64EncodedPem(Filter):
                     # drop the candidate and continue search
                     pem_text = ''
                     pem_end_found = False
-        except Exception as exc:
-            logger.warning(exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, target.descriptor)
         return True

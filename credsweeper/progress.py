@@ -14,11 +14,13 @@ class Progress:
         elif self.progress_bar.unit != unit:
             self.progress_bar.close()
             self.progress_bar = tqdm(total=total, unit=unit)
-        if done >= total:
+        if done < total:
+            # in process
+            self.progress_bar.n = done
+            self.progress_bar.refresh()
+        else:
+            # done
             self.progress_bar.n = total
             self.progress_bar.refresh()
             self.progress_bar.close()
             self.progress_bar = None
-        else:
-            self.progress_bar.n = done
-            self.progress_bar.refresh()

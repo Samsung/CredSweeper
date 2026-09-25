@@ -39,7 +39,7 @@ class ContentProvider(ABC):
             min_len: minimal line length to scan
 
         Return:
-            row objects to analysing
+            row objects to analyzing
 
         """
         raise NotImplementedError()

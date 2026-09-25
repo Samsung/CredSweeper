@@ -48,9 +48,9 @@ class ZipScanner(AbstractScanner, ABC):
                     # effective size
                     result += zfl.file_size
             return result
-        except Exception as zip_exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             # too many exception types might be produced with broken zip
-            logger.warning("%s", zip_exc)
+            logger.warning("%s:%s", type(exc), exc)
         return -1
 
     def data_scan(
@@ -80,7 +80,7 @@ class ZipScanner(AbstractScanner, ABC):
                         zip_candidates = self.recursive_scan(zip_content_provider, depth, recursive_limit_size)
                         candidates.extend(zip_candidates)
             return candidates
-        except Exception as zip_exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             # too many exception types might be produced with broken zip
-            logger.warning("%s:%s", data_provider.file_path, zip_exc)
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

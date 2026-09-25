@@ -49,6 +49,7 @@ class PandasScanner(AbstractScanner, ABC):
                     augment_candidates(candidates, row_candidates)
 
             return candidates
-        except Exception as xlsx_exc:
-            logger.warning("%s:%s", data_provider.file_path, xlsx_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

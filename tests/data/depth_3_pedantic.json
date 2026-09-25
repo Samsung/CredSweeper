@@ -187,7 +187,7 @@
                 "line": "  }   private static byte [] getPrivateKey1() {  final byte [] pkey = Base64.getMimeDecoder().decode(  \"MIIBOgIBAAJBAL1/hJjtuMbjbVXo6wYT1SxiROOvwgffVSvOAk5aN2d4wYTC25k3\"+  \"sklfpdwxvkjh4iGB6/qC+0RbmiLwaXaQT0ECAwEAAQJAeAlQyza6t3HVDnhud/kU\"+  \"LftJvBjXhfkYkJj8qPlI40dn/Tnwe6mywfly6hOvAn4TRBsnB/Eln6hJLmCrDvZv\"+  \"yQIhAPf7Uma4/Aqgoz3SfPyz9TaQXyD5JSC3ej7cOH7b3hgTAiEAw6AYhc/UKh8i\"+  \"IAPYGK15ImVmXAlxmhFD6xCWx9bcTdsCIQDiqOayWZaWKCnNEh2H5PzW+LLasp9K\"+  \"/ilQV32UBmdD3QIgbafQFzHoO7Q37Lo655pVzHIKbozcoQAMkjc6TcqiswECIBvX\"+  \"LFj5jkNs4iSqphZo8eISUdol/9Zo/dkrHC41kbYJ\");",
                 "line_num": 31,
                 "path": "./tests/samples/Sample.java",
-                "info": "FILE:./tests/samples/Sample.java|LEXER",
+                "info": "FILE:./tests/samples/Sample.java|<pygments.lexers.JavaLexer with {'stripnl': False, 'stripall': False, 'ensurenl': False}>",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -216,6 +216,27 @@
                 "value_start": 0,
                 "value_end": 74,
                 "entropy": 4.63151
+            }
+        ]
+    },
+    {
+        "rule": "Airtable API Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "patSql3jMArWI71qt.f0a46e2ca7b45f3205a9d517b0482543b297e57a38b65c38344c226b901766f2",
+                "line_num": 2,
+                "path": "./tests/samples/airtable",
+                "info": "FILE:./tests/samples/airtable|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "patSql3jMArWI71qt.f0a46e2ca7b45f3205a9d517b0482543b297e57a38b65c38344c226b901766f2",
+                "value_start": 0,
+                "value_end": 82,
+                "entropy": 4.47592
             }
         ]
     },
@@ -1529,63 +1550,63 @@
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaDx4mIbbM4",
+                "line": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaD06f546f9",
                 "line_num": 2,
                 "path": "./tests/samples/cloudflare",
                 "info": "FILE:./tests/samples/cloudflare|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaDx4mIbbM4",
+                "value": "cfat_ldxiugEl907l4fW6ViLbhZled5GG95J90dRk9JaD06f546f9",
                 "value_start": 0,
                 "value_end": 53,
-                "entropy": 4.855
+                "entropy": 4.65945
             }
         ]
     },
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiuOKCYyDMJ",
+                "line": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiu5bdbfa91",
                 "line_num": 3,
                 "path": "./tests/samples/cloudflare",
                 "info": "FILE:./tests/samples/cloudflare|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiuOKCYyDMJ",
+                "value": "cfut_WmHcE131Up3QBmRVvjfAyMBSik11OpgJpZikzYiu5bdbfa91",
                 "value_start": 0,
                 "value_end": 53,
-                "entropy": 4.94472
+                "entropy": 4.97558
             }
         ]
     },
     {
         "rule": "CloudFlare API Token",
         "severity": "high",
-        "confidence": "moderate",
+        "confidence": "strong",
         "ml_probability": null,
         "line_data_list": [
             {
-                "line": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj1Ui1koxj",
+                "line": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rjb5043cbd",
                 "line_num": 4,
                 "path": "./tests/samples/cloudflare",
                 "info": "FILE:./tests/samples/cloudflare|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
-                "value": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rj1Ui1koxj",
+                "value": "cfk_7fqkxWi4TYQn4bPzsHyl0JuMV8UwHV2V1xpv54rjb5043cbd",
                 "value_start": 0,
                 "value_end": 52,
-                "entropy": 5.05093
+                "entropy": 5.09448
             }
         ]
     },
@@ -1775,6 +1796,90 @@
                 "value_start": 26,
                 "value_end": 41,
                 "entropy": 3.5899
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ak_ppda4WEZA4P9k42oYRQD",
+                "line_num": 3,
+                "path": "./tests/samples/composio",
+                "info": "FILE:./tests/samples/composio|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ak_ppda4WEZA4P9k42oYRQD",
+                "value_start": 0,
+                "value_end": 23,
+                "entropy": 4.05596
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "oak_B-Nk3XEYumqGlUR6nFrL",
+                "line_num": 5,
+                "path": "./tests/samples/composio",
+                "info": "FILE:./tests/samples/composio|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "oak_B-Nk3XEYumqGlUR6nFrL",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.50163
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "uak_aQHDUyPscrh5VjHV7kQ2",
+                "line_num": 7,
+                "path": "./tests/samples/composio",
+                "info": "FILE:./tests/samples/composio|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "uak_aQHDUyPscrh5VjHV7kQ2",
+                "value_start": 0,
+                "value_end": 24,
+                "entropy": 4.1683
+            }
+        ]
+    },
+    {
+        "rule": "Composio Credentials",
+        "severity": "high",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ck_MJti8N-s9sAlyTs7K3yw",
+                "line_num": 9,
+                "path": "./tests/samples/composio",
+                "info": "FILE:./tests/samples/composio|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ck_MJti8N-s9sAlyTs7K3yw",
+                "value_start": 0,
+                "value_end": 23,
+                "entropy": 4.22987
             }
         ]
     },
@@ -2180,7 +2285,7 @@
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.993,
+        "ml_probability": 0.987,
         "line_data_list": [
             {
                 "line": "Activation key : ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
@@ -2190,6 +2295,27 @@
                 "variable": "key",
                 "variable_start": 11,
                 "variable_end": 14,
+                "value": "ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "value_start": 17,
+                "value_end": 46,
+                "entropy": 4.21126
+            }
+        ]
+    },
+    {
+        "rule": "Product Activation Key",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "Activation key : ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
+                "line_num": 2,
+                "path": "./tests/samples/doc_credentials_p",
+                "info": "FILE:./tests/samples/doc_credentials_p|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
                 "value": "ZAQWS-XCDER-VBGTR-FRTGU-KLMNX",
                 "value_start": 17,
                 "value_end": 46,
@@ -10068,6 +10194,27 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
+        "ml_probability": 0.994,
+        "line_data_list": [
+            {
+                "line": "\"pswrd\\u003D\\\"Zf2Fv\\u0025s2\\\";\\u000D\"",
+                "line_num": 43,
+                "path": "./tests/samples/password_TRUE",
+                "info": "FILE:./tests/samples/password_TRUE|RAW",
+                "variable": "pswrd",
+                "variable_start": 1,
+                "variable_end": 6,
+                "value": "Zf2Fv\\u0025s2",
+                "value_start": 14,
+                "value_end": 27,
+                "entropy": 3.18083
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
         "ml_probability": 1.0,
         "line_data_list": [
             {
@@ -13263,7 +13410,7 @@
                 "line": "  # >>> Java sample 2   = \"\\\"-----BEGIN PRIVATE KEY-----\\n\"  + \"MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAxAIxg6QtxmnJ0Bsj\\n\"  + \"VRsEhjLB9lSY9CaFvvEbXK9eBezqR6x6epxm4w/bx1xAK1O9m4iyEN72+jhpZHZs\\n\"  + \"6RZsxQIDAQABAkBbzksyxWtLS7Fi79MUwZrU4GFI50bc1E5AqN2QA/OeAg+tdgRC\\n\"  + \"eTVV2eZEM750xZUCoqDwLsLeYrGFR7zy0VkBAiEA5ljPCFu3UIVOgZXhSr342mTX\\n\"  + \"vC9/t9XrGuHCQU8oOW0CIQDZ1mYBOniJmPD0h5j1wadmLkmmZRPUNyMTEHiBUEmB\\n\"  + \"uQIgSpG1dB882PRO1eSPaoLVbN34eRNnZTv7QFiVak8V1oECIGk3tKdtPaGAnQoP\\n\"  + \"oOM7eYbSXsKfWdeMFkX0E7CqPgcJAiEAlydP8ln92gy4LefZuIJn1/M5PEeRFKrq\\n\"  + \"aAjRMKT7uCM=\\n\"  + \"-----END RSA PRIVATE KEY-----\\\"\";",
                 "line_num": 12,
                 "path": "./tests/samples/pem_key.p.java",
-                "info": "FILE:./tests/samples/pem_key.p.java|LEXER",
+                "info": "FILE:./tests/samples/pem_key.p.java|<pygments.lexers.JavaLexer>",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -13284,7 +13431,7 @@
                 "line": "  # >>> Java sample 2   = \"\\\"-----BEGIN PRIVATE KEY-----\\n\"  + \"MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAxAIxg6QtxmnJ0Bsj\\n\"  + \"VRsEhjLB9lSY9CaFvvEbXK9eBezqR6x6epxm4w/bx1xAK1O9m4iyEN72+jhpZHZs\\n\"  + \"6RZsxQIDAQABAkBbzksyxWtLS7Fi79MUwZrU4GFI50bc1E5AqN2QA/OeAg+tdgRC\\n\"  + \"eTVV2eZEM750xZUCoqDwLsLeYrGFR7zy0VkBAiEA5ljPCFu3UIVOgZXhSr342mTX\\n\"  + \"vC9/t9XrGuHCQU8oOW0CIQDZ1mYBOniJmPD0h5j1wadmLkmmZRPUNyMTEHiBUEmB\\n\"  + \"uQIgSpG1dB882PRO1eSPaoLVbN34eRNnZTv7QFiVak8V1oECIGk3tKdtPaGAnQoP\\n\"  + \"oOM7eYbSXsKfWdeMFkX0E7CqPgcJAiEAlydP8ln92gy4LefZuIJn1/M5PEeRFKrq\\n\"  + \"aAjRMKT7uCM=\\n\"  + \"-----END RSA PRIVATE KEY-----\\\"\";",
                 "line_num": 12,
                 "path": "./tests/samples/pem_key.p.java",
-                "info": "FILE:./tests/samples/pem_key.p.java|LEXER",
+                "info": "FILE:./tests/samples/pem_key.p.java|<pygments.lexers.JavaLexer>",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -17935,6 +18082,27 @@
         ]
     },
     {
+        "rule": "Product Activation Key",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "P6V3T-M9J7T-GP9CU-VWXY6-GJ7KV",
+                "line_num": 2,
+                "path": "./tests/samples/product_key",
+                "info": "FILE:./tests/samples/product_key|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "P6V3T-M9J7T-GP9CU-VWXY6-GJ7KV",
+                "value_start": 0,
+                "value_end": 29,
+                "entropy": 3.9354
+            }
+        ]
+    },
+    {
         "rule": "Pulumi Personal Access Token",
         "severity": "high",
         "confidence": "strong",
@@ -18301,7 +18469,7 @@
                 "line": "MIIBOgIBAAJBAL1/hJjtuMbjbVXo6wYT1SxiROOvwgffVSvOAk5aN2d4wYTC25k3sklfpdwxvkjh4iGB6/qC+0RbmiLwaXaQT0ECAwEAAQJAeAlQyza6t3HVDnhud/kULftJvBjXhfkYkJj8qPlI40dn/Tnwe6mywfly6hOvAn4TRBsnB/Eln6hJLmCrDvZvyQIhAPf7Uma4/Aqgoz3SfPyz9TaQXyD5JSC3ej7cOH7b3hgTAiEAw6AYhc/UKh8iIAPYGK15ImVmXAlxmhFD6xCWx9bcTdsCIQDiqOayWZaWKCnNEh2H5PzW+LLasp9K/ilQV32UBmdD3QIgbafQFzHoO7Q37Lo655pVzHIKbozcoQAMkjc6TcqiswECIBvXLFj5jkNs4iSqphZo8eISUdol/9Zo/dkrHC41kbYJ",
                 "line_num": 0,
                 "path": "./tests/samples/sample-311.pyc",
-                "info": "FILE:./tests/samples/sample-311.pyc|PYCACHE|BYTES:1|PKCS_PASSWORD:None",
+                "info": "FILE:./tests/samples/sample-311.pyc|PYCACHE:575|PKCS_PASSWORD:None",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -18322,7 +18490,7 @@
                 "line": "bace4d19-fa7e-beef-cafe-91294741cd81",
                 "line_num": 1,
                 "path": "./tests/samples/sample-311.pyc",
-                "info": "FILE:./tests/samples/sample-311.pyc|PYCACHE|STRING:5|RAW",
+                "info": "FILE:./tests/samples/sample-311.pyc|PYCACHE:381|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -18574,7 +18742,7 @@
                 "line": "void auth(void *ctx){  easy_setopt(ctx, CURLOPT_XOAUTH2_BEARER,  \"9Uqh8h6y8lOaVx8CdfE0RSbB/vmSApqzFr9Dus0FNYSyDlYrcdVLhSZ5AiTzJ6KwrM0PuJ3cI/v6E+Tfbg==\");",
                 "line_num": 2,
                 "path": "./tests/samples/sample.cc",
-                "info": "FILE:./tests/samples/sample.cc|LEXER",
+                "info": "FILE:./tests/samples/sample.cc|<pygments.lexers.CppLexer with {'stripnl': False, 'stripall': False, 'ensurenl': False}>",
                 "variable": "CURLOPT_XOAUTH2_BEARER",
                 "variable_start": 40,
                 "variable_end": 62,
@@ -18595,7 +18763,7 @@
                 "line": "  char secret_key[] = {   0x76, 0x51, 0x48, 0x0a, 0x51, 0x74, 0x51, 0x48, 0x4f, 0x77, 0x39, 0x34, 0x63, 0x7a, 0x48, 0x62,  0x61, 0x52, 0x2b, 0x34, 0x33, 0x39, 0x62, 0x6d, 0x63, 0x61, 0x53, 0x77, 0x44, 0x6e, 0x51, 0x6d    };",
                 "line_num": 4,
                 "path": "./tests/samples/sample.cc",
-                "info": "FILE:./tests/samples/sample.cc|LEXER",
+                "info": "FILE:./tests/samples/sample.cc|<pygments.lexers.CppLexer with {'stripnl': False, 'stripall': False, 'ensurenl': False}>",
                 "variable": "secret_key[]",
                 "variable_start": 7,
                 "variable_end": 19,
@@ -18616,7 +18784,7 @@
                 "line": "  char secret_key[] = {   0x76, 0x51, 0x48, 0x0a, 0x51, 0x74, 0x51, 0x48, 0x4f, 0x77, 0x39, 0x34, 0x63, 0x7a, 0x48, 0x62,  0x61, 0x52, 0x2b, 0x34, 0x33, 0x39, 0x62, 0x6d, 0x63, 0x61, 0x53, 0x77, 0x44, 0x6e, 0x51, 0x6d    };",
                 "line_num": 4,
                 "path": "./tests/samples/sample.cc",
-                "info": "FILE:./tests/samples/sample.cc|LEXER",
+                "info": "FILE:./tests/samples/sample.cc|<pygments.lexers.CppLexer with {'stripnl': False, 'stripall': False, 'ensurenl': False}>",
                 "variable": "secret_key[]",
                 "variable_start": 7,
                 "variable_end": 19,
@@ -19475,7 +19643,7 @@
                 "line": "#define AESKEY {0x35, 0x34, 0x65, 0x9b, 0x1c, 0x2e, 023, 010, 041, 033, 043, 000, ",
                 "line_num": 1,
                 "path": "./tests/samples/sample.h",
-                "info": "FILE:./tests/samples/sample.h|LEXER",
+                "info": "FILE:./tests/samples/sample.h|<pygments.lexers.CLexer with {'stripnl': False, 'stripall': False, 'ensurenl': False}>",
                 "variable": "AESKEY",
                 "variable_start": 8,
                 "variable_end": 14,
@@ -19768,6 +19936,111 @@
                 "value_start": 11,
                 "value_end": 47,
                 "entropy": 3.66606
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "\"\"\"pswrd=\"Zf2Fv%s2\";\\r\"\"\"",
+                "line_num": 1,
+                "path": "./tests/samples/sample.json",
+                "info": "FILE:./tests/samples/sample.json|STRUCT|STRING:line|STRUCT|STRING:0|RAW",
+                "variable": "pswrd",
+                "variable_start": 3,
+                "variable_end": 8,
+                "value": "Zf2Fv%s2",
+                "value_start": 10,
+                "value_end": 18,
+                "entropy": 2.75
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.993,
+        "line_data_list": [
+            {
+                "line": "\"pswrd\\u003D\\\"Zf2Fv\\u0025s2\\\";\\u000D\"",
+                "line_num": 1,
+                "path": "./tests/samples/sample.json",
+                "info": "FILE:./tests/samples/sample.json|STRUCT|STRING:line|RAW",
+                "variable": "pswrd",
+                "variable_start": 1,
+                "variable_end": 6,
+                "value": "Zf2Fv\\u0025s2",
+                "value_start": 14,
+                "value_end": 27,
+                "entropy": 3.18083
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.771,
+        "line_data_list": [
+            {
+                "line": "pswrd=ZfF2v\\u0025s2",
+                "line_num": 1,
+                "path": "./tests/samples/sample.json",
+                "info": "FILE:./tests/samples/sample.json|STRUCT|STRING:.properties|RAW",
+                "variable": "pswrd",
+                "variable_start": 0,
+                "variable_end": 5,
+                "value": "ZfF2v\\u0025s2",
+                "value_start": 6,
+                "value_end": 19,
+                "entropy": 3.18083
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.881,
+        "line_data_list": [
+            {
+                "line": "    \"line\": \"\\\"pswrd\\\\u003D\\\\\\\"Zf2Fv\\\\u0025s2\\\\\\\";\\\\u000D\\\"\",",
+                "line_num": 2,
+                "path": "./tests/samples/sample.json",
+                "info": "FILE:./tests/samples/sample.json|RAW",
+                "variable": "pswrd",
+                "variable_start": 15,
+                "variable_end": 20,
+                "value": "Zf2Fv\\\\u0025s2",
+                "value_start": 31,
+                "value_end": 45,
+                "entropy": 3.18201
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.966,
+        "line_data_list": [
+            {
+                "line": "    \".properties\" : \"pswrd\\u003DZfF2v\\\\u0025s2\\n\"",
+                "line_num": 3,
+                "path": "./tests/samples/sample.json",
+                "info": "FILE:./tests/samples/sample.json|RAW",
+                "variable": "pswrd",
+                "variable_start": 21,
+                "variable_end": 26,
+                "value": "ZfF2v\\\\u0025s2",
+                "value_start": 32,
+                "value_end": 46,
+                "entropy": 3.18201
             }
         ]
     },
@@ -21133,6 +21406,48 @@
                 "value_start": 12,
                 "value_end": 22,
                 "entropy": 2.92193
+            }
+        ]
+    },
+    {
+        "rule": "Product Activation Key",
+        "severity": "info",
+        "confidence": "weak",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "P6V3T-M9J7T-GP9CU-VW6XY-GJ7KV",
+                "line_num": 1,
+                "path": "./tests/samples/sample.sqlite",
+                "info": "FILE:./tests/samples/sample.sqlite|SQLite3.51\u00b0 28' 38\"\"|STRING:m`aiq|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "P6V3T-M9J7T-GP9CU-VW6XY-GJ7KV",
+                "value_start": 0,
+                "value_end": 29,
+                "entropy": 3.9354
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "ba4d1ce9-fa7e-beef-cafe-91474b29cd81",
+                "line_num": 1,
+                "path": "./tests/samples/sample.sqlite",
+                "info": "FILE:./tests/samples/sample.sqlite|SQLite3.51\u00b0 28' 38\"\"|STRING:m`aiq|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "ba4d1ce9-fa7e-beef-cafe-91474b29cd81",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.58954
             }
         ]
     },
@@ -24844,9 +25159,9 @@
         "line_data_list": [
             {
                 "line": "SK4D2F64E2A108CD72F648B1984C3B5A13",
-                "line_num": 1,
-                "path": "./tests/samples/twilio_credentials_p",
-                "info": "FILE:./tests/samples/twilio_credentials_p|RAW",
+                "line_num": 2,
+                "path": "./tests/samples/twilio_credentials",
+                "info": "FILE:./tests/samples/twilio_credentials|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,
@@ -24864,10 +25179,86 @@
         "ml_probability": null,
         "line_data_list": [
             {
+                "line": "NO4d2f64e2a108cd72f648b1984c3b5a13",
+                "line_num": 3,
+                "path": "./tests/samples/twilio_credentials",
+                "info": "FILE:./tests/samples/twilio_credentials|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "NO4d2f64e2a108cd72f648b1984c3b5a13",
+                "value_start": 0,
+                "value_end": 34,
+                "entropy": 4.02086
+            }
+        ]
+    },
+    {
+        "rule": "Twilio Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "XR4D2F64E2A108CD72F648B1984C3B5A13",
+                "line_num": 4,
+                "path": "./tests/samples/twilio_credentials",
+                "info": "FILE:./tests/samples/twilio_credentials|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "XR4D2F64E2A108CD72F648B1984C3B5A13",
+                "value_start": 0,
+                "value_end": 34,
+                "entropy": 4.02086
+            }
+        ]
+    },
+    {
+        "rule": "Twilio Multi",
+        "severity": "critical",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
                 "line": "AC4d2f64e2a108cd72f648b1984c3b5a13",
-                "line_num": 2,
-                "path": "./tests/samples/twilio_credentials_p",
-                "info": "FILE:./tests/samples/twilio_credentials_p|RAW",
+                "line_num": 1,
+                "path": "./tests/samples/twilio_multi",
+                "info": "FILE:./tests/samples/twilio_multi|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AC4d2f64e2a108cd72f648b1984c3b5a13",
+                "value_start": 0,
+                "value_end": 34,
+                "entropy": 4.02086
+            },
+            {
+                "line": "73c1a036711392721c39fdbd43537f21 - POSITIVE",
+                "line_num": 3,
+                "path": "./tests/samples/twilio_multi",
+                "info": "FILE:./tests/samples/twilio_multi|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "73c1a036711392721c39fdbd43537f21",
+                "value_start": 0,
+                "value_end": 32,
+                "entropy": 3.50393
+            }
+        ]
+    },
+    {
+        "rule": "Twilio Credentials",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AC4d2f64e2a108cd72f648b1984c3b5a13",
+                "line_num": 1,
+                "path": "./tests/samples/twilio_multi",
+                "info": "FILE:./tests/samples/twilio_multi|RAW",
                 "variable": null,
                 "variable_start": -2,
                 "variable_end": -2,

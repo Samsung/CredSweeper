@@ -45,6 +45,7 @@ class PptxScanner(AbstractScanner, ABC):
                 pptx_candidates = self.scanner.scan(string_data_provider)
                 candidates.extend(pptx_candidates)
             return candidates
-        except Exception as pptx_exc:
-            logger.warning("%s:%s", data_provider.file_path, pptx_exc)
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

@@ -37,7 +37,7 @@ class AbstractProvider(ABC):
             config: dict of credsweeper configuration
 
         Return:
-            file objects to analyse
+            file objects to analyze
 
         """
         raise NotImplementedError()

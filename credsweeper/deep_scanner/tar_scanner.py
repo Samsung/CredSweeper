@@ -57,7 +57,7 @@ class TarScanner(AbstractScanner, ABC):
                         tar_candidates = self.recursive_scan(tar_content_provider, depth, recursive_limit_size)
                         candidates.extend(tar_candidates)
             return candidates
-        except Exception as tar_exc:
+        except Exception as exc:  # pylint: disable=broad-exception-caught
             # too many exception types might be produced with broken tar
-            logger.warning("%s:%s", data_provider.file_path, tar_exc)
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

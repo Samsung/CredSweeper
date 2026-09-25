@@ -1,10 +1,13 @@
 import contextlib
+import ctypes
 import json
 import logging
 import multiprocessing
 import queue
 import signal
+import sys
 import threading
+import time
 from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple, Callable
 
@@ -14,8 +17,9 @@ from colorama import Style
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
 
+from credsweeper.logger.logger import SILENCE, TRACE
 from credsweeper.scanner.scanner import Scanner
-from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType, DEFAULT_ENCODING
+from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType, DEFAULT_ENCODING, Confidence
 from credsweeper.config.config import Config
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.credentials.candidate_key import CandidateKey
@@ -43,34 +47,36 @@ class CredSweeper:
     """
 
     def __init__(
-        self,
-        rule_path: Union[None, str, Path] = None,
-        config_path: Optional[str] = None,
-        json_filename: Union[None, str, Path] = None,
-        xlsx_filename: Union[None, str, Path] = None,
-        stdout: bool = False,
-        color: bool = False,
-        hashed: bool = False,
-        subtext: bool = False,
-        sort_output: bool = False,
-        use_filters: bool = True,
-        pool_count: int = 1,
-        ml_batch_size: Optional[int] = None,
-        ml_threshold: Union[int, float, ThresholdPreset] = ThresholdPreset.medium,
-        ml_config: Union[None, str, Path] = None,
-        ml_model: Union[None, str, Path] = None,
-        ml_providers: Optional[str] = None,
-        ml_threads_limit: Optional[int] = None,
-        find_by_ext: bool = False,
-        pedantic: bool = False,
-        depth: int = 0,
-        doc: bool = False,
-        severity: Union[Severity, str] = Severity.INFO,
-        size_limit: Optional[str] = None,
-        exclude_lines: Optional[List[str]] = None,
-        exclude_values: Optional[List[str]] = None,
-        thrifty: bool = False,
-        log_level: Optional[str] = None,
+            self,  #
+            rule_path: Union[None, str, Path] = None,  #
+            config_path: Optional[str] = None,  #
+            json_filename: Union[None, str, Path] = None,  #
+            xlsx_filename: Union[None, str, Path] = None,  #
+            stdout: bool = False,  #
+            color: bool = False,  #
+            hashed: bool = False,  #
+            subtext: bool = False,  #
+            sort_output: bool = False,  #
+            use_filters: bool = True,  #
+            pool_count: int = 1,  #
+            ml_batch_size: Optional[int] = None,  #
+            ml_threshold: Union[int, float, ThresholdPreset] = ThresholdPreset.medium,  #
+            ml_config: Union[None, str, Path] = None,  #
+            ml_model: Union[None, str, Path] = None,  #
+            ml_providers: Optional[str] = None,  #
+            ml_threads_limit: Optional[int] = None,  #
+            find_by_ext: bool = False,  #
+            pedantic: bool = False,  #
+            depth: int = 0,  #
+            doc: bool = False,  #
+            severity: Union[Severity, str] = Severity.INFO,  #
+            confidence: Union[Confidence, str] = Confidence.WEAK,  #
+            size_limit: Optional[str] = None,  #
+            time_limit: Optional[float] = None,  #
+            exclude_lines: Optional[List[str]] = None,  #
+            exclude_values: Optional[List[str]] = None,  #
+            thrifty: bool = False,  #
+            log_level: Optional[str] = None,  #
     ) -> None:
         """Initialize Advanced credential scanner.
 
@@ -98,7 +104,9 @@ class CredSweeper:
             depth: int - how deep container files will be scanned
             doc: boolean - document-specific scanning
             severity: Severity - minimum severity level of rule
+            confidence: Confidence - minimum confidence level of rule
             size_limit: optional string integer or human-readable format to skip oversize files
+            time_limit: optional positive float value to limit scan time per file
             exclude_lines: lines to omit in scan. Will be added to the lines already in config
             exclude_values: values to omit in scan. Will be added to the values already in config
             thrifty: free provider resources after scan to reduce memory consumption
@@ -109,6 +117,9 @@ class CredSweeper:
         if not (_severity := Severity.get(severity)):
             raise RuntimeError(f"Severity level provided: {severity}"
                                f" -- must be one of: {' | '.join([i.value for i in Severity])}")
+        if not (_confidence := Confidence.get(confidence)):
+            raise RuntimeError(f"Confidence level provided: {confidence}"
+                               f" -- must be one of: {' | '.join([i.value for i in Confidence])}")
         config_dict = self._get_config_dict(config_path=config_path,
                                             use_filters=use_filters,
                                             find_by_ext=find_by_ext,
@@ -116,6 +127,7 @@ class CredSweeper:
                                             depth=depth,
                                             doc=doc,
                                             severity=_severity,
+                                            confidence=_confidence,
                                             size_limit=size_limit,
                                             exclude_lines=exclude_lines,
                                             exclude_values=exclude_values)
@@ -137,6 +149,7 @@ class CredSweeper:
         self.ml_providers = ml_providers
         self.ml_threads_limit = ml_threads_limit
         self.thrifty = thrifty
+        self.time_limit = time_limit
         self.log_level = log_level
         self.__progress_queue: Optional[queue.Queue] = None
         self.__ml_validator: Optional[MlValidator] = None
@@ -160,6 +173,7 @@ class CredSweeper:
             depth: int,  #
             doc: bool,  #
             severity: Severity,  #
+            confidence: Confidence,  #
             size_limit: Optional[str],  #
             exclude_lines: Optional[List[str]],  #
             exclude_values: Optional[List[str]]) -> Dict[str, Any]:
@@ -171,6 +185,7 @@ class CredSweeper:
         config_dict["depth"] = depth
         config_dict["doc"] = doc
         config_dict["severity"] = severity.value
+        config_dict["confidence"] = confidence.value
 
         if exclude_lines is not None:
             config_dict["exclude"]["lines"] = config_dict["exclude"].get("lines", []) + exclude_lines
@@ -214,18 +229,10 @@ class CredSweeper:
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    @staticmethod
-    def pool_initializer(log_kwargs) -> None:
-        """Ignore SIGINT in child processes."""
-        logging.basicConfig(**log_kwargs)
-        signal.signal(signal.SIGINT, signal.SIG_IGN)
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
     def run(
-        self,
-        content_provider: AbstractProvider,
-        progress_callback: Optional[Callable[[str, int, int], None]] = None,
+            self,  #
+            content_provider: AbstractProvider,  #
+            progress_callback: Optional[Callable[[str, int, int], None]] = None,  #
     ) -> int:
         """Run an analysis of 'content_provider' object.
 
@@ -249,9 +256,9 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def scan(
-        self,
-        content_providers: Sequence[ContentProvider],
-        progress_callback: Optional[Callable[[str, int, int], None]],
+            self,  #
+            content_providers: Sequence[ContentProvider],  #
+            progress_callback: Optional[Callable[[str, int, int], None]],  #
     ) -> None:
         """Run scanning of files from an argument "content_providers".
 
@@ -268,38 +275,58 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def single_job_scan(
-        self,
-        content_providers: Sequence[ContentProvider],
-        progress_callback: Optional[Callable[[str, int, int], None]],
+            self,  #
+            content_providers: Sequence[ContentProvider],  #
+            progress_callback: Optional[Callable[[str, int, int], None]],  #
     ) -> None:
         """Performs scan in main thread"""
         logger.info("Scan for %s providers", len(content_providers))
         total = len(content_providers)
+        if progress_callback:
+            progress_callback(" file", 0, total)
         for n, provider in enumerate(content_providers, start=1):
-            if progress_callback:
-                progress_callback(" file", n, total)
-            provider_candidates = self.file_scan(provider)
+            if self.time_limit:
+                provider_candidates = CredSweeper.scan_time_limit(self.file_scan, provider, self.time_limit)
+            else:
+                provider_candidates = self.file_scan(provider)
             self.credential_manager.extend_credentials(provider_candidates)
             if self.thrifty:
                 provider.free()
+            if progress_callback:
+                progress_callback(" file", n, total)
         logger.info("Completed: processed %s providers with %s candidates", total,
                     self.credential_manager.len_credentials())
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+    @staticmethod
+    def _pool_initializer(log_kwargs) -> None:
+        """Ignore SIGINT in child processes."""
+        signal.signal(signal.SIGINT, signal.SIG_IGN)
+        logging.addLevelName(TRACE, "TRACE")
+        logging.addLevelName(SILENCE, "SILENCE")
+        log_kwargs["stream"] = sys.stdout
+        log_kwargs["force"] = True
+        logging.basicConfig(**log_kwargs)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
     def multi_jobs_scan(
-        self,
-        content_providers: Sequence[ContentProvider],
-        progress_callback: Optional[Callable[[str, int, int], None]],
+            self,  #
+            content_providers: Sequence[ContentProvider],  #
+            progress_callback: Optional[Callable[[str, int, int], None]],  #
     ) -> None:
         """Performs scan with multiple jobs"""
-        # use this separation to satisfy YAPF formatter
-        yapfix = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)s | %(message)s"
-        log_kwargs = {"format": yapfix}
+        for handler in logger.handlers:
+            if isinstance(handler, logging.StreamHandler) and handler.stream is sys.stdout:
+                _f = handler.formatter._fmt  # pylint: disable=W0212
+                break
+        else:
+            # use this separation to satisfy YAPF formatter
+            _f = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)d | %(message)s"
+        log_kwargs = {"format": _f}
         if isinstance(self.log_level, str):
             # is not None
-            if "SILENCE" == self.log_level:
-                logging.addLevelName(60, "SILENCE")
             log_kwargs["level"] = self.log_level
         len_providers = len(content_providers)
         pool_count = min(self.pool_count, len_providers)
@@ -330,7 +357,7 @@ class CredSweeper:
             progress_thread = None
             progress_manager = None
         with ctx.Pool(processes=pool_count,
-                      initializer=CredSweeper.pool_initializer,
+                      initializer=CredSweeper._pool_initializer,
                       initargs=(log_kwargs,)) as pool:  # yapf: disable
             try:
                 for scan_results in pool.imap_unordered(self.files_scan,
@@ -358,7 +385,10 @@ class CredSweeper:
         for provider in content_providers:
             if self.__progress_queue:
                 self.__progress_queue.put(1)
-            provider_candidates = self.file_scan(provider)
+            if self.time_limit:
+                provider_candidates = CredSweeper.scan_time_limit(self.file_scan, provider, self.time_limit)
+            else:
+                provider_candidates = self.file_scan(provider)
             candidates.extend(provider_candidates)
             if self.thrifty:
                 provider.free()
@@ -386,7 +416,6 @@ class CredSweeper:
                                                             content_provider.file_type, content_provider.info,
                                                             FilePathExtractor.FIND_BY_EXT_RULE)
             candidates.append(dummy_candidate)
-
         else:
             if self.config.depth or self.config.doc:
                 # deep scan with possible data representation
@@ -404,9 +433,9 @@ class CredSweeper:
     def post_processing(self, progress_callback: Optional[Callable[[str, int, int], None]]) -> None:
         """Machine learning validation for received credential candidates."""
         if purged := self.credential_manager.purge_duplicates():
-            logger.info("Purged %s duplicates", purged)
+            logger.debug("Purged %s duplicates", purged)
         if self._use_ml_validation():
-            logger.info("Grouping %s candidates", len(self.credential_manager.candidates))
+            logger.debug("Grouping %s candidates", len(self.credential_manager.candidates))
             new_cred_list: List[Candidate] = []
             cred_groups = self.credential_manager.group_credentials()
             ml_cred_groups: List[Tuple[CandidateKey, List[Candidate]]] = []
@@ -457,6 +486,7 @@ class CredSweeper:
                 x.line_data_list[0].path,  #
                 x.line_data_list[0].line_num,  #
                 x.severity,  #
+                x.confidence,  #
                 x.rule_name,  #
                 x.line_data_list[0].value_start,  #
                 x.line_data_list[0].value_end  #
@@ -510,3 +540,47 @@ class CredSweeper:
         if self.stdout:
             for credential in credentials:
                 print(credential.to_str(hashed=self.hashed, subtext=self.subtext))
+
+    @staticmethod
+    def scan_time_limit(file_scan, provider: ContentProvider, time_limit: float) -> List[Candidate]:
+        """Run file scan with a time limit."""
+        start_time = time.perf_counter()
+        _queue: queue.Queue[Union[Exception, List[Candidate]]] = queue.Queue()
+
+        def time_limited_thread(_provider):
+            try:
+                _queue.put(file_scan(_provider))
+            except Exception as _exc:  # pylint: disable=broad-exception-caught
+                # all exceptions are passed to main process through queue
+                _queue.put(_exc)
+
+        thread = threading.Thread(target=time_limited_thread, args=(provider, ), daemon=True)
+        thread.start()
+        thread.join(time_limit)
+        if thread.is_alive() and (thread_id := thread.ident) and thread_id is not None:
+            result = ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id),
+                                                                ctypes.py_object(TimeoutError))
+            if 0 == result:
+                raise ValueError("Wrong thread id")
+            if 1 < result:
+                ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id), None)
+                raise SystemError("PyThreadState_SetAsyncExc multiple threads executions")
+            # second chance with the same time limit
+            thread.join(time_limit)
+
+        try:
+            result = _queue.get_nowait()
+            if isinstance(result, list):
+                logger.info("Scan for '%s' completed in %.3f seconds", provider.descriptor,
+                            time.perf_counter() - start_time)
+                return result
+            raise result
+        except (queue.Empty, TimeoutError):
+            logger.warning("Scan for '%s' timed out in %.3f seconds", provider.descriptor,
+                           time.perf_counter() - start_time)
+            return []
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
+            logger.exception(exc)
+            result = exc
+        raise result

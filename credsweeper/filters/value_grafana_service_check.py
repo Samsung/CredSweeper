@@ -28,8 +28,8 @@ class ValueGrafanaServiceCheck(Filter):
 
         """
         with contextlib.suppress(Exception):
-            checksum = struct.unpack("<I", bytes.fromhex(line_data.value[38:]))[0]
-            data = line_data.value[:37].encode(ASCII)
+            checksum = struct.unpack("<I", bytes.fromhex(line_data.value[-8:]))[0]
+            data = line_data.value[:-9].encode(ASCII)
             crc32 = binascii.crc32(data)
             if checksum == crc32:
                 return False

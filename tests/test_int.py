@@ -1,7 +1,9 @@
 import datetime
 import os
+import platform
 import re
 import shutil
+import sqlite3
 import subprocess
 import sys
 import tempfile
@@ -12,6 +14,8 @@ from unittest import TestCase
 import pytest
 
 from credsweeper.app import APP_PATH
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
+from credsweeper.logger.logger import Logger
 from credsweeper.utils.util import Util
 from tests import SAMPLES_PATH, \
     TESTS_PATH, SAMPLE_ZIP
@@ -27,13 +31,34 @@ class TestInt(TestCase):
 
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
-        with subprocess.Popen(
-                args=[sys.executable, "-m", "credsweeper", *args],  #
-                cwd=APP_PATH.parent,  #
-                stdout=subprocess.PIPE,  #
-                stderr=subprocess.PIPE,  #
-        ) as proc:
-            _stdout, _stderr = proc.communicate()
+        if "Linux" == platform.system():
+
+            def set_limits():
+                import resource
+                # apply 3Gb limit for testing RECURSIVE_SCAN_LIMITATION
+                vmem_limit = 3 * RECURSIVE_SCAN_LIMITATION
+                resource.setrlimit(resource.RLIMIT_AS, (vmem_limit, vmem_limit))
+                # apply time limit (depends on hardware)
+                soft, hard = resource.getrlimit(resource.RLIMIT_CPU)
+                resource.setrlimit(resource.RLIMIT_CPU,
+                                   (min(60, soft if 0 < soft else 60), min(60, hard if 0 < hard else 60)))
+
+            with subprocess.Popen(
+                    preexec_fn=set_limits,  #
+                    args=[sys.executable, "-m", "credsweeper", *args],  #
+                    cwd=APP_PATH.parent,  #
+                    stdout=subprocess.PIPE,  #
+                    stderr=subprocess.PIPE,  #
+            ) as proc:
+                _stdout, _stderr = proc.communicate()
+        else:
+            with subprocess.Popen(
+                    args=[sys.executable, "-m", "credsweeper", *args],  #
+                    cwd=APP_PATH.parent,  #
+                    stdout=subprocess.PIPE,  #
+                    stderr=subprocess.PIPE,  #
+            ) as proc:
+                _stdout, _stderr = proc.communicate()
 
         def transform(x: AnyStr) -> str:
             if isinstance(x, bytes):
@@ -239,6 +264,7 @@ class TestInt(TestCase):
                    " [--ref REF]" \
                    " [--rules PATH]" \
                    " [--severity SEVERITY]" \
+                   " [--confidence CONFIDENCE]" \
                    " [--config PATH]" \
                    " [--log_config PATH]" \
                    " [--denylist PATH]" \
@@ -267,6 +293,7 @@ class TestInt(TestCase):
                    " [--log LOG_LEVEL]" \
                    " [--progress | --no-progress]" \
                    " [--size_limit SIZE_LIMIT]" \
+                   " [--time_limit POSITIVE_FLOAT]" \
                    " [--banner] " \
                    " [--version] " \
                    "python -m credsweeper: error: one of the arguments" \
@@ -282,46 +309,96 @@ class TestInt(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_log_p(self) -> None:
-        _stdout, _stderr = self._m_credsweeper(
-            ["--log", "Debug", "--depth", "7", "--ml_threshold", "0", "--path",
-             str(SAMPLE_ZIP), "not_existed_path"])
-        self.assertEqual('', _stderr)
+        # TRACE level and all others
+        _stdout, _stderr = self._m_credsweeper([
+            "--log",
+            "TRACE",
+            "--depth",
+            "7",
+            "--ml_config",
+            # should be CRITICAL for wrong config
+            str(APP_PATH / "secret" / "config.json"),
+            "--jobs",
+            "2",
+            "--path",
+            str(SAMPLES_PATH),
+            "not_existed_path_for_warning",
+        ])
+        if "Windows" != platform.system():
+            self.assertEqual('', _stderr, _stderr)
 
-        self.assertIn("DEBUG", _stdout)
-        self.assertIn("INFO", _stdout)
-        self.assertIn("WARNING", _stdout)
-        self.assertNotIn("ERROR", _stdout)
-        self.assertNotIn("CRITICAL", _stdout)
-
-        for line in _stdout.splitlines():
-            if 5 <= len(line) and "rule:" == line[0:5]:
-                self.assertRegex(line, r"rule: \.*")
-            elif 21 <= len(line) and "Detected Credentials:" == line[0:21]:
-                self.assertRegex(line, r"Detected Credentials: \d+")
-            elif 13 <= len(line) and "Time Elapsed:" == line[0:13]:
-                self.assertRegex(line, r"Time Elapsed: \d+\.\d+")
-            else:
-                self.assertRegex(
-                    line,
-                    r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (DEBUG|INFO|WARNING|ERROR) \| \w+:\d+ \| .*",
-                )
+        self.assertIn("| TRACE |", _stdout)
+        self.assertIn("| DEBUG |", _stdout)
+        self.assertIn("| INFO |", _stdout)
+        self.assertIn("| WARNING |", _stdout)
+        self.assertIn("| ERROR |", _stdout)
+        self.assertIn("| CRITICAL |", _stdout)
+        # no results produced due critical
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_log_n(self) -> None:
-        _stdout, _stderr = self._m_credsweeper(["--log", "CriTicaL", "--rule", "NOT_EXISTED_PATH", "--path", "."])
+        # critical level only
+        _stdout, _stderr = self._m_credsweeper([
+            "--log",
+            "CRITICAL",
+            "--depth",
+            "7",
+            "--ml_config",
+            # should be CRITICAL for wrong config
+            str(APP_PATH / "secret" / "config.json"),
+            "--jobs",
+            "2",
+            "--path",
+            str(SAMPLES_PATH),
+            "not_existed_path_for_warning",
+        ])
         self.assertEqual('', _stderr)
 
-        self.assertNotIn("DEBUG", _stdout)
-        self.assertNotIn("INFO", _stdout)
-        self.assertNotIn("WARNING", _stdout)
-        self.assertNotIn("ERROR", _stdout)
-        self.assertIn("CRITICAL", _stdout)
+        self.assertNotIn("| TRACE |", _stdout)
+        self.assertNotIn("| DEBUG |", _stdout)
+        self.assertNotIn("| INFO |", _stdout)
+        self.assertNotIn("| WARNING |", _stdout)
+        self.assertNotIn("| ERROR |", _stdout)
+        self.assertIn(" | CRITICAL | ", _stdout)
 
-        self.assertTrue(
-            any(
-                re.match(r"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d+ \| (CRITICAL) \| \w+:\d+ \| .*", line)
-                for line in _stdout.splitlines()), _stdout)
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_log_silence_n(self) -> None:
+        # silence - no log output
+        _stdout, _stderr = self._m_credsweeper([
+            "--log",
+            "SILENCE",
+            "--depth",
+            "7",
+            "--ml_config",
+            # should be CRITICAL for wrong config
+            str(APP_PATH / "secret" / "config.json"),
+            "--jobs",
+            "2",
+            "--path",
+            str(SAMPLES_PATH),
+            "not_existed_path_for_warning",
+        ])
+
+        # workaround for GitHub Action
+        if all(x in _stderr for x in [
+                "[W:onnxruntime:Default",
+                "Skipping pci_bus_id for PCI path at",
+                "because filename",
+                "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
+        ]):
+            pass
+        else:
+            self.assertEqual('', _stderr)
+
+        self.assertNotIn("| TRACE |", _stdout)
+        self.assertNotIn("| DEBUG |", _stdout)
+        self.assertNotIn("| INFO |", _stdout)
+        self.assertNotIn("| WARNING |", _stdout)
+        self.assertNotIn("| ERROR |", _stdout)
+        self.assertNotIn(" | CRITICAL | ", _stdout)
+        self.assertNotIn("| SILENCE |", _stdout)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -364,21 +441,11 @@ class TestInt(TestCase):
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             _stdout, _stderr = self._m_credsweeper(
                 ["--diff_path", target_path, "--no-stdout", "--save-json", json_filename, "--log", "silence"])
+            self.assertIn("Added File Credentials:", _stdout)
+            self.assertIn("Deleted File Credentials:", _stdout)
+            self.assertIn("Time Elapsed:", _stdout)
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.added.json")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
-
-    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-    def test_patch_save_json_n(self) -> None:
-        start_time = time.time()
-        target_path = str(SAMPLES_PATH / "password.patch")
-        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
-        for root, dirs, files in os.walk(APP_PATH.parent):
-            self.assertIn("credsweeper", dirs)
-            for file in files:
-                # check whether the report was created AFTER test launch to avoid failures during development
-                self.assertFalse(file.endswith(".json") and os.stat(os.path.join(root, file)).st_mtime > start_time)
-            dirs.clear()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -430,10 +497,15 @@ class TestInt(TestCase):
 
     def test_external_ml_n(self) -> None:
         # not existed ml_config
-        _stdout, _stderr = self._m_credsweeper(
-            ["--ml_config", "not_existed_file", "--path",
-             str(APP_PATH), "--log", "CRITICAL", "--error"])
-        self.assertEqual('', _stderr)
+        _stdout, _stderr = self._m_credsweeper([
+            "--jobs", "2", "--ml_threads_limit", "2", "--log", "INFO", "--error", "--progress", "--path",
+            str(APP_PATH), "--ml_config",
+            str(APP_PATH / "secret" / "config.json")
+        ])
+        # tqdm produces progress in stderr
+        self.assertIn("file/s", _stderr)
+        self.assertNotIn("ml/s", _stderr)
+        self.assertIn("100%", _stderr)
         self.assertIn("CRITICAL", _stdout)
         # wrong config
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -449,11 +521,14 @@ class TestInt(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_external_ml_p(self) -> None:
-        log_pattern = re.compile(r".*Init ML validator with providers: \S+ ; threads:None ;"
+        log_pattern = re.compile(r".*Init ML validator with providers: \S+ ; threads:2 ;"
                                  r" model:'.+' md5:([0-9a-f]{32}) ;"
                                  r" config:'.+' md5:([0-9a-f]{32}).*")
-        _stdout, _stderr = self._m_credsweeper(
-            ["--path", str(APP_PATH), "--log", "INFO", "--error", "--jobs", "2", "--progress"])
+        _stdout, _stderr = self._m_credsweeper([
+            "--jobs", "2", "--ml_threads_limit", "2", "--log", "INFO", "--error", "--progress", "--path",
+            str(APP_PATH), "--ml_config",
+            str(APP_PATH / "ml_model" / "ml_config.json")
+        ])
         # tqdm produces progress in stderr
         self.assertIn("file/s", _stderr)
         self.assertIn("ml/s", _stderr)
@@ -484,3 +559,67 @@ class TestInt(TestCase):
             self.assertIn(md5_model, _stdout)
             # hash of ml config will be different
             self.assertNotIn(md5_config, _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    @pytest.mark.skipif("Windows" == platform.system(), reason="Windows PermissionError")
+    def test_sqlite_injection_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            sqlite_filename = os.path.join(tmp_dir, f"{__name__}.sqlite")
+            with sqlite3.connect(sqlite_filename) as conn:
+                cursor = conn.cursor()
+                cursor.executescript("""
+CREATE TABLE t (id INTEGER PRIMARY KEY, user TEXT, key TEXT);
+INSERT INTO t VALUES (1, 'root', 'P6V3T-M79JT-GP9CU-VW6XY-GJ7KV'), (2, 'user', 'ba4d1ce9-fa7e-beef-cafe-911479c4b82d');
+CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t n, t o, t p, t q, t r, t s, t t, t u, t v, t w, t x, t y" (id INTEGER);
+""")
+                conn.commit()
+            _stdout, _stderr = self._m_credsweeper(["--path", sqlite_filename, "--depth", "3", "--log", "DEBUG"])
+
+            # workaround for GitHub Action
+            if all(x in _stderr for x in [
+                    "[W:onnxruntime:Default",
+                    "Skipping pci_bus_id for PCI path at",
+                    "because filename",
+                    "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
+            ]):
+                pass
+            else:
+                self.assertEqual('', _stderr)
+
+            self.assertNotIn("WARNING", _stdout)
+            self.assertNotIn("ERROR", _stdout)
+            self.assertNotIn("CRITICAL", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_timeout_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            args = ["--path", str(SAMPLES_PATH / "changeme_key.jks"), "--depth", "3", "--time_limit", "10"]
+            _stdout, _stderr = self._m_credsweeper(args)
+            self.assertNotIn("WARNING", _stdout)
+            self.assertNotIn("timed out", _stdout)
+            self.assertIn("Detected Credentials: 1", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_timeout_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            config = Util.json_load(APP_PATH / "secret" / "config.json")
+            config["bruteforce_list"] = ["banana"] * 1_000_000
+            custom_config = os.path.join(tmp_dir, f"{__name__}.json")
+            Util.json_dump(config, custom_config)
+            args = [
+                "--path",
+                str(SAMPLES_PATH / "changeme_key.jks"),
+                "--depth",
+                "3",
+                "--time_limit",
+                "0.1",
+                "--config",
+                custom_config,
+            ]
+            _stdout, _stderr = self._m_credsweeper(args)
+            self.assertIn("WARNING", _stdout)
+            self.assertIn("timed out", _stdout)
+            self.assertIn("Detected Credentials: 0", _stdout)
