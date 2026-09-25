@@ -1,9 +1,11 @@
+import json
 import mimetypes
 from typing import Dict
 
 import pandas as pd
 
 from credsweeper.app import APP_PATH
+from credsweeper.common.constants import UTF_8
 from credsweeper.utils.util import Util
 
 ML_CONFIG_PATH = APP_PATH / "ml_model" / "ml_config.json"
@@ -46,7 +48,8 @@ def model_config_preprocess(df_all: pd.DataFrame, doc_target: bool) -> Dict[str,
                         # collect all unknown extensions for error log
                         print(f"UNKNOWN EXTENSION: {extension}", flush=True)
                         unknown_extensions.append(extension)
-                Util.json_dump(model_config, ML_CONFIG_PATH)
+                with open(ML_CONFIG_PATH, 'w', encoding=UTF_8) as f:
+                    json.dump(model_config, f, indent=4, sort_keys=True, ensure_ascii=True)
                 if known_extensions != set(x["kwargs"]["extensions"]):
                     # the process must be restarted with updated config
                     raise RuntimeError("RESTART: differences in extensions:"

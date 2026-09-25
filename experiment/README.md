@@ -4,7 +4,7 @@ This code will allow you to retrain model on the CredData dataset
 
 ## Preparation
 
-- Make sure that you are using Python 3.10 or higher
+- Make sure that you are using Python 3.11 or higher
 
 - Download CredData dataset
 

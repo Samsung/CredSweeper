@@ -9,13 +9,13 @@ credsweeper.config.config module
 
 .. automodule:: credsweeper.config.config
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: credsweeper.config
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
