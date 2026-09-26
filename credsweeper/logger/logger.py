@@ -8,7 +8,7 @@ from credsweeper.app import APP_PATH
 from credsweeper.utils.util import Util
 
 TRACE = DEBUG >> 1  # half of DEBUG
-SILENCE = 10 + max(logging._levelToName.keys())  # pylint: disable=W0212
+SILENCE = max(logging._levelToName.keys()) << 1  # pylint: disable=W0212
 
 
 class Logger:
