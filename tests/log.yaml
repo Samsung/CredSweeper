@@ -1,0 +1,48 @@
+version: 1
+
+disable_existing_loggers: False
+
+formatters:
+    simple:
+        format: "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)d | %(message)s"
+    verbose:
+        format: "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(name)s | %(filename)s:%(lineno)d | %(message)s"
+
+handlers:
+    console:
+        class: logging.StreamHandler
+        level: INFO
+        formatter: simple
+        stream: ext://sys.stdout
+
+    debug:
+        class: logging.handlers.TimedRotatingFileHandler
+        level: TRACE
+        formatter: verbose
+        filename: ./log/debug.log
+        backupCount: 3
+        delay: True
+        when: midnight
+
+    warning:
+        class: logging.handlers.RotatingFileHandler
+        level: WARNING
+        formatter: verbose
+        filename: ./log/warning.log
+        maxBytes: 10485760
+        backupCount: 7
+
+root:
+    level: NOTSET
+    handlers: [console, debug, warning]
+
+loggers:
+    git:
+        level: WARNING
+        handlers: [console]
+        propagate: False
+
+    pdfminer:
+        level: ERROR
+        handlers: [console]
+        propagate: False
