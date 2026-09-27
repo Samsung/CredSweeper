@@ -1,10 +1,8 @@
 import platform
-import shutil
 import tempfile
 from pathlib import Path
 from unittest import TestCase
 
-from credsweeper.app import APP_PATH
 from credsweeper.common.constants import ASCII, UTF_8
 from tests import SAMPLES_PATH, TESTS_PATH
 from tests.test_int import TestInt
@@ -15,7 +13,7 @@ class TestLog(TestCase):
     def setUp(self):
         self.maxDiff = None
 
-    def test_log_p(self) -> None:
+    def test_log_file_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             test_log_cfg = Path(tmp_dir) / "log.yaml"
             with open(TESTS_PATH / "log.yaml", 'r', encoding=ASCII) as fi:

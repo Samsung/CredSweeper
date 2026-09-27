@@ -7,7 +7,6 @@ import sqlite3
 import subprocess
 import sys
 import tempfile
-import time
 from typing import AnyStr, Tuple
 from unittest import TestCase
 
@@ -15,10 +14,8 @@ import pytest
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
-from credsweeper.logger.logger import Logger
 from credsweeper.utils.util import Util
-from tests import SAMPLES_PATH, \
-    TESTS_PATH, SAMPLE_ZIP
+from tests import SAMPLES_PATH, TESTS_PATH
 
 CHECK_WORKFLOW_PATH = TESTS_PATH.parent / ".github" / "workflows" / "check.yml"
 
@@ -310,30 +307,35 @@ class TestInt(TestCase):
 
     def test_log_p(self) -> None:
         # TRACE level and all others
-        _stdout, _stderr = self._m_credsweeper([
-            "--log",
-            "TRACE",
-            "--depth",
-            "7",
-            "--ml_config",
-            # should be CRITICAL for wrong config
-            str(APP_PATH / "secret" / "config.json"),
-            "--jobs",
-            "2",
-            "--path",
-            str(SAMPLES_PATH),
-            "not_existed_path_for_warning",
-        ])
-        if "Windows" != platform.system():
-            self.assertEqual('', _stderr, _stderr)
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_filename = os.path.join(tmp_dir, "bad_ml_cfg.json")
+            with open(tmp_filename, 'w') as f:
+                f.write('{"char_set":"0123456789","thresholds":{"lowest":0.5,"low":0.6,"medium":0.7,"high":0.9,'
+                        '"highest":0.9},"features":[{"type":"FileExtension","kwargs":{}}]}')
+            _stdout, _stderr = self._m_credsweeper([
+                "--log",
+                "TRACE",
+                "--depth",
+                "7",
+                "--ml_config",
+                # should be ERROR + CRITICAL for wrong config
+                tmp_filename,
+                "--jobs",
+                "2",
+                "--path",
+                str(SAMPLES_PATH),
+                "not_existed_path_for_warning",
+            ])
+            if "Windows" != platform.system():
+                self.assertEqual('', _stderr, _stderr)
 
-        self.assertIn("| TRACE |", _stdout)
-        self.assertIn("| DEBUG |", _stdout)
-        self.assertIn("| INFO |", _stdout)
-        self.assertIn("| WARNING |", _stdout)
-        self.assertIn("| ERROR |", _stdout)
-        self.assertIn("| CRITICAL |", _stdout)
-        # no results produced due critical
+            self.assertIn("| TRACE |", _stdout)
+            self.assertIn("| DEBUG |", _stdout)
+            self.assertIn("| INFO |", _stdout)
+            self.assertIn("| WARNING |", _stdout)
+            self.assertIn("| ERROR |", _stdout)
+            self.assertIn("| CRITICAL |", _stdout)
+            # no results produced due critical
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -383,10 +385,10 @@ class TestInt(TestCase):
 
         # workaround for GitHub Action
         if all(x in _stderr for x in [
-                "[W:onnxruntime:Default",
-                "Skipping pci_bus_id for PCI path at",
-                "because filename",
-                "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
+            "[W:onnxruntime:Default",
+            "Skipping pci_bus_id for PCI path at",
+            "because filename",
+            "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
         ]):
             pass
         else:
@@ -578,10 +580,10 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
 
             # workaround for GitHub Action
             if all(x in _stderr for x in [
-                    "[W:onnxruntime:Default",
-                    "Skipping pci_bus_id for PCI path at",
-                    "because filename",
-                    "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
+                "[W:onnxruntime:Default",
+                "Skipping pci_bus_id for PCI path at",
+                "because filename",
+                "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
             ]):
                 pass
             else:
