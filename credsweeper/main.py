@@ -102,7 +102,6 @@ def scan(args: Namespace, content_provider: AbstractProvider) -> int:
                                progress_callback=Progress().callback if args.progress else None)
     except Exception as exc:  # pylint: disable=broad-exception-caught
         # fallback
-        logger.critical(exc, exc_info=True)
         logger.exception(exc)
     return -1
 
