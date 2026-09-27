@@ -2,12 +2,12 @@ import contextlib
 import ctypes
 import json
 import logging
-from logging.handlers import QueueHandler
 import multiprocessing
 import queue
 import signal
 import threading
 import time
+from logging.handlers import QueueHandler
 from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple, Callable
 
@@ -357,7 +357,7 @@ class CredSweeper:
                     logging.getLogger(record.name).handle(record)
 
         __log_queue = ctx.Queue()
-        log_thread = threading.Thread(target=log_relay, args=(__log_queue, ), daemon=True)
+        log_thread = threading.Thread(target=log_relay, args=(__log_queue,), daemon=True)  # yapf: disable
         log_thread.start()
         log_config = {
             x: y.level
@@ -374,6 +374,10 @@ class CredSweeper:
                                                         (content_providers[x::pool_count] for x in range(pool_count))):
                     for cred in scan_results:
                         self.credential_manager.append_credential(cred)
+            except KeyboardInterrupt as break_exc:
+                logger.warning("Interrupted: %s", break_exc)
+                pool.terminate()
+                raise
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 logger.critical("%s", exc)
                 pool.terminate()
@@ -568,7 +572,7 @@ class CredSweeper:
                 # all exceptions are passed to main process through queue
                 _queue.put(_exc)
 
-        thread = threading.Thread(target=time_limited_thread, args=(provider, ), daemon=True)
+        thread = threading.Thread(target=time_limited_thread, args=(provider,), daemon=True)  # yapf: disable
         thread.start()
         thread.join(time_limit)
         if thread.is_alive() and (thread_id := thread.ident) and thread_id is not None:
