@@ -365,35 +365,43 @@ class CredSweeper:
             if (isinstance(y, logging.Logger) and logging.NOTSET != y.level)
         }.copy()
         log_config[''] = logging.getLogger().level
-        with ctx.Pool(processes=pool_count,
-                      initializer=CredSweeper._pool_initializer,
-                      initargs=(__log_queue, log_config),
-                      ) as pool:  # yapf: disable
-            try:
-                for scan_results in pool.imap_unordered(self.files_scan,
-                                                        (content_providers[x::pool_count] for x in range(pool_count))):
-                    for cred in scan_results:
-                        self.credential_manager.append_credential(cred)
-            except KeyboardInterrupt as break_exc:
-                logger.warning("Interrupted: %s", break_exc)
-                pool.terminate()
-                raise
-            except Exception as exc:  # pylint: disable=broad-exception-caught
-                logger.critical("%s", exc)
-                pool.terminate()
-                raise
-            else:
-                pool.close()
-            finally:
-                pool.join()
-                __log_queue.put(None)
-                log_thread.join()
-                if self.__progress_queue and progress_thread:
-                    self.__progress_queue.put(None)
-                    progress_thread.join()
-                    self.__progress_queue = None
-                if progress_manager:
-                    progress_manager.shutdown()
+        pool = ctx.Pool(processes=pool_count,
+                        initializer=CredSweeper._pool_initializer,
+                        initargs=(__log_queue, log_config),
+                        )
+        try:
+            for scan_results in pool.imap_unordered(self.files_scan,
+                                                    (content_providers[x::pool_count] for x in range(pool_count))):
+                for cred in scan_results:
+                    self.credential_manager.append_credential(cred)
+        except KeyboardInterrupt:
+            logger.warning("Interrupted")
+            pool.terminate()
+            raise
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            logger.critical("%s", exc)
+            pool.terminate()
+            raise
+        else:
+            pool.close()
+        finally:
+            pool.join()
+
+        with contextlib.suppress(queue.Empty):
+            while True:
+                __log_queue.get_nowait()
+        __log_queue.put(None)
+        log_thread.join(timeout=1)
+
+        if self.__progress_queue and progress_thread:
+            with contextlib.suppress(queue.Empty):
+                while True:
+                    self.__progress_queue.get_nowait()
+            self.__progress_queue.put(None)
+            progress_thread.join(timeout=1)
+            self.__progress_queue = None
+        if progress_manager:
+            progress_manager.shutdown()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

@@ -248,10 +248,6 @@ jobs:
           fi
           echo "RELEASE_TIME=${RELEASE_TIME}" >> $GITHUB_ENV
 
-      - name: Uninstall released CredSweeper
-        run: |
-          python -m pip uninstall -y credsweeper
-
       - name: Checkout base CredSweeper
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
@@ -260,6 +256,7 @@ jobs:
 
       - name: Install base CredSweeper
         run: |
+          python -m pip uninstall -y credsweeper
           python -m pip install temp/CredSweeper.base
           # check the banner
           credsweeper --banner
@@ -287,6 +284,7 @@ jobs:
 
       - name: Install current CredSweeper
         run: |
+          python -m pip uninstall -y credsweeper
           python -m pip install temp/CredSweeper.head
           # check the banner
           credsweeper --banner
@@ -360,6 +358,14 @@ jobs:
           fi
 
           exit ${exit_code}
+
+      - name: Interrupt check
+        run: |
+          if ! timeout --signal=SIGINT 10s credsweeper --jobs $(nproc) --path data --log debug --progress; then
+            echo "Test interrupt passed"
+          else
+            exit 1
+          fi
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
