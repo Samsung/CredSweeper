@@ -1,3 +1,4 @@
+import platform
 import shutil
 import tempfile
 from pathlib import Path
@@ -33,7 +34,10 @@ class TestLog(TestCase):
             self.assertIn("| INFO |", _stdout)
             self.assertIn("| WARNING |", _stdout)
             self.assertTrue(test_log_dir.exists())
-            with open(test_log_dir / "debug.log", 'r', encoding=UTF_8) as debug_f:
+
+            utf8errors = "replace" if "Windows" == platform.system() else "strict"
+
+            with open(test_log_dir / "debug.log", 'r', encoding=UTF_8, errors=utf8errors) as debug_f:
                 debug_text = debug_f.read()
                 self.assertIn("| TRACE |", debug_text)
                 self.assertIn("| DEBUG |", debug_text)
@@ -45,7 +49,7 @@ class TestLog(TestCase):
                         continue
                     self.assertTrue(any(x in line for x in ["| TRACE |", "| DEBUG |", "| INFO |", "| WARNING |"]), line)
 
-            with open(test_log_dir / "warning.log", 'r', encoding=UTF_8) as warning_f:
+            with open(test_log_dir / "warning.log", 'r', encoding=UTF_8, errors=utf8errors) as warning_f:
                 warning_text = warning_f.read()
                 self.assertNotIn("| TRACE |", warning_text)
                 self.assertNotIn("| DEBUG |", warning_text)

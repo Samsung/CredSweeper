@@ -323,26 +323,8 @@ class CredSweeper:
         pool_count = min(self.pool_count, len_providers)
         logger.info("Scan in %s processes for %s providers", pool_count, len_providers)
         ctx = multiprocessing.get_context("spawn")
-        progress_manager = ctx.Manager()
-        log_config = {
-            x: y.level
-            for x, y in logging.Logger.manager.loggerDict.items()
-            if (isinstance(y, logging.Logger) and logging.NOTSET != y.level)
-        }
-        log_config[''] = logging.getLogger().level
-
-        def log_relay(log_queue: queue.Queue) -> None:
-            while True:
-                with contextlib.suppress(queue.Empty):
-                    record = log_queue.get(timeout=1)
-                    if record is None:
-                        break
-                    logging.getLogger(record.name).handle(record)
-
-        __log_queue = ctx.Queue()
-        _listener_thread = threading.Thread(target=log_relay, args=(__log_queue, ), daemon=True)
-        _listener_thread.start()
         if progress_callback:
+            progress_manager = ctx.Manager()
             self.__progress_queue = progress_manager.Queue()
 
             def progress_loop(progress_queue: queue.Queue, total_providers: int) -> None:
@@ -365,6 +347,24 @@ class CredSweeper:
             self.__progress_queue = None
             progress_thread = None
             progress_manager = None
+
+        def log_relay(log_queue: queue.Queue) -> None:
+            while True:
+                with contextlib.suppress(queue.Empty):
+                    record = log_queue.get(timeout=1)
+                    if record is None:
+                        break
+                    logging.getLogger(record.name).handle(record)
+
+        __log_queue = ctx.Queue()
+        log_thread = threading.Thread(target=log_relay, args=(__log_queue, ), daemon=True)
+        log_thread.start()
+        log_config = {
+            x: y.level
+            for x, y in logging.Logger.manager.loggerDict.items()
+            if (isinstance(y, logging.Logger) and logging.NOTSET != y.level)
+        }.copy()
+        log_config[''] = logging.getLogger().level
         with ctx.Pool(processes=pool_count,
                       initializer=CredSweeper._pool_initializer,
                       initargs=(__log_queue, log_config),
@@ -374,19 +374,22 @@ class CredSweeper:
                                                         (content_providers[x::pool_count] for x in range(pool_count))):
                     for cred in scan_results:
                         self.credential_manager.append_credential(cred)
-            except KeyboardInterrupt:
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                logger.critical("%s", exc)
+                pool.terminate()
                 raise
-            finally:
+            else:
                 pool.close()
+            finally:
                 pool.join()
                 __log_queue.put(None)
-                _listener_thread.join()
-        if self.__progress_queue and progress_thread:
-            self.__progress_queue.put(None)
-            progress_thread.join()
-            self.__progress_queue = None
-        if progress_manager:
-            progress_manager.shutdown()
+                log_thread.join()
+                if self.__progress_queue and progress_thread:
+                    self.__progress_queue.put(None)
+                    progress_thread.join()
+                    self.__progress_queue = None
+                if progress_manager:
+                    progress_manager.shutdown()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
