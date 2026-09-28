@@ -368,7 +368,7 @@ jobs:
           while [ 0 -lt $TIMER ]; do
             TIMER=$(( $TIMER - 1 ))
             ps -efww | grep -E "\s$test_pid\s"
-            if kill -0 $test_pid;
+            if kill -0 $test_pid; then
               echo "Process $test_pid alive # $TIMER"
             else
               echo "Process $test_pid dead # $TIMER"
