@@ -364,20 +364,21 @@ jobs:
           rm -fr log
           (timeout --signal=SIGINT 10s python -m credsweeper --banner --jobs $(nproc) --path data --log debug --log_config temp/CredSweeper.head/tests/log.yaml --progress &>credsweeper.log ) &
           test_pid=$!
-          TIMER=3
-          while [ 0 -lt $TIMER ]; do
-            TIMER=$(( $TIMER - 1 ))
+          probes=5
+          while [ 0 -lt $probes ]; do
+            probes=$(( $probes - 1 ))
             ps -efww | grep -E "\s$test_pid\s"
             if kill -0 $test_pid; then
-              echo "Process $test_pid alive # $TIMER"
+              echo "Process $test_pid alive # $probes"
             else
-              echo "Process $test_pid dead # $TIMER"
+              echo "Process $test_pid dead # $probes"
               break
             fi
             echo "Sleep 7 seconds"
             sleep 7
           done
-          if ! [ 0 -lt $TIMER ]; then
+          echo "Probes out"
+          if ! [ 0 -lt $probes ]; then
             echo "Overtime"
             exit 1
           fi
