@@ -8,6 +8,7 @@ import signal
 import threading
 import time
 from logging.handlers import QueueHandler
+from multiprocessing.context import SpawnContext
 from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple, Callable
 
@@ -151,6 +152,7 @@ class CredSweeper:
         self.thrifty = thrifty
         self.time_limit = time_limit
         self.log_level = log_level
+        self.__log_queue: Optional[queue.Queue] = None
         self.__progress_queue: Optional[queue.Queue] = None
         self.__ml_validator: Optional[MlValidator] = None
 
@@ -323,9 +325,10 @@ class CredSweeper:
         pool_count = min(self.pool_count, len_providers)
         logger.info("Scan in %s processes for %s providers", pool_count, len_providers)
         ctx = multiprocessing.get_context("spawn")
+        ctx_manager = ctx.Manager()
+
         if progress_callback:
-            progress_manager = ctx.Manager()
-            self.__progress_queue = progress_manager.Queue()
+            self.__progress_queue = ctx_manager.Queue()
 
             def progress_loop(progress_queue: queue.Queue, total_providers: int) -> None:
                 total = 0
@@ -346,7 +349,6 @@ class CredSweeper:
         else:
             self.__progress_queue = None
             progress_thread = None
-            progress_manager = None
 
         def log_relay(log_queue: queue.Queue) -> None:
             while True:
@@ -356,19 +358,46 @@ class CredSweeper:
                         break
                     logging.getLogger(record.name).handle(record)
 
-        __log_queue = ctx.Queue()
-        log_thread = threading.Thread(target=log_relay, args=(__log_queue,), daemon=True)  # yapf: disable
+        self.__log_queue = ctx_manager.Queue()
+        log_thread = threading.Thread(target=log_relay, args=(self.__log_queue,), daemon=True)  # yapf: disable
         log_thread.start()
+
+        try:
+            self._pool_scan(ctx, pool_count, content_providers)
+        finally:
+            # drain & stop log
+            with contextlib.suppress(queue.Empty):
+                while True:
+                    self.__log_queue.get_nowait()
+            self.__log_queue.put(None)
+            log_thread.join(timeout=1)
+            # drain & stop progress
+            if self.__progress_queue:
+                with contextlib.suppress(queue.Empty):
+                    while True:
+                        self.__progress_queue.get_nowait()
+                self.__progress_queue.put(None)
+            if progress_thread:
+                progress_thread.join(timeout=1)
+                self.__progress_queue = None
+
+            ctx_manager.shutdown()
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def _pool_scan(self, ctx: SpawnContext, pool_count: int, content_providers: Sequence[ContentProvider]) -> None:
+        """Auxiliary method to scan content providers with inner try-except block"""
         log_config = {
             x: y.level
             for x, y in logging.Logger.manager.loggerDict.items()
             if (isinstance(y, logging.Logger) and logging.NOTSET != y.level)
         }.copy()
         log_config[''] = logging.getLogger().level
+
         pool = ctx.Pool(
             processes=pool_count,
             initializer=CredSweeper._pool_initializer,
-            initargs=(__log_queue, log_config),
+            initargs=(self.__log_queue, log_config),
         )
         try:
             for scan_results in pool.imap_unordered(self.files_scan,
@@ -387,22 +416,6 @@ class CredSweeper:
             pool.close()
         finally:
             pool.join()
-
-        with contextlib.suppress(queue.Empty):
-            while True:
-                __log_queue.get_nowait()
-        __log_queue.put(None)
-        log_thread.join(timeout=1)
-
-        if self.__progress_queue and progress_thread:
-            with contextlib.suppress(queue.Empty):
-                while True:
-                    self.__progress_queue.get_nowait()
-            self.__progress_queue.put(None)
-            progress_thread.join(timeout=1)
-            self.__progress_queue = None
-        if progress_manager:
-            progress_manager.shutdown()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

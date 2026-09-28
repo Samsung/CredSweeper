@@ -367,7 +367,7 @@ jobs:
             echo "Test interrupt failed - positive exit?"
             exit 1
           fi
-          if ps -efww | grep python; then
+          if ps -efww | grep 'python.*multiprocessing'; then
             echo "Test interrupt failed - zombie processes?"
             killall python
             exit 1
