@@ -262,9 +262,11 @@ jobs:
 
       - name: Interrupt check
         run: |
+          cp -v temp/CredSweeper.head/tests/log.yaml log.yaml
+          sed -i 's/TRACE/DEBUG/g' log.yaml
           rm -fr log
           mkdir log
-          (time if ! (timeout --signal=SIGINT 10s python -m credsweeper --banner --jobs $(nproc) --path data --log debug --log_config temp/CredSweeper.head/tests/log.yaml --progress &>log/std.log); then echo FINISHED; fi) &
+          (time if ! (timeout --signal=SIGINT 10s python -m credsweeper --banner --jobs 2 --path data --log debug --log_config log.yaml --progress &>./log/console.log); then echo FINISHED; fi) &
           test_pid=$!
           probes=5
           while [ 0 -lt $probes ]; do
@@ -292,9 +294,10 @@ jobs:
           fi
 
           # check log from a worker
-          grep '| DEBUG | SpawnPoolWorker' ./log/debug.log | head -n 1
-          grep '| DEBUG | SpawnPoolWorker' ./log/credsweeper.log | head -n 1
-          grep '| WARNING | MainProcess:MainThread | app.py:.* | Interrupted' ./log/credsweeper.log
+          grep -E '\| DEBUG \| SpawnPoolWorker' ./log/debug.log | head -n 1
+          grep -E '\| INFO \| SpawnPoolWorker' ./log/console.log | head -n 1
+          grep -E '\| WARNING \| MainProcess:MainThread \| app.py:.* \| Interrupted' ./log/warning.log
+          grep -E '\| WARNING \| MainProcess:MainThread \| app.py:.* \| Interrupted' ./log/console.log
 
           echo "Test interrupt passed"
 
