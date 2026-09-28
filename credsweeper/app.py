@@ -365,10 +365,11 @@ class CredSweeper:
             if (isinstance(y, logging.Logger) and logging.NOTSET != y.level)
         }.copy()
         log_config[''] = logging.getLogger().level
-        pool = ctx.Pool(processes=pool_count,
-                        initializer=CredSweeper._pool_initializer,
-                        initargs=(__log_queue, log_config),
-                        )
+        pool = ctx.Pool(
+            processes=pool_count,
+            initializer=CredSweeper._pool_initializer,
+            initargs=(__log_queue, log_config),
+        )
         try:
             for scan_results in pool.imap_unordered(self.files_scan,
                                                     (content_providers[x::pool_count] for x in range(pool_count))):

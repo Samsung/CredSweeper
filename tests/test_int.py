@@ -580,10 +580,10 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
 
             # workaround for GitHub Action
             if all(x in _stderr for x in [
-                "[W:onnxruntime:Default",
-                "Skipping pci_bus_id for PCI path at",
-                "because filename",
-                "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
+                "[W:onnxruntime:Default",  #
+                "Skipping pci_bus_id for PCI path at",  #
+                "because filename",  #
+                "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",  #
             ]):
                 pass
             else:

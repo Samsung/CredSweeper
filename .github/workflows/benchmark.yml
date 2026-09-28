@@ -361,11 +361,18 @@ jobs:
 
       - name: Interrupt check
         run: |
-          if ! timeout --signal=SIGINT 10s credsweeper --jobs $(nproc) --path data --log debug --progress; then
-            echo "Test interrupt passed"
+          if ! timeout --signal=SIGINT 10s python credsweeper --jobs $(nproc) --path data --log debug --progress; then
+            echo "Interrupted"
           else
+            echo "Test interrupt failed - positive exit?"
             exit 1
           fi
+          if ps -efww | grep python; then
+            echo "Test interrupt failed - zombie processes?"
+            killall python
+            exit 1
+          fi
+          echo "Test interrupt passed"
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
