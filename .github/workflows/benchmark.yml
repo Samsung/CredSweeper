@@ -362,7 +362,7 @@ jobs:
       - name: Interrupt check
         run: |
           rm -fr log
-          (timeout --signal=SIGINT 10s python -m credsweeper --banner --jobs $(nproc) --path data --log debug --log_config temp/CredSweeper.head/tests/log.yaml --progress &>credsweeper.log ) &
+          (time (timeout --signal=SIGINT 10s python -m credsweeper --banner --jobs $(nproc) --path data --log debug --log_config temp/CredSweeper.head/tests/log.yaml --progress &>credsweeper.log) || echo FINISHED) &
           test_pid=$!
           probes=5
           while [ 0 -lt $probes ]; do
