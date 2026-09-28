@@ -19,6 +19,13 @@ from tests import SAMPLES_PATH, TESTS_PATH
 
 CHECK_WORKFLOW_PATH = TESTS_PATH.parent / ".github" / "workflows" / "check.yml"
 
+GITHUB_ONNX_WARNS = [
+    "[W:onnxruntime:Default",  #
+    "Skipping pci_bus_id for PCI path at",  #
+    "because filename",  #
+    "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",  #
+]
+
 
 class TestInt(TestCase):
     """Integration tests with CLI - must be excluded during coverage statistics"""
@@ -384,12 +391,7 @@ class TestInt(TestCase):
         ])
 
         # workaround for GitHub Action
-        if all(x in _stderr for x in [
-            "[W:onnxruntime:Default",  #
-            "Skipping pci_bus_id for PCI path at",  #
-            "because filename",  #
-            "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",  #
-        ]):
+        if all(x in _stderr for x in GITHUB_ONNX_WARNS):
             pass
         else:
             self.assertEqual('', _stderr)
@@ -579,12 +581,7 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
             _stdout, _stderr = self._m_credsweeper(["--path", sqlite_filename, "--depth", "3", "--log", "DEBUG"])
 
             # workaround for GitHub Action
-            if all(x in _stderr for x in [
-                "[W:onnxruntime:Default",  #
-                "Skipping pci_bus_id for PCI path at",  #
-                "because filename",  #
-                "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",  #
-            ]):
+            if all(x in _stderr for x in GITHUB_ONNX_WARNS):
                 pass
             else:
                 self.assertEqual('', _stderr)
