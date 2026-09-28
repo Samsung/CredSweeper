@@ -9,7 +9,6 @@ from credsweeper.credentials.candidate import Candidate, LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.filters.filter import Filter
 from credsweeper.logger.logger import TRACE
-
 from credsweeper.rules.rule import Rule
 
 logger = logging.getLogger(__name__)
