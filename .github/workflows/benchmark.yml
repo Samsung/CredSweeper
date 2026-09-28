@@ -268,7 +268,7 @@ jobs:
           probes=5
           while [ 0 -lt $probes ]; do
             probes=$(( $probes - 1 ))
-            ps -efww | grep -E "\s$test_pid\s"
+            ps -efww | grep -E "\s$test_pid\s" || true
             if kill -0 $test_pid; then
               echo "Process $test_pid alive # $probes"
             else
