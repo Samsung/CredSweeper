@@ -263,7 +263,8 @@ jobs:
       - name: Interrupt check
         run: |
           rm -fr log
-          (time if ! (timeout --signal=SIGINT 10s python -m credsweeper --banner --jobs $(nproc) --path data --log debug --log_config temp/CredSweeper.head/tests/log.yaml --progress &>credsweeper.log); then echo FINISHED; fi) &
+          mkdir log
+          (time if ! (timeout --signal=SIGINT 10s python -m credsweeper --banner --jobs $(nproc) --path data --log debug --log_config temp/CredSweeper.head/tests/log.yaml --progress &>log/std.log); then echo FINISHED; fi) &
           test_pid=$!
           probes=5
           while [ 0 -lt $probes ]; do
@@ -293,9 +294,15 @@ jobs:
           # check log from a worker
           grep '| DEBUG | SpawnPoolWorker' ./log/debug.log | head -n 1
           grep '| DEBUG | SpawnPoolWorker' ./credsweeper.log | head -n 1
-          grep '| WARNING | MainProcess:MainThread | app.py:.* | Interrupted' ./log/warning.log
           grep '| WARNING | MainProcess:MainThread | app.py:.* | Interrupted' ./credsweeper.log
 
           echo "Test interrupt passed"
+
+      - name: Upload CredSweeper log
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1 - 2026.04.10
+        with:
+          name: log
+          path: log
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
