@@ -295,9 +295,10 @@ jobs:
 
           # check log from a worker
           grep -E '\| DEBUG \| SpawnPoolWorker' ./log/debug.log | head -n 1
-          grep -E '\| INFO \| SpawnPoolWorker' ./log/console.log | head -n 1
-          grep -E '\| WARNING \| MainProcess:MainThread \| app.py:.* \| Interrupted' ./log/warning.log
-          grep -E '\| WARNING \| MainProcess:MainThread \| app.py:.* \| Interrupted' ./log/console.log
+          grep -E '\| DEBUG \| MainProcess' ./log/debug.log | head -n 1
+          grep -E '\| DEBUG \| MainProcess' ./log/console.log | head -n 1
+          grep -E '\| WARNING \| MainProcess:MainThread \| app.py:[0-9]+ \| Interrupted' ./log/warning.log
+          grep -E '\| WARNING \| MainProcess:MainThread \| app.py:[0-9]+ \| Interrupted' ./log/console.log
 
           echo "Test interrupt passed"
 

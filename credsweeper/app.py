@@ -366,16 +366,16 @@ class CredSweeper:
             self._pool_scan(ctx, pool_count, content_providers)
         finally:
             # drain & stop log
-            with contextlib.suppress(queue.Empty):
-                while True:
-                    self.__log_queue.get_nowait()
+            # with contextlib.suppress(queue.Empty):
+            #     while True:
+            #         self.__log_queue.get_nowait()
             self.__log_queue.put(None)
             log_thread.join(timeout=1)
             # drain & stop progress
             if self.__progress_queue:
-                with contextlib.suppress(queue.Empty):
-                    while True:
-                        self.__progress_queue.get_nowait()
+                # with contextlib.suppress(queue.Empty):
+                #     while True:
+                #         self.__progress_queue.get_nowait()
                 self.__progress_queue.put(None)
             if progress_thread:
                 progress_thread.join(timeout=1)

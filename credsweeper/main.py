@@ -219,7 +219,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     if args.banner:
         print(f"CredSweeper {__version__} crc32:{check_integrity():08x}")
     Logger.init_logging(args.log, args.log_config_path)
-    logger.info("Init CredSweeper object with arguments: %s CWD: %s", args, os.getcwd())
+    logger.debug("Init CredSweeper object with arguments: %s CWD: %s", args, os.getcwd())
     summary: Dict[str, int] = {}
     if args.path:
         logger.info("Run analyzer on path: %s", args.path)
