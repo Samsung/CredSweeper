@@ -361,17 +361,39 @@ jobs:
 
       - name: Interrupt check
         run: |
-          if ! timeout --signal=SIGINT 10s python credsweeper --jobs $(nproc) --path data --log debug --progress; then
-            echo "Interrupted"
-          else
-            echo "Test interrupt failed - positive exit?"
+          rm -fr log
+          (timeout --signal=SIGINT 10s python -m credsweeper --banner --jobs $(nproc) --path data --log debug --log_config temp/CredSweeper.head/tests/log.yaml --progress &>credsweeper.log ) &
+          test_pid=$!
+          TIMER=3
+          while [ 0 -lt $TIMER ]; do
+            TIMER=$(( $TIMER - 1 ))
+            ps -efww | grep -E "\s$test_pid\s"
+            if kill -0 $test_pid;
+              echo "Process $test_pid alive # $TIMER"
+            else
+              echo "Process $test_pid dead # $TIMER"
+              break
+            fi
+            echo "Sleep 7 seconds"
+            sleep 7
+          done
+          if ! [ 0 -lt $TIMER ]; then
+            echo "Overtime"
             exit 1
           fi
-          if ps -efww | grep 'python.*multiprocessing'; then
-            echo "Test interrupt failed - zombie processes?"
-            killall python
+          wait
+
+          if ps -efww | grep -E "^\w+\s+\w+\s+$test_pid\s"; then
+            echo "Child processes exist"
             exit 1
           fi
+
+          # check log from a worker
+          grep '| DEBUG | SpawnPoolWorker' ./log/debug.log | head -n 1
+          grep '| DEBUG | SpawnPoolWorker' ./credsweeper.log | head -n 1
+          grep '| WARNING | MainProcess:MainThread | app.py:.* | Interrupted' ./log/warning.log
+          grep '| WARNING | MainProcess:MainThread | app.py:.* | Interrupted' ./credsweeper.log
+
           echo "Test interrupt passed"
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
