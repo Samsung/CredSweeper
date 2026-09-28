@@ -293,8 +293,8 @@ jobs:
 
           # check log from a worker
           grep '| DEBUG | SpawnPoolWorker' ./log/debug.log | head -n 1
-          grep '| DEBUG | SpawnPoolWorker' ./credsweeper.log | head -n 1
-          grep '| WARNING | MainProcess:MainThread | app.py:.* | Interrupted' ./credsweeper.log
+          grep '| DEBUG | SpawnPoolWorker' ./log/credsweeper.log | head -n 1
+          grep '| WARNING | MainProcess:MainThread | app.py:.* | Interrupted' ./log/credsweeper.log
 
           echo "Test interrupt passed"
 
