@@ -385,10 +385,10 @@ class TestInt(TestCase):
 
         # workaround for GitHub Action
         if all(x in _stderr for x in [
-            "[W:onnxruntime:Default",
-            "Skipping pci_bus_id for PCI path at",
-            "because filename",
-            "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",
+            "[W:onnxruntime:Default",  #
+            "Skipping pci_bus_id for PCI path at",  #
+            "because filename",  #
+            "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+",  #
         ]):
             pass
         else:
