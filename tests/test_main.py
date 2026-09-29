@@ -329,19 +329,13 @@ class TestMain(unittest.TestCase):
             for rule in rules:
                 target = ','.join(sorted(list(rule["target"])))
                 values: list[str] = rule["values"]
-                rows.append((rule["name"], rule["type"], target, rule["severity"], rule["confidence"],
+                rows.append((rule["name"], rule["type"], target, rule["severity"].strip(), rule["confidence"].strip(),
                              f"```{values[0].replace('|', '&#124;')}```"))
                 for i in values[1:]:
                     rows.append(('', '', '', '', '', f"```{i.replace('|', '&#124;')}```"))
-            tab_lines = tabulate.tabulate(rows, headers, tablefmt="github", colalign=aligns,
-                                          headersalign=aligns).splitlines()
-            tab_lines[1] = tab_lines[1] \
-                .replace("--|--", ": | :") \
-                .replace(':', '-', count=1) \
-                .replace("|--", "| :") \
-                .replace("-|", " |")
+            table_text = tabulate.tabulate(rows, headers, tablefmt="pipe", colalign=aligns, headersalign=aligns)
             with open(TESTS_PATH / "RULES.md", 'w', encoding=UTF_8) as f:
-                f.write('\n'.join(tab_lines))
+                f.write(table_text)
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
