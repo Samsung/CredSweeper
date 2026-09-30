@@ -336,6 +336,7 @@ class TestMain(unittest.TestCase):
             table_text = tabulate.tabulate(rows, headers, tablefmt="pipe", colalign=aligns, headersalign=aligns)
             with open(TESTS_PATH / "RULES.md", 'w', encoding=UTF_8) as f:
                 f.write(table_text)
+                f.write('\n')
             rules_text = yaml.dump_all(rules, sort_keys=True)
             checksum = hashlib.md5(rules_text.encode()).hexdigest()
             # update the expected value manually if some changes
