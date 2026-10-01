@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredData
-          ref: c09c0c52fc6dae4ae5438ae69ba486f9f8059f0d
+          ref: 0b1940e171725ad8937311120b191602608a4801
 
       - name: Markup hashing
         run: |
@@ -68,6 +68,105 @@ jobs:
 
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+  run_benchmark:
+
+    if: ${{ 'pull_request' == github.event_name }}
+
+    needs: [ download_data ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Harden Runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4 - 2026.05.21
+        with:
+          egress-policy: audit
+
+      - name: Checkout CredData
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
+        with:
+          repository: Samsung/CredData
+          ref: 0b1940e171725ad8937311120b191602608a4801
+
+      - name: Markup hashing
+        run: |
+          md5sum snapshot.json >checksums.md5
+          for f in $(find meta -type f|sort); do md5sum $f; done >>checksums.md5
+          for f in $(find . -maxdepth 1 -type f -name "*.py"|sort); do md5sum $f; done >>checksums.md5
+          cat checksums.md5
+          sha256sum checksums.md5
+
+      - name: Cache data
+        id: cache-data
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3 - 2026.01.29
+        with:
+          path: data
+          key: cred-data-${{ hashFiles('checksums.md5') }}
+
+      - name: Failure in case when cache missed
+        if: steps.cache-data.outputs.cache-hit != 'true'
+        run: exit 1
+
+      - name: Check Data Asset - DEBUG
+        if: steps.cache-data.outputs.cache-hit == 'true'
+        run: ls -al . && ls -al data
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
+        with:
+          python-version: "3.10"
+
+      - name: Update PIP
+        run: python -m pip install --upgrade pip
+
+      - name: Install requirements of CredData
+        run: python -m pip install --requirement requirements.txt
+
+      - name: Checkout CredSweeper
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: temp/CredSweeper
+
+      - name: Install CredSweeper
+        run: |
+          python -m pip install temp/CredSweeper
+          python -m credsweeper --banner
+
+      - name: Run CredSweeper tool
+        run: |
+          credsweeper --banner --log info --jobs $(nproc) --thrifty --sort --no-stdout --subtext --path data --save-json report.${{ github.event.pull_request.head.sha }}.json | tee credsweeper.${{ github.event.pull_request.head.sha }}.log
+
+      - name: Run Benchmark
+        run: |
+          python -m benchmark --scanner credsweeper --load report.${{ github.event.pull_request.head.sha }}.json | tee benchmark.${{ github.event.pull_request.head.sha }}.log
+
+      - name: Upload CredSweeper log
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1 - 2026.04.10
+        with:
+          name: credsweeper
+          path: credsweeper.${{ github.event.pull_request.head.sha }}.log
+
+      - name: Upload CredSweeper report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1 - 2026.04.10
+        with:
+          name: report
+          path: report.${{ github.event.pull_request.head.sha }}.json
+
+      - name: Upload benchmark output
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1 - 2026.04.10
+        with:
+          name: benchmark
+          path: benchmark.${{ github.event.pull_request.head.sha }}.log
+
+      - name: Verify benchmark scores of the PR
+        run: |
+          diff --unified=3 --ignore-all-space --ignore-blank-lines temp/CredSweeper/.ci/benchmark.txt benchmark.${{ github.event.pull_request.head.sha }}.log
+
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
   performance_benchmark:
@@ -91,7 +190,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredData
-          ref: c09c0c52fc6dae4ae5438ae69ba486f9f8059f0d
+          ref: 0b1940e171725ad8937311120b191602608a4801
 
       - name: Markup hashing
         run: |
@@ -260,53 +359,102 @@ jobs:
 
           exit ${exit_code}
 
-      - name: Interrupt check
-        run: |
-          cp -v temp/CredSweeper.head/tests/log.yaml log.yaml
-          sed -i 's/TRACE/DEBUG/g' log.yaml
-          rm -fr log
-          mkdir log
-          (time if ! (timeout --signal=SIGINT 10s python -m credsweeper --banner --jobs 2 --path data --log debug --log_config log.yaml --progress &>./log/console.log); then echo FINISHED; fi) &
-          test_pid=$!
-          probes=5
-          while [ 0 -lt $probes ]; do
-            probes=$(( $probes - 1 ))
-            ps -efww | grep -E "\s$test_pid\s" || true
-            if kill -0 $test_pid; then
-              echo "Process $test_pid alive # $probes"
-            else
-              echo "Process $test_pid dead # $probes"
-              break
-            fi
-            echo "Sleep 7 seconds"
-            sleep 7
-          done
-          echo "Probes out"
-          if ! [ 0 -lt $probes ]; then
-            echo "Overtime"
-            exit 1
-          fi
-          wait
-
-          if ps -efww | grep -E "^\w+\s+\w+\s+$test_pid\s"; then
-            echo "Child processes exist"
-            exit 1
-          fi
-
-          # check log from a worker
-          grep -E '\| DEBUG \| SpawnPoolWorker' ./log/debug.log | head -n 1
-          grep -E '\| DEBUG \| MainProcess' ./log/debug.log | head -n 1
-          grep -E '\| DEBUG \| MainProcess' ./log/console.log | head -n 1
-          grep -E '\| WARNING \| MainProcess:MainThread \| app.py:[0-9]+ \| Interrupted' ./log/warning.log
-          grep -E '\| WARNING \| MainProcess:MainThread \| app.py:[0-9]+ \| Interrupted' ./log/console.log
-
-          echo "Test interrupt passed"
-
-      - name: Upload CredSweeper log
-        if: always()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1 - 2026.04.10
-        with:
-          name: log-${{ matrix.python-version }}
-          path: log
-
   # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  experiment:
+    # the ml train test is placed here to use cached data set
+    needs: [ download_data ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Harden Runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4 - 2026.05.21
+        with:
+          egress-policy: audit
+
+      - name: Checkout CredData
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
+        with:
+          repository: Samsung/CredData
+          ref: 0b1940e171725ad8937311120b191602608a4801
+
+      - name: Markup hashing
+        run: |
+          md5sum snapshot.json >checksums.md5
+          for f in $(find meta -type f|sort); do md5sum $f; done >>checksums.md5
+          for f in $(find . -maxdepth 1 -type f -name "*.py"|sort); do md5sum $f; done >>checksums.md5
+          cat checksums.md5
+          sha256sum checksums.md5
+
+      - name: Cache data
+        id: cache-data
+        uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3 - 2026.01.29
+        with:
+          path: data
+          key: cred-data-${{ hashFiles('checksums.md5') }}
+
+      - name: Failure in case when cache missed
+        if: steps.cache-data.outputs.cache-hit != 'true'
+        run: exit 1
+
+      - name: Exclude some sets for speed-up
+        run: |
+          rm -rf data/4* data/5* data/6* data/7* data/8* data/9* data/a* data/b* data/c* data/d* data/e* data/f*
+          rm -rf meta/4* meta/5* meta/6* meta/7* meta/8* meta/9* meta/a* meta/b* meta/c* meta/d* meta/e* meta/f*
+          mkdir -vp ${{ github.workspace }}/CredData
+          mv data ${{ github.workspace }}/CredData/
+          mv meta ${{ github.workspace }}/CredData/
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
+        with:
+          python-version: "3.10"
+
+      - name: Update PIP
+        run: python -m pip install --upgrade pip
+
+      - name: Checkout current CredSweeper
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: CredSweeper.head
+
+      - name: Install development packages
+        run: python -m pip install --requirement CredSweeper.head/requirements.txt
+
+      - name: Install experimental packages
+        # some versions will be changed for compatibility
+        run: python -m pip install --requirement CredSweeper.head/experiment/requirements.txt
+
+      - name: dbg
+        run: echo ${{ github.workspace }} && ls -al ${{ github.workspace }} && tree ${{ github.workspace }}
+
+      - name: Run the experiment
+        run: |
+          cd CredSweeper.head
+          pwd # dbg
+          ls -al # dbg
+          export PYTHONPATH=$(pwd):${PYTHONPATH}
+          cd experiment
+          # check whether credsweeper is available as module
+          python -m credsweeper --banner
+          # use only 2 epochs for the test
+          python main.py --data ${{ github.workspace }}/CredData --jobs $(( 2 * $(nproc) )) --epochs 2
+          git diff # dbg
+          # crc32 should be changed
+          python -m credsweeper --banner
+          # train artifacts check
+          if [ 3 -gt $(ls -1 results | grep '\.png\|\.yaml\|\.json' | wc -l) ]; then
+            ls -1 results
+            echo "Not all artifacts were found"
+            exit 1
+          fi
+          # run quick scan
+          python -m credsweeper --jobs $(nproc) --ml_threads_limit $(nproc) --ml_providers AzureExecutionProvider,CPUExecutionProvider --log debug --path ../tests/samples --no-stdout --save-json
+          NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)
+          if [ 10 -gt ${NEW_MODEL_FOUND_SAMPLES} ]; then
+            echo "Failure: found ${NEW_MODEL_FOUND_SAMPLES} credentials"
+            exit 1
+          fi

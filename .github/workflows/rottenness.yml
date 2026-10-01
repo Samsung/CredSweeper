@@ -1,0 +1,69 @@
+# This workflow checks whether last release is not too old
+
+name: Check last release
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '58 23 * * 0'
+
+permissions:
+  contents: read
+
+jobs:
+
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+  rottenness:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Harden Runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4 - 2026.05.21
+        with:
+          egress-policy: audit
+
+      - name: Check last release date
+        id: last_release_check
+        run: |
+          latest_release="$(curl --silent https://api.github.com/repos/Samsung/CredSweeper/releases/latest)"
+          published_date=$(echo "${latest_release}" | jq --raw-output '.published_at')
+          release_age=$(( $(date +%s) - $(date --date="${published_date}" +%s) ))
+          if [ 0 -ge ${release_age} ]; then
+              echo "Probably, release: ${published_date} and current timezone were different"
+              release_age=0
+          fi
+          echo "Release age: ${release_age} seconds"
+          tag_name=$(echo "${latest_release}" | jq --raw-output '.tag_name')
+          if [ $(( 60 * 60 * 24 * 28 )) -gt ${release_age} ]; then
+              echo "Release is fresh"
+          else
+              echo "Release is rotten"
+              echo "TAG_NAME=${tag_name}" >> $GITHUB_ENV
+              exit 1
+          fi
+
+      - name: Checkout current code of default branch
+        if: ${{ failure() && steps.last_release_check.conclusion == 'failure' }}
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
+        with:
+          repository: Samsung/CredSweeper
+          ref: main
+          path: main
+
+      - name: Checkout last release code
+        if: ${{ failure() && steps.last_release_check.conclusion == 'failure' }}
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
+        with:
+          repository: Samsung/CredSweeper
+          ref: ${{ env.TAG_NAME }}
+          path: ${{ env.TAG_NAME }}
+
+      - name: Compare source code of versions
+        if: ${{ failure() && steps.last_release_check.conclusion == 'failure' }}
+        run: diff --recursive ${{ env.TAG_NAME }}/credsweeper ${{ github.event.repository.default_branch }}/credsweeper
