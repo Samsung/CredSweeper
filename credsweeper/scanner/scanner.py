@@ -11,7 +11,6 @@ from credsweeper.credentials.candidate import Candidate
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.logger.logger import TRACE
-
 from credsweeper.rules.rule import Rule
 from credsweeper.scanner.scan_type.multi_pattern import MultiPattern
 from credsweeper.scanner.scan_type.pem_key_pattern import PemKeyPattern

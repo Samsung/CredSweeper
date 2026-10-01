@@ -554,7 +554,7 @@ class CredSweeper:
                 # all exceptions are passed to main process through queue
                 _queue.put(_exc)
 
-        thread = threading.Thread(target=time_limited_thread, args=(provider, ), daemon=True)
+        thread = threading.Thread(target=time_limited_thread, args=(provider,), daemon=True)  # yapf: disable
         thread.start()
         thread.join(time_limit)
         if thread.is_alive() and (thread_id := thread.ident) and thread_id is not None:
