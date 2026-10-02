@@ -53,10 +53,10 @@ class ValuePatternCheck(Filter):
         pattern_length = max(DEFAULT_PATTERN_LEN, pattern_len)
         if MIN_DATA_LEN <= pattern_length:
             # base64 long sequences may contain 0x00 or 0xFF inside
-            pattern = fr"([^\sA/_])\1{{{str(pattern_length-1)},}}"
+            pattern = fr"([^\sA/_])\1{{{str(pattern_length - 1)},}}"
         else:
             # up to 256 symbols length
-            pattern = fr"(\S)\1{{{str(pattern_length-1)},}}"
+            pattern = fr"(\S)\1{{{str(pattern_length - 1)},}}"
         return re.compile(pattern)
 
     def equal_pattern_check(self, value: str, bit_length: int) -> bool:
