@@ -897,8 +897,6 @@ class TestMain(unittest.TestCase):
             "json_filename": "output.json",
         })
 
-    # todo: fix when python 3.10 support ends. pycache from python3.10 is not recognized
-    @pytest.mark.skipif(10 == sys.version_info.minor, reason="pycache sample from python 3.11 is not recognized")
     def test_data_scan_depth_3_pedantic_p(self):
         # scan with deep 3 and pedantic
         self.data_scan({

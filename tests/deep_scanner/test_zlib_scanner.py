@@ -51,8 +51,6 @@ class TestZlibScanner(unittest.TestCase):
     def test_decompress_static_p(self):
         self.assertEqual(AZ_DATA, ZlibScanner.decompress(limit=MAX_LINE_LENGTH, data=ZLIB_DATA))
 
-    # todo: fix when python 3.10 support ends
-    @pytest.mark.skipif(10 == sys.version_info.minor, reason="zlib.compress was changed in 3.11")
     def test_decompress_n(self):
         self.assertTrue(CHUNK_STEP_SIZE < CHUNK_SIZE < MAX_LINE_LENGTH)
         total_counter = check_counter = 0
@@ -69,8 +67,6 @@ class TestZlibScanner(unittest.TestCase):
                 ZlibScanner.decompress(CHUNK_STEP_SIZE, zlib_data)
         self.assertTrue(100 < check_counter < total_counter)
 
-    # todo: fix when python 3.10 support ends
-    @pytest.mark.skipif(10 == sys.version_info.minor, reason="zlib.compress was changed in 3.11")
     def test_decompress_p(self):
         total_counter = check_counter = 0
         for level, wbits in itertools.product(list(range(10)), list(range(8, 32))):

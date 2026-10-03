@@ -8,7 +8,7 @@ There is applied custom documentation, so auto-generation might fail. Please, us
 With the command new sources might be updated (in /docs directory):
 
 ```bash
-sphinx-apidoc --force --full --ext-autodoc ../credsweeper -o source/
+sphinx-apidoc --force --full --no-toc --ext-autodoc ../credsweeper -o source/
 ```
 
 Edit, then check with command:
