@@ -324,6 +324,14 @@ credsweeper.deep\_scanner.tmx\_scanner module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.deep\_scanner.toml\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.toml_scanner
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 credsweeper.deep\_scanner.xls\_scanner module
 ---------------------------------------------
 

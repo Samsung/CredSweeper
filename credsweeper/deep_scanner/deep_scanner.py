@@ -42,6 +42,7 @@ from credsweeper.deep_scanner.strings_scanner import StringsScanner
 from credsweeper.deep_scanner.tar_scanner import TarScanner
 from credsweeper.deep_scanner.tmx_scanner import TmxScanner
 from credsweeper.deep_scanner.xls_scanner import XlsScanner
+from credsweeper.deep_scanner.toml_scanner import TomlScanner
 from credsweeper.deep_scanner.xlsx_scanner import XlsxScanner
 from credsweeper.deep_scanner.xml_scanner import XmlScanner
 from credsweeper.deep_scanner.zip_scanner import ZipScanner
@@ -91,6 +92,7 @@ class DeepScanner(
     SnkScanner,  #
     StringsScanner,  #
     TarScanner,  #
+    TomlScanner,  #
     DebScanner,  #
     XmlScanner,  #
     XlsScanner,  #
@@ -251,6 +253,8 @@ class DeepScanner(
                 deep_scanners.append(LangScanner)
                 if LexerScanner.match(data):
                     deep_scanners.append(LexerScanner)
+                if TomlScanner.match(data):
+                    deep_scanners.append(TomlScanner)
                 if CsvScanner.match(data):
                     deep_scanners.append(CsvScanner)
                 if EncoderScanner.match(data):
