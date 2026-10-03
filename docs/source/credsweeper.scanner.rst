@@ -17,13 +17,13 @@ credsweeper.scanner.scanner module
 
 .. automodule:: credsweeper.scanner.scanner
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: credsweeper.scanner
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:

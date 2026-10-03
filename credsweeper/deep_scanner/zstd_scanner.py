@@ -31,7 +31,7 @@ class ZstdScanner(AbstractScanner, ABC):
     def decompress(limit: int, data: bytes) -> None | bytes:
         """Decompress zstd compressed data"""
         if (3, 14) > sys.version_info:
-            # Python 3.10, 3.11, 3.12, 3.13
+            # Python 3.11, 3.12, 3.13
             value = zstd.decompress(data, limit)
             if isinstance(value, bytes):
                 return value

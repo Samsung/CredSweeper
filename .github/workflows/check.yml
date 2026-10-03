@@ -96,7 +96,7 @@ jobs:
       - name: Banner and version check
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         env:
-          CREDSWEEPER_BANNER: "CredSweeper 1.18.5 crc32:ed1e5645"
+          CREDSWEEPER_BANNER: "CredSweeper 1.19.0 crc32:4112951b"
         run: |
           banner="$(python -m credsweeper --banner | grep CredSweeper | head -1)"
           echo "banner = '${banner}'"
@@ -106,10 +106,6 @@ jobs:
           fi
 
       # # # pylint
-
-      - name: Analysing the code with pylint and minimum Python version 3.10
-        if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
-        run: pylint --py-version=3.10 --verbose credsweeper
 
       - name: Analysing the code with pylint and minimum Python version 3.11
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
@@ -153,7 +149,7 @@ jobs:
           pip install --requirement requirements.txt
           make html
           python -m sphinx -T -E -b html -d _build/doctrees -D language=en ./source/ ./_html
-          sphinx-apidoc --force --full --ext-autodoc ../credsweeper -o source/
+          sphinx-apidoc --force --full --no-toc --ext-autodoc ../credsweeper -o source/
           git checkout source/conf.py source/index.rst source/credsweeper.rst
           if [ 0 -ne $(git ls-files -m | wc -l) ]; then
             git diff
