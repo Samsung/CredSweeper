@@ -257,8 +257,8 @@ class TestInt(TestCase):
 
         # Merge more than two whitespaces into one because _stdout and _stderr are changed based on the terminal size
         output = " ".join(_stderr.split())
-        # github workaround
-        if "did not match expected pattern of [0-9a-f]+:[0-9a-f]+:[0-9a-f]+[.][0-9a-f]+" in output:
+        # GitHub workaround
+        if all(x in output for x in GITHUB_ONNX_WARNS):
             cutpos = output.find("usage:")
             output = output[cutpos:]
 
@@ -337,9 +337,7 @@ class TestInt(TestCase):
                 str(SAMPLES_PATH),
                 "not_existed_path_for_warning",
             ])
-            if all(x in _stderr for x in GITHUB_ONNX_WARNS) or "Windows" == platform.system():
-                pass
-            else:
+            if not all(x in _stderr for x in GITHUB_ONNX_WARNS) and "Windows" != platform.system():
                 self.assertEqual('', _stderr, repr(_stderr.encode()))
 
             self.assertIn("| TRACE |", _stdout)
@@ -370,9 +368,7 @@ class TestInt(TestCase):
         ])
 
         # workaround for GitHub Action
-        if all(x in _stderr for x in GITHUB_ONNX_WARNS):
-            pass
-        else:
+        if not all(x in _stderr for x in GITHUB_ONNX_WARNS):
             self.assertEqual('', _stderr, repr(_stderr.encode()))
 
         self.assertNotIn("| TRACE |", _stdout)
@@ -402,9 +398,7 @@ class TestInt(TestCase):
         ])
 
         # workaround for GitHub Action
-        if all(x in _stderr for x in GITHUB_ONNX_WARNS):
-            pass
-        else:
+        if not all(x in _stderr for x in GITHUB_ONNX_WARNS):
             self.assertEqual('', _stderr, repr(_stderr.encode()))
 
         self.assertNotIn("| TRACE |", _stdout)
@@ -471,9 +465,7 @@ class TestInt(TestCase):
             _stdout, _stderr = self._m_credsweeper(args)
 
             # workaround for GitHub Action
-            if all(x in _stderr for x in GITHUB_ONNX_WARNS):
-                pass
-            else:
+            if not all(x in _stderr for x in GITHUB_ONNX_WARNS):
                 self.assertEqual('', _stderr, repr(_stderr.encode()))
 
             self.assertNotIn("CRITICAL", _stdout)
@@ -489,9 +481,7 @@ class TestInt(TestCase):
             _stdout, _stderr = self._m_credsweeper(args)
 
             # workaround for GitHub Action
-            if all(x in _stderr for x in GITHUB_ONNX_WARNS):
-                pass
-            else:
+            if not all(x in _stderr for x in GITHUB_ONNX_WARNS):
                 self.assertEqual('', _stderr, repr(_stderr.encode()))
 
             self.assertNotIn("CRITICAL", _stdout)
@@ -506,7 +496,11 @@ class TestInt(TestCase):
         _stdout, _stderr = self._m_credsweeper(
             ["--config", "not_existed_file", "--path",
              str(APP_PATH), "--log", "CRITICAL"])
-        self.assertEqual('', _stderr, repr(_stderr.encode()))
+
+        # workaround for GitHub Action
+        if not all(x in _stderr for x in GITHUB_ONNX_WARNS):
+            self.assertEqual('', _stderr, repr(_stderr.encode()))
+
         self.assertIn("CRITICAL", _stdout)
         # wrong config
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -518,9 +512,7 @@ class TestInt(TestCase):
                  str(APP_PATH), "--log", "CRITICAL"])
 
             # workaround for GitHub Action
-            if all(x in _stderr for x in GITHUB_ONNX_WARNS):
-                pass
-            else:
+            if not all(x in _stderr for x in GITHUB_ONNX_WARNS):
                 self.assertEqual('', _stderr, repr(_stderr.encode()))
 
             self.assertIn("CRITICAL", _stdout)
@@ -549,9 +541,7 @@ class TestInt(TestCase):
                  str(APP_PATH), "--log", "CRITICAL"])
 
             # workaround for GitHub Action
-            if all(x in _stderr for x in GITHUB_ONNX_WARNS):
-                pass
-            else:
+            if not all(x in _stderr for x in GITHUB_ONNX_WARNS):
                 self.assertEqual('', _stderr, repr(_stderr.encode()))
 
             self.assertIn("CRITICAL", _stdout)
@@ -593,9 +583,7 @@ class TestInt(TestCase):
             _stdout, _stderr = self._m_credsweeper(args)
 
             # workaround for GitHub Action
-            if all(x in _stderr for x in GITHUB_ONNX_WARNS):
-                pass
-            else:
+            if not all(x in _stderr for x in GITHUB_ONNX_WARNS):
                 self.assertEqual('', _stderr, repr(_stderr.encode()))
 
             self.assertNotIn("CRITICAL", _stdout, _stdout)
@@ -621,9 +609,7 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
             _stdout, _stderr = self._m_credsweeper(["--path", sqlite_filename, "--depth", "3", "--log", "DEBUG"])
 
             # workaround for GitHub Action
-            if all(x in _stderr for x in GITHUB_ONNX_WARNS):
-                pass
-            else:
+            if not all(x in _stderr for x in GITHUB_ONNX_WARNS):
                 self.assertEqual('', _stderr, repr(_stderr.encode()))
 
             self.assertNotIn("WARNING", _stdout)
