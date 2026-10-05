@@ -17,13 +17,13 @@ credsweeper.ml\_model.ml\_validator module
 
 .. automodule:: credsweeper.ml_model.ml_validator
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
 
 Module contents
 ---------------
 
 .. automodule:: credsweeper.ml_model
    :members:
-   :undoc-members:
    :show-inheritance:
+   :undoc-members:
