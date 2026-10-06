@@ -23,7 +23,7 @@ SAMPLES_POST_CRED_COUNT = 619
 
 # archived credentials that are not found without --depth
 SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 181
-SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 47
+SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 50
 SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 8
 
 # well known string with all latin letters

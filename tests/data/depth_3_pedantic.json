@@ -21014,6 +21014,48 @@
         "rule": "Token",
         "severity": "high",
         "confidence": "moderate",
+        "ml_probability": 0.98,
+        "line_data_list": [
+            {
+                "line": "X_Auth_Tokens[0] = '\\\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\\\r\\\\n'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE:./tests/samples/sample.py|STRUCT|STRING:10|TOML|KEYWORD",
+                "variable": "X_Auth_Tokens[0]",
+                "variable_start": 0,
+                "variable_end": 16,
+                "value": "\\\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\\\r\\\\n",
+                "value_start": 20,
+                "value_end": 69,
+                "entropy": 3.97718
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.98,
+        "line_data_list": [
+            {
+                "line": "X_Auth_Tokens[0] = '\\\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\\\r\\\\n'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE:./tests/samples/sample.py|STRUCT|STRING:10|TOML|KEYWORD",
+                "variable": "X_Auth_Tokens[0]",
+                "variable_start": 0,
+                "variable_end": 16,
+                "value": "\\\\t8ab20238fb3ef48823e75469b5712d3f0baf2e58\\\\r\\\\n",
+                "value_start": 20,
+                "value_end": 69,
+                "entropy": 3.97718
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
         "ml_probability": 0.998,
         "line_data_list": [
             {
@@ -21175,6 +21217,48 @@
                 "value_start": 29,
                 "value_end": 54,
                 "entropy": 3.31908
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.992,
+        "line_data_list": [
+            {
+                "line": "X_Auth_Tokens[1] = '\\\\tf692a26934cc39327e912b102b5ed60d31da9a34\\\\r\\\\n'",
+                "line_num": 2,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE:./tests/samples/sample.py|STRUCT|STRING:10|TOML|KEYWORD",
+                "variable": "X_Auth_Tokens[1]",
+                "variable_start": 0,
+                "variable_end": 16,
+                "value": "\\\\tf692a26934cc39327e912b102b5ed60d31da9a34\\\\r\\\\n",
+                "value_start": 20,
+                "value_end": 69,
+                "entropy": 3.99515
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.992,
+        "line_data_list": [
+            {
+                "line": "X_Auth_Tokens[1] = '\\\\tf692a26934cc39327e912b102b5ed60d31da9a34\\\\r\\\\n'",
+                "line_num": 2,
+                "path": "./tests/samples/sample.py",
+                "info": "FILE:./tests/samples/sample.py|STRUCT|STRING:10|TOML|KEYWORD",
+                "variable": "X_Auth_Tokens[1]",
+                "variable_start": 0,
+                "variable_end": 16,
+                "value": "\\\\tf692a26934cc39327e912b102b5ed60d31da9a34\\\\r\\\\n",
+                "value_start": 20,
+                "value_end": 69,
+                "entropy": 3.99515
             }
         ]
     },
@@ -22130,6 +22214,69 @@
                 "value_start": 17,
                 "value_end": 249,
                 "entropy": 5.84741
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "tokens[0] = 'baf8b6ffb1500dbaa204d5b5d6f9168e8f84d3d2'",
+                "line_num": 1,
+                "path": "./tests/samples/sample.toml",
+                "info": "FILE:./tests/samples/sample.toml|TOML|DICT:list|DICT:sample|KEYWORD",
+                "variable": "tokens[0]",
+                "variable_start": 0,
+                "variable_end": 9,
+                "value": "baf8b6ffb1500dbaa204d5b5d6f9168e8f84d3d2",
+                "value_start": 13,
+                "value_end": 53,
+                "entropy": 3.62572
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "tokens[1] = '9b305fb417a268d878a09ce9db8b2be931dfc6bf'",
+                "line_num": 2,
+                "path": "./tests/samples/sample.toml",
+                "info": "FILE:./tests/samples/sample.toml|TOML|DICT:list|DICT:sample|KEYWORD",
+                "variable": "tokens[1]",
+                "variable_start": 0,
+                "variable_end": 9,
+                "value": "9b305fb417a268d878a09ce9db8b2be931dfc6bf",
+                "value_start": 13,
+                "value_end": 53,
+                "entropy": 3.84644
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "tokens[2] = '1607997c52db7fd09864047493c82f538573339a'",
+                "line_num": 3,
+                "path": "./tests/samples/sample.toml",
+                "info": "FILE:./tests/samples/sample.toml|TOML|DICT:list|DICT:sample|KEYWORD",
+                "variable": "tokens[2]",
+                "variable_start": 0,
+                "variable_end": 9,
+                "value": "1607997c52db7fd09864047493c82f538573339a",
+                "value_start": 13,
+                "value_end": 53,
+                "entropy": 3.72572
             }
         ]
     },

@@ -41,14 +41,14 @@ from credsweeper.deep_scanner.squashfs_scanner import SquashfsScanner
 from credsweeper.deep_scanner.strings_scanner import StringsScanner
 from credsweeper.deep_scanner.tar_scanner import TarScanner
 from credsweeper.deep_scanner.tmx_scanner import TmxScanner
-from credsweeper.deep_scanner.xls_scanner import XlsScanner
 from credsweeper.deep_scanner.toml_scanner import TomlScanner
+from credsweeper.deep_scanner.xls_scanner import XlsScanner
 from credsweeper.deep_scanner.xlsx_scanner import XlsxScanner
 from credsweeper.deep_scanner.xml_scanner import XmlScanner
 from credsweeper.deep_scanner.zip_scanner import ZipScanner
 from credsweeper.deep_scanner.zlib_scanner import ZlibScanner
 from credsweeper.deep_scanner.zstd_scanner import ZstdScanner
-from credsweeper.file_handler.descriptor import Descriptor
+from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.utils.magic_detector import MagicDetector
 from credsweeper.utils.util import Util
@@ -122,10 +122,11 @@ class DeepScanner(
         return self.__scanner
 
     @staticmethod
-    def get_deep_scanners(data: bytes, descriptor: Descriptor, depth: int, limit: int) -> Tuple[List[Any], List[Any]]:
+    def get_deep_scanners(data_provider: DataContentProvider, depth: int, limit: int) -> Tuple[List[Any], List[Any]]:
         """Returns possibly scan methods for the data depends on content and fallback scanners"""
         deep_scanners: List[Any] = []
         fallback_scanners: List[Any] = []
+        data = data_provider.data
         if not data or not isinstance(data, (bytes, bytearray)) or len(data) < MIN_DATA_LEN:
             # Guard clause: reject empty or invalid input data early
             pass
@@ -233,7 +234,7 @@ class DeepScanner(
                 deep_scanners.append(XmlScanner)
                 fallback_scanners.append(ByteScanner)
         elif EmlScanner.match(data):
-            if descriptor.extension in (".eml", ".mht"):
+            if data_provider.descriptor.extension in (".eml", ".mht"):
                 deep_scanners.append(EmlScanner)
             else:
                 if 0 < depth:
@@ -245,7 +246,7 @@ class DeepScanner(
             # only StringsScanner may be applied for the formats effective
             if 0 < depth:
                 fallback_scanners.append(StringsScanner)
-        elif not Util.is_binary(data):
+        elif not Util.is_binary(data) and data_provider.text:
             # keep ByteScanner first to apply real value position if possible
             deep_scanners.append(ByteScanner)
             if 0 < depth:
@@ -262,7 +263,8 @@ class DeepScanner(
                 if ZlibScanner.match(data):
                     deep_scanners.append(ZlibScanner)
         else:
-            unknown_warning = not (descriptor.info.endswith("|BASE64") or "|PROTO:" in descriptor.info)
+            unknown_warning = not (
+                        data_provider.descriptor.info.endswith("|BASE64") or "|PROTO:" in data_provider.descriptor.info)
             if 0 < depth:
                 if ZlibScanner.match(data):
                     deep_scanners.append(ZlibScanner)
@@ -275,5 +277,6 @@ class DeepScanner(
                 else:
                     deep_scanners.append(StringsScanner)
             if unknown_warning:
-                logger.warning("Cannot apply a deep scanner for data(%d) %s %s", len(data), repr(data[:32]), descriptor)
+                logger.warning("Cannot apply a deep scanner for data(%d) %s %s", len(data), repr(data[:32]),
+                               data_provider.descriptor)
         return deep_scanners, fallback_scanners

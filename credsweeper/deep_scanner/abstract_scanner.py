@@ -62,7 +62,7 @@ class AbstractScanner(ABC):
 
     @staticmethod
     @abstractmethod
-    def get_deep_scanners(data: bytes, descriptor: Descriptor, depth: int, limit: int) -> Tuple[List[Any], List[Any]]:
+    def get_deep_scanners(data_provider: DataContentProvider, depth: int, limit: int) -> Tuple[List[Any], List[Any]]:
         """Returns possibly scan methods for the data depends on content and fallback scanners"""
         raise NotImplementedError(__name__)
 
@@ -151,7 +151,7 @@ class AbstractScanner(ABC):
             for key, value in structure.items():
                 size += AbstractScanner.structure_size(key)
                 size += AbstractScanner.structure_size(value)
-        elif isinstance(structure, (list, tuple)):
+        elif isinstance(structure, (list, tuple, frozenset, set)):
             size += sum(AbstractScanner.structure_size(x) for x in structure)
         return size
 
@@ -166,13 +166,15 @@ class AbstractScanner(ABC):
                 if not value:
                     # skip empty values
                     continue
-                if isinstance(value, (list, tuple)):
+                if isinstance(value, (list, tuple, frozenset, set)):
                     if 1 == len(value):
                         # simplify some structures like YAML when single item in new line is a value
-                        yield key, value[0]
-                        continue
-                # all other data will be precessed in next code
-                yield key, value
+                        yield key, next(iter(value))
+                    else:
+                        yield from AbstractScanner.structure_processing(value, parent_key=key)
+                else:
+                    # all other data will be precessed in next code
+                    yield key, value
             yield from AbstractScanner.key_value_combination(structure)
         elif isinstance(structure, (list, tuple, frozenset, set)):
             # enumerate the items to fit for return structure
@@ -187,7 +189,10 @@ class AbstractScanner(ABC):
                 if isinstance(value, CodeType):
                     yield from AbstractScanner.structure_processing(value)
                 elif value:
-                    yield key, value
+                    if parent_key:
+                        yield f"{parent_key}[{key}]", value
+                    else:
+                        yield key, value
         else:
             logger.warning("Not supported type:%s val:%s", str(type(structure)), repr(structure))
 
@@ -301,8 +306,7 @@ class AbstractScanner(ABC):
 
         """
         candidates: List[Candidate] = []
-        deep_scanners, fallback_scanners = self.get_deep_scanners(data_provider.data, data_provider.descriptor, depth,
-                                                                  recursive_limit_size)
+        deep_scanners, fallback_scanners = self.get_deep_scanners(data_provider, depth, recursive_limit_size)
         fallback = True
         for scan_class in deep_scanners:
             new_candidates = scan_class.data_scan(self, data_provider, depth, recursive_limit_size)
