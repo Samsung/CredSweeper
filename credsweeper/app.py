@@ -325,63 +325,54 @@ class CredSweeper:
         pool_count = min(self.pool_count, len_providers)
         logger.info("Scan in %s processes for %s providers", pool_count, len_providers)
         ctx = multiprocessing.get_context("spawn")
-        ctx_manager = ctx.Manager()
+        with ctx.Manager() as ctx_manager:
+            if progress_callback:
+                self.__progress_queue = ctx_manager.Queue()
 
-        if progress_callback:
-            self.__progress_queue = ctx_manager.Queue()
+                def progress_loop(progress_queue: queue.Queue, total_providers: int) -> None:
+                    total = 0
+                    while True:
+                        with contextlib.suppress(queue.Empty):
+                            delta = progress_queue.get(timeout=1)
+                            if delta is None:
+                                break
+                            total += delta
+                            progress_callback(" file", total, total_providers)
 
-            def progress_loop(progress_queue: queue.Queue, total_providers: int) -> None:
-                total = 0
+                progress_thread = threading.Thread(
+                    target=progress_loop,
+                    args=(self.__progress_queue, len_providers),
+                    daemon=True,
+                )
+                progress_thread.start()
+            else:
+                self.__progress_queue = None
+                progress_thread = None
+
+            def log_relay(log_queue: queue.Queue) -> None:
                 while True:
                     with contextlib.suppress(queue.Empty):
-                        delta = progress_queue.get(timeout=1)
-                        if delta is None:
+                        record = log_queue.get(timeout=1)
+                        if record is None:
                             break
-                        total += delta
-                        progress_callback(" file", total, total_providers)
+                        logging.getLogger(record.name).handle(record)
 
-            progress_thread = threading.Thread(
-                target=progress_loop,
-                args=(self.__progress_queue, len_providers),
-                daemon=True,
-            )
-            progress_thread.start()
-        else:
-            self.__progress_queue = None
-            progress_thread = None
+            self.__log_queue = ctx_manager.Queue()
+            log_thread = threading.Thread(target=log_relay, args=(self.__log_queue,), daemon=True)  # yapf: disable
+            log_thread.start()
 
-        def log_relay(log_queue: queue.Queue) -> None:
-            while True:
-                with contextlib.suppress(queue.Empty):
-                    record = log_queue.get(timeout=1)
-                    if record is None:
-                        break
-                    logging.getLogger(record.name).handle(record)
-
-        self.__log_queue = ctx_manager.Queue()
-        log_thread = threading.Thread(target=log_relay, args=(self.__log_queue,), daemon=True)  # yapf: disable
-        log_thread.start()
-
-        try:
-            self._pool_scan(ctx, pool_count, content_providers)
-        finally:
-            # drain & stop log
-            # with contextlib.suppress(queue.Empty):
-            #     while True:
-            #         self.__log_queue.get_nowait()
-            self.__log_queue.put(None)
-            log_thread.join(timeout=1)
-            # drain & stop progress
-            if self.__progress_queue:
-                # with contextlib.suppress(queue.Empty):
-                #     while True:
-                #         self.__progress_queue.get_nowait()
-                self.__progress_queue.put(None)
-            if progress_thread:
-                progress_thread.join(timeout=1)
-                self.__progress_queue = None
-
-            ctx_manager.shutdown()
+            try:
+                self._pool_scan(ctx, pool_count, content_providers)
+            finally:
+                with contextlib.suppress(EOFError, OSError):
+                    self.__log_queue.put(None)
+                log_thread.join(timeout=1)
+                if self.__progress_queue:
+                    with contextlib.suppress(EOFError, OSError):
+                        self.__progress_queue.put(None)
+                if progress_thread:
+                    progress_thread.join(timeout=1)
+                    self.__progress_queue = None
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -391,7 +382,7 @@ class CredSweeper:
             x: y.level
             for x, y in logging.Logger.manager.loggerDict.items()
             if (isinstance(y, logging.Logger) and logging.NOTSET != y.level)
-        }.copy()
+        }
         log_config[''] = logging.getLogger().level
 
         pool = ctx.Pool(
