@@ -10,7 +10,7 @@ class TestValueEntropyCheck:
     @pytest.mark.parametrize(
         "line",
         [
-            "VP6V3TM47TG5A"
+            "YDVYJPWTZRRO5"
             "0123456789abcdef",  #
             "18eea36e-e870-f279-4021-12f45ee03e37",  #
             "VP6V3TM9J7TGP9CUVWXY6GJ7K",  #
@@ -23,7 +23,7 @@ class TestValueEntropyCheck:
     @pytest.mark.parametrize(
         "line",
         [
-            "VP6V3TM47TG5",  #
+            "YDVYJPWTZRRO",  #
             "0123456789abcde",  #
             "000000000000000",  #
             "aP6b3TM9x7",  #

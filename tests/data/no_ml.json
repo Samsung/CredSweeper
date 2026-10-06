@@ -5360,6 +5360,27 @@
         ]
     },
     {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.0,
+        "line_data_list": [
+            {
+                "line": "Enter token : This is a query parameter",
+                "line_num": 40,
+                "path": "./tests/samples/doc_secret_pair",
+                "info": "",
+                "variable": "token",
+                "variable_start": 6,
+                "variable_end": 11,
+                "value": "This",
+                "value_start": 14,
+                "value_end": 18,
+                "entropy": 2.0
+            }
+        ]
+    },
+    {
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
