@@ -4,6 +4,14 @@ credsweeper.filters.group package
 Submodules
 ----------
 
+credsweeper.filters.group.crypto\_keyword module
+------------------------------------------------
+
+.. automodule:: credsweeper.filters.group.crypto_keyword
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 credsweeper.filters.group.general\_keyword module
 -------------------------------------------------
 

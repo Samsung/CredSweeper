@@ -204,6 +204,14 @@ credsweeper.filters.value\_entropy\_base\_check module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.filters.value\_entropy\_check module
+------------------------------------------------
+
+.. automodule:: credsweeper.filters.value_entropy_check
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 credsweeper.filters.value\_file\_path\_check module
 ---------------------------------------------------
 
