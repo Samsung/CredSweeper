@@ -7,7 +7,13 @@ from credsweeper.file_handler.string_content_provider import StringContentProvid
 class TestCredentialManager:
 
     @pytest.mark.parametrize(
-        "line", ["apiKeyToken = 'mybstscrt'", "SecretToken = 'mybstscrt'", "secret = AKIAGIREOGIAWSKEY123"])
+        "line",
+        [
+            "apiKey = 'mybstscrt'",  #
+            "SecretNonce = 'mybstscrt'",  #
+            '"auth-credential-token": "AKIAGIREOGIAWSKEY123",',  #
+            "PASSWORD_SALT = {123, 53, 77, 9, 4, 2, 58, 9, 3, 234, 5, 6, 7, 0};",  #
+        ])
     def test_groups_p(self, line):
         cred_sweeper = CredSweeper()
         provider = StringContentProvider([line])

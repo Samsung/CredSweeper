@@ -16,7 +16,7 @@ SAMPLES_IN_DOC = 1043
 SAMPLES_REGEX_COUNT = 849
 
 # credentials count after scan with filters and without ML validation
-SAMPLES_FILTERED_COUNT = 668
+SAMPLES_FILTERED_COUNT = 664
 
 # credentials count after default post-processing
 SAMPLES_POST_CRED_COUNT = 619

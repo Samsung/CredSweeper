@@ -1,3 +1,4 @@
+from credsweeper.filters.group.crypto_keyword import CryptoKeyword
 from credsweeper.filters.group.general_keyword import GeneralKeyword
 from credsweeper.filters.group.general_pattern import GeneralPattern
 from credsweeper.filters.group.password_keyword import PasswordKeyword
