@@ -15,6 +15,8 @@ import pytest
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, ASCII, UTF_8
+from credsweeper.logger.logger import Logger
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, ASCII, UTF_8
 from credsweeper.utils.util import Util
 from tests import SAMPLES_PATH, TESTS_PATH
 
