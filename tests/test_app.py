@@ -4,7 +4,6 @@ import os
 import random
 import shutil
 import string
-import sys
 import tempfile
 import threading
 import unittest
