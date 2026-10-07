@@ -16,8 +16,6 @@ import numpy as np
 import yaml
 from cryptography.utils import CryptographyDeprecationWarning
 
-from credsweeper.logger import TRACE
-
 warnings.filterwarnings("ignore", category=CryptographyDeprecationWarning)  # TODO: remove with DH
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
@@ -34,8 +32,9 @@ from cryptography.hazmat.primitives.serialization import load_der_private_key
 from cryptography.hazmat.primitives.serialization.pkcs12 import load_key_and_certificates
 from lxml import etree
 
-from credsweeper.common.constants import AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII, UTF_16_LE, UTF_16_BE
+from credsweeper.logger import TRACE
+from credsweeper.common.constants import AVAILABLE_ENCODINGS, DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, \
+    CHUNK_STEP_SIZE, ASCII, UTF_16_LE, UTF_16_BE
 
 logger = logging.getLogger(__name__)
 
