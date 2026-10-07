@@ -16,6 +16,8 @@ import numpy as np
 import yaml
 from cryptography.utils import CryptographyDeprecationWarning
 
+from credsweeper.logger import TRACE
+
 warnings.filterwarnings("ignore", category=CryptographyDeprecationWarning)  # TODO: remove with DH
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import padding
@@ -241,7 +243,7 @@ class Util:
                 return text
             except UnicodeError:
                 binary_suggest = True
-                logger.debug("UnicodeError: Can not decode content as %s.", encoding)
+                logger.log(TRACE, "UnicodeError: Can not decode content as %s.", encoding)
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 # fallback
                 logger.error("Unexpected Error: Can not read content as %s. %s:%s", encoding, type(exc), exc)

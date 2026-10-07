@@ -18,7 +18,7 @@ from colorama import Style
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
 
-from credsweeper.logger.logger import TRACE
+from credsweeper.logger import TRACE
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType, DEFAULT_ENCODING, Confidence
 from credsweeper.config.config import Config

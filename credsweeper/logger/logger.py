@@ -1,14 +1,11 @@
 import logging
 import logging.config
-from logging import DEBUG
 from pathlib import Path
 from typing import Optional
 
 from credsweeper.app import APP_PATH
+from credsweeper.logger import TRACE, SILENCE
 from credsweeper.utils.util import Util
-
-TRACE = DEBUG >> 1  # half of DEBUG
-SILENCE = max(logging._levelToName.keys()) << 1  # pylint: disable=W0212
 
 
 class Logger:
