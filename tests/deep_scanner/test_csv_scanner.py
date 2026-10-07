@@ -30,27 +30,22 @@ class TestCsvScanner(unittest.TestCase):
         self.assertTrue(CsvScanner.match(b'a|b\r\n1|2'))
 
     def test_get_structure_n(self):
-        with self.assertRaises(ValueError):
-            CsvScanner.get_structure('First line,"and escaped,coma"\nSecond,line,with more comas\n')
-        with self.assertRaises(ValueError):
-            CsvScanner.get_structure("First,line\nSecond,line,with,more,comas")
+        self.assertIsNone(CsvScanner.get_structure('First line,"and escaped,coma"\nSecond,line,with more comas\n'))
+        self.assertIsNone(CsvScanner.get_structure("First,line\nSecond,line,with,more,comas"))
         with self.assertRaises(Error):
             CsvScanner.get_structure(f"{AZ_STRING[:19]}\n{AZ_STRING[20:]}\n")
         with self.assertRaises(Error):
             CsvScanner.get_structure("'user and password'\nadmin&tizen\n")
-        with self.assertRaises(ValueError):
-            CsvScanner.get_structure('')
+        self.assertIsNone(CsvScanner.get_structure(''))
         with self.assertRaises(Error):
             CsvScanner.get_structure("user&password\nadmin&tizen\n")
         with self.assertRaises(Error):
             CsvScanner.get_structure('"user and password"\nadmin&tizen\n')
-        with self.assertRaises(ValueError):
-            CsvScanner.get_structure("user,password\tadmin,tizen\t")
+        self.assertIsNone(CsvScanner.get_structure("user,password\tadmin,tizen\t"))
 
     def test_get_structure_from_sample_n(self):
-        with self.assertRaises(ValueError):
-            with open(SAMPLES_PATH / "aws_client_id") as f:
-                CsvScanner.get_structure(f.read())
+        with open(SAMPLES_PATH / "aws_client_id") as f:
+            self.assertIsNone(CsvScanner.get_structure(f.read()))
 
     def test_get_structure_p(self):
         structure = CsvScanner.get_structure("user,password\nadmin,tizen\nempty,\n")
