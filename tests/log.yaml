@@ -43,6 +43,6 @@ loggers:
     propagate: False
 
   pdfminer:
-    level: ERROR
+    level: WARNING
     handlers: [ console ]
     propagate: False
