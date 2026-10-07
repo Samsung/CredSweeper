@@ -271,5 +271,5 @@ class DeepScanner(
                 else:
                     deep_scanners.append(StringsScanner)
             if unknown_warning:
-                logger.warning("Cannot apply a deep scanner for data(%d) %s %s", len(data), repr(data[:32]), descriptor)
+                logger.debug("Cannot apply a deep scanner for data(%d) %s %s", len(data), repr(data[:32]), descriptor)
         return deep_scanners, fallback_scanners
