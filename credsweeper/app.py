@@ -5,9 +5,10 @@ import logging
 import multiprocessing
 import queue
 import signal
-import sys
 import threading
 import time
+from logging.handlers import QueueHandler
+from multiprocessing.context import SpawnContext
 from pathlib import Path
 from typing import Any, List, Optional, Union, Dict, Sequence, Tuple, Callable
 
@@ -17,7 +18,7 @@ from colorama import Style
 # Directory of credsweeper sources MUST be placed before imports to avoid circular import error
 APP_PATH = Path(__file__).resolve().parent
 
-from credsweeper.logger import SILENCE, TRACE
+from credsweeper.logger import TRACE
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.common.constants import Severity, ThresholdPreset, DiffRowType, DEFAULT_ENCODING, Confidence
 from credsweeper.config.config import Config
@@ -151,6 +152,7 @@ class CredSweeper:
         self.thrifty = thrifty
         self.time_limit = time_limit
         self.log_level = log_level
+        self.__log_queue: Optional[queue.Queue] = None
         self.__progress_queue: Optional[queue.Queue] = None
         self.__ml_validator: Optional[MlValidator] = None
 
@@ -300,14 +302,17 @@ class CredSweeper:
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @staticmethod
-    def _pool_initializer(log_kwargs) -> None:
-        """Ignore SIGINT in child processes."""
+    def _pool_initializer(log_queue: queue.Queue, log_config: Dict[str, int]) -> None:
+        """Ignore SIGINT in child processes and mirror the parent's logging configuration."""
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         logging.addLevelName(TRACE, "TRACE")
-        logging.addLevelName(SILENCE, "SILENCE")
-        log_kwargs["stream"] = sys.stdout
-        log_kwargs["force"] = True
-        logging.basicConfig(**log_kwargs)
+        # SILENCE means - no log should be produced with the level
+        root = logging.getLogger()
+        for handler in root.handlers[:]:
+            root.removeHandler(handler)
+        root.addHandler(QueueHandler(log_queue))
+        for name, level in log_config.items():
+            logging.getLogger(name).setLevel(level)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -317,65 +322,92 @@ class CredSweeper:
             progress_callback: Optional[Callable[[str, int, int], None]],  #
     ) -> None:
         """Performs scan with multiple jobs"""
-        for handler in logger.handlers:
-            if isinstance(handler, logging.StreamHandler) and handler.stream is sys.stdout:
-                _f = handler.formatter._fmt  # pylint: disable=W0212
-                break
-        else:
-            # use this separation to satisfy YAPF formatter
-            _f = "%(asctime)s | %(levelname)s | %(processName)s:%(threadName)s | %(filename)s:%(lineno)d | %(message)s"
-        log_kwargs = {"format": _f}
-        if isinstance(self.log_level, str):
-            # is not None
-            log_kwargs["level"] = self.log_level
         len_providers = len(content_providers)
         pool_count = min(self.pool_count, len_providers)
         logger.info("Scan in %s processes for %s providers", pool_count, len_providers)
         ctx = multiprocessing.get_context("spawn")
-        if progress_callback:
-            progress_manager = ctx.Manager()
-            self.__progress_queue = progress_manager.Queue()
+        with ctx.Manager() as ctx_manager:
+            if progress_callback:
+                self.__progress_queue = ctx_manager.Queue()
 
-            def progress_loop(progress_queue: queue.Queue, total_providers: int) -> None:
-                total = 0
+                def progress_loop(progress_queue: queue.Queue, total_providers: int) -> None:
+                    total = 0
+                    while True:
+                        with contextlib.suppress(queue.Empty):
+                            delta = progress_queue.get(timeout=1)
+                            if delta is None:
+                                break
+                            total += delta
+                            progress_callback(" file", total, total_providers)
+
+                progress_thread = threading.Thread(
+                    target=progress_loop,
+                    args=(self.__progress_queue, len_providers),
+                    daemon=True,
+                )
+                progress_thread.start()
+            else:
+                self.__progress_queue = None
+                progress_thread = None
+
+            def log_relay(log_queue: queue.Queue) -> None:
                 while True:
                     with contextlib.suppress(queue.Empty):
-                        delta = progress_queue.get(timeout=1)
-                        if delta is None:
+                        record = log_queue.get(timeout=1)
+                        if record is None:
                             break
-                        total += delta
-                        progress_callback(" file", total, total_providers)
+                        logging.getLogger(record.name).handle(record)
 
-            progress_thread = threading.Thread(
-                target=progress_loop,
-                args=(self.__progress_queue, len_providers),
-                daemon=True,
-            )
-            progress_thread.start()
-        else:
-            self.__progress_queue = None
-            progress_thread = None
-            progress_manager = None
-        with ctx.Pool(processes=pool_count,
-                      initializer=CredSweeper._pool_initializer,
-                      initargs=(log_kwargs,)) as pool:  # yapf: disable
+            self.__log_queue = ctx_manager.Queue()
+            log_thread = threading.Thread(target=log_relay, args=(self.__log_queue,), daemon=True)  # yapf: disable
+            log_thread.start()
+
             try:
-                for scan_results in pool.imap_unordered(self.files_scan,
-                                                        (content_providers[x::pool_count] for x in range(pool_count))):
-                    for cred in scan_results:
-                        self.credential_manager.append_credential(cred)
-            except KeyboardInterrupt:
-                pool.terminate()
-                pool.join()
-                raise
+                self._pool_scan(ctx, pool_count, content_providers)
+            finally:
+                with contextlib.suppress(EOFError, OSError):
+                    self.__log_queue.put(None)
+                log_thread.join(timeout=1)
+                if self.__progress_queue:
+                    with contextlib.suppress(EOFError, OSError):
+                        self.__progress_queue.put(None)
+                if progress_thread:
+                    progress_thread.join(timeout=1)
+                    self.__progress_queue = None
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def _pool_scan(self, ctx: SpawnContext, pool_count: int, content_providers: Sequence[ContentProvider]) -> None:
+        """Auxiliary method to scan content providers with inner try-except block"""
+        log_config = {
+            x: y.level
+            for x, y in logging.Logger.manager.loggerDict.items()
+            if (isinstance(y, logging.Logger) and logging.NOTSET != y.level)
+        }
+        log_config[''] = logging.getLogger().level
+
+        pool = ctx.Pool(
+            processes=pool_count,
+            initializer=CredSweeper._pool_initializer,
+            initargs=(self.__log_queue, log_config),
+        )
+        try:
+            for scan_results in pool.imap_unordered(self.files_scan,
+                                                    (content_providers[x::pool_count] for x in range(pool_count))):
+                for cred in scan_results:
+                    self.credential_manager.append_credential(cred)
+        except KeyboardInterrupt:
+            logger.warning("Interrupted")
+            pool.terminate()
+            raise
+        except Exception as exc:  # pylint: disable=broad-exception-caught
+            logger.critical("%s", exc)
+            pool.terminate()
+            raise
+        else:
             pool.close()
+        finally:
             pool.join()
-        if self.__progress_queue and progress_thread:
-            self.__progress_queue.put(None)
-            progress_thread.join()
-            self.__progress_queue = None
-        if progress_manager:
-            progress_manager.shutdown()
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
