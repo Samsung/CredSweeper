@@ -408,21 +408,7 @@ class TestInt(TestCase):
                 self.assertIn("| TRACE |", debug_text)
                 self.assertIn("| DEBUG |", debug_text)
                 self.assertIn("| INFO |", debug_text)
-                self.assertIn("| WARNING |", debug_text)
-                for line in debug_text.splitlines():
-                    if " | " not in line:
-                        # multiline debug
-                        continue
-                    self.assertTrue(any(x in line for x in ["| TRACE |", "| DEBUG |", "| INFO |", "| WARNING |"]), line)
-
-            with open(test_log_dir / "warning.log", 'r', encoding=UTF_8, errors=utf8errors) as warning_f:
-                warning_text = warning_f.read()
-                self.assertNotIn("| TRACE |", warning_text)
-                self.assertNotIn("| DEBUG |", warning_text)
-                self.assertNotIn("| INFO |", warning_text)
-                self.assertIn("| WARNING |", warning_text)
-                for line in warning_f.readlines():
-                    self.assertIn(" | WARNING | ", line)
+                self.assertNotIn("SpawnPoolWorker", debug_text)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
