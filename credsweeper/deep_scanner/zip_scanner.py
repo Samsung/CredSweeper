@@ -72,13 +72,19 @@ class ZipScanner(AbstractScanner, ABC):
                         logger.warning("%s: size %s is over limit %s depth:%s", zfl.filename, zfl.file_size,
                                        recursive_limit_size, depth)
                         continue
-                    with zf.open(zfl) as f:
-                        zip_content_provider = DataContentProvider(data=f.read(),
-                                                                   file_path=data_provider.file_path,
-                                                                   file_type=Util.get_type(zfl.filename),
-                                                                   info=f"{data_provider.info}|ZIP:{zfl.filename}")
-                        zip_candidates = self.recursive_scan(zip_content_provider, depth, recursive_limit_size)
-                        candidates.extend(zip_candidates)
+                    try:
+                        with zf.open(zfl) as f:
+                            member_data = f.read()
+                    except Exception as exc:  # pylint: disable=broad-exception-caught
+                        # A damaged member must not hide credentials in other ZIP members.
+                        logger.warning("%s:%s:%s:ZIP:%s", type(exc), exc, data_provider.descriptor, zfl.filename)
+                        continue
+                    zip_content_provider = DataContentProvider(data=member_data,
+                                                               file_path=data_provider.file_path,
+                                                               file_type=Util.get_type(zfl.filename),
+                                                               info=f"{data_provider.info}|ZIP:{zfl.filename}")
+                    zip_candidates = self.recursive_scan(zip_content_provider, depth, recursive_limit_size)
+                    candidates.extend(zip_candidates)
             return candidates
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # too many exception types might be produced with broken zip
