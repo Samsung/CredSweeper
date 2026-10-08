@@ -36,7 +36,7 @@ class TestZipScanner(unittest.TestCase):
     def test_corrupt_member_does_not_hide_intact_credentials(self) -> None:
         # A bad CRC must not suppress credentials in earlier or later valid members.
         bad_data = b"Synthetic broken member; no credential present"
-        secret = b'password = "cackle!"\\n'
+        secret = b'password = "cackle!"\n'
         for bad_first in (True, False):
             with self.subTest(bad_first=bad_first):
                 data = io.BytesIO()
