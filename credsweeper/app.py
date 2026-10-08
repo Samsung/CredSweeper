@@ -306,6 +306,7 @@ class CredSweeper:
         """Ignore SIGINT in child processes and mirror the parent's logging configuration."""
         signal.signal(signal.SIGINT, signal.SIG_IGN)
         logging.addLevelName(TRACE, "TRACE")
+        # SILENCE means - no log should be produced with the level
         root = logging.getLogger()
         for handler in root.handlers[:]:
             root.removeHandler(handler)

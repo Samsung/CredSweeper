@@ -399,16 +399,18 @@ class TestInt(TestCase):
             self.assertNotIn("| DEBUG |", _stdout)
             self.assertIn("| INFO |", _stdout)
             self.assertIn("| WARNING |", _stdout)
+            self.assertIn("SpawnPoolWorker", _stdout)
+
             self.assertTrue(test_log_dir.exists())
-
             utf8errors = "replace" if "Windows" == platform.system() else "strict"
-
             with open(test_log_dir / "debug.log", 'r', encoding=UTF_8, errors=utf8errors) as debug_f:
                 debug_text = debug_f.read()
                 self.assertIn("| TRACE |", debug_text)
                 self.assertIn("| DEBUG |", debug_text)
                 self.assertIn("| INFO |", debug_text)
                 self.assertIn("| WARNING |", debug_text)
+                # spawned workers produces log into file
+                self.assertIn("SpawnPoolWorker", debug_text)
                 for line in debug_text.splitlines():
                     if " | " not in line:
                         # multiline debug
@@ -421,6 +423,8 @@ class TestInt(TestCase):
                 self.assertNotIn("| DEBUG |", warning_text)
                 self.assertNotIn("| INFO |", warning_text)
                 self.assertIn("| WARNING |", warning_text)
+                # spawned workers produces log into file
+                self.assertIn("SpawnPoolWorker", warning_text)
                 for line in warning_f.readlines():
                     self.assertIn(" | WARNING | ", line)
 
