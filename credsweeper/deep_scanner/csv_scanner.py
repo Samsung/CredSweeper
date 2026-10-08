@@ -61,7 +61,7 @@ class CsvScanner(AbstractScanner, ABC):
         fields_number = sum(1 for x in reader.fieldnames if x is not None)
         for row in reader:
             if not isinstance(row, dict):
-                logger.log(TRACE, "ERROR: wrong row %s", row)
+                logger.log(TRACE, "Wrong row type %s", type(row))
                 return None
             if len(row) != fields_number or any(x is None for x in row.values()):
                 # None means no separator used

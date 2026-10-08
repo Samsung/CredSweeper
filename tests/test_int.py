@@ -399,10 +399,10 @@ class TestInt(TestCase):
             self.assertNotIn("| DEBUG |", _stdout)
             self.assertIn("| INFO |", _stdout)
             self.assertIn("| WARNING |", _stdout)
+            self.assertIn("SpawnPoolWorker", _stdout)
+
             self.assertTrue(test_log_dir.exists())
-
             utf8errors = "replace" if "Windows" == platform.system() else "strict"
-
             with open(test_log_dir / "debug.log", 'r', encoding=UTF_8, errors=utf8errors) as debug_f:
                 debug_text = debug_f.read()
                 self.assertIn("| TRACE |", debug_text)

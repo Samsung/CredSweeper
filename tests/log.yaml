@@ -39,10 +39,10 @@ root:
 loggers:
   git:
     level: WARNING
-    handlers: [ console ]
+    handlers: [ console, warning ]
     propagate: False
 
   pdfminer:
     level: WARNING
-    handlers: [ console ]
+    handlers: [ console, warning ]
     propagate: False
