@@ -7,13 +7,14 @@ import sqlite3
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 from typing import AnyStr, Tuple
 from unittest import TestCase
 
 import pytest
 
 from credsweeper.app import APP_PATH
-from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION
+from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, ASCII, UTF_8
 from credsweeper.utils.util import Util
 from tests import SAMPLES_PATH, TESTS_PATH
 
@@ -377,6 +378,37 @@ class TestInt(TestCase):
         self.assertNotIn("| WARNING |", _stdout)
         self.assertNotIn("| ERROR |", _stdout)
         self.assertIn(" | CRITICAL | ", _stdout)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_log_file_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_log_cfg = Path(tmp_dir) / "log.yaml"
+            with open(TESTS_PATH / "log.yaml", 'r', encoding=ASCII) as fi:
+                t = fi.read()
+            test_log_dir = Path(tmp_dir) / "log"
+            with open(test_log_cfg, 'w', encoding=ASCII) as fo:
+                # enable all handlers and add for the root
+                fo.write(t.replace("filename: ./log/", f"filename: {test_log_dir}/"))
+            _stdout, _stderr = TestInt._m_credsweeper([
+                "--path",
+                str(SAMPLES_PATH), "--log_config",
+                str(test_log_cfg), "--jobs", "2", "--log", "INFO", "--no-stdout"
+            ])
+            self.assertNotIn("| TRACE |", _stdout)
+            self.assertNotIn("| DEBUG |", _stdout)
+            self.assertIn("| INFO |", _stdout)
+            self.assertIn("| WARNING |", _stdout)
+            self.assertIn("SpawnPoolWorker", _stdout)
+
+            self.assertTrue(test_log_dir.exists())
+            utf8errors = "replace" if "Windows" == platform.system() else "strict"
+            with open(test_log_dir / "debug.log", 'r', encoding=UTF_8, errors=utf8errors) as debug_f:
+                debug_text = debug_f.read()
+                self.assertIn("| TRACE |", debug_text)
+                self.assertIn("| DEBUG |", debug_text)
+                self.assertIn("| INFO |", debug_text)
+                self.assertNotIn("SpawnPoolWorker", debug_text)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

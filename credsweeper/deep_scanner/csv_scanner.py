@@ -10,6 +10,7 @@ from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.struct_content_provider import StructContentProvider
+from credsweeper.logger import TRACE
 
 logger = logging.getLogger(__name__)
 
@@ -36,7 +37,7 @@ class CsvScanner(AbstractScanner, ABC):
         return False
 
     @classmethod
-    def get_structure(cls, text: str) -> List[Dict[str, Any]]:
+    def get_structure(cls, text: str) -> Optional[List[Dict[str, Any]]]:
         """Reads a text as CSV standard with guessed dialect"""
         # windows style \r\n
         first_line_end = text.find('\r', 0, MAX_LINE_LENGTH)
@@ -46,7 +47,8 @@ class CsvScanner(AbstractScanner, ABC):
             first_line_end = text.find('\n', 0, MAX_LINE_LENGTH)
             line_terminator = "\n"
             if 0 > first_line_end:
-                raise ValueError(f"No suitable line end found in {MAX_LINE_LENGTH} symbols")
+                logger.log(TRACE, "No suitable line end found in %d symbols", MAX_LINE_LENGTH)
+                return None
 
         first_line = text[:first_line_end]
         dialect = cls.sniffer.sniff(first_line, delimiters=cls.DELIMITERS)
@@ -59,10 +61,12 @@ class CsvScanner(AbstractScanner, ABC):
         fields_number = sum(1 for x in reader.fieldnames if x is not None)
         for row in reader:
             if not isinstance(row, dict):
-                raise ValueError(f"ERROR: wrong row '{row}'")
+                logger.log(TRACE, "Wrong row type %s", type(row))
+                return None
             if len(row) != fields_number or any(x is None for x in row.values()):
                 # None means no separator used
-                raise ValueError(f"Different columns number in row '{row}' - mismatch {fields_number}")
+                logger.log(TRACE, "Mismatch header fields (%d) with row (%d) in %s", fields_number, len(row), row)
+                return None
             rows.append(row)
         return rows
 

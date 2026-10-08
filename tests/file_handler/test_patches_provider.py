@@ -6,6 +6,7 @@ from unittest.mock import patch
 from credsweeper.common.constants import DiffRowType, UTF_8
 from credsweeper.config.config import Config
 from credsweeper.file_handler.patches_provider import PatchesProvider
+from credsweeper.logger import TRACE
 from credsweeper.utils.util import Util
 from tests import SAMPLES_PATH
 
@@ -88,9 +89,9 @@ class TestPatchesProvider:
         patch_file = SAMPLES_PATH / "password_western.patch"
         patch_provider = PatchesProvider([patch_file], DiffRowType.ADDED)
 
-        with patch('logging.Logger.debug') as mocked_logger:
+        with patch('logging.Logger.log') as mocked_log:
             raw_patches = patch_provider.load_patch_data(config)
-            mocked_logger.assert_called_with("UnicodeError: Can not decode content as %s.", UTF_8)
+            mocked_log.assert_called_with(TRACE, "UnicodeError: Can not decode content as %s.", UTF_8)
 
         expected = [[
             'diff --git a/.changes/1.16.98.json b/.changes/1.16.98.json',  #
@@ -113,9 +114,9 @@ class TestPatchesProvider:
         patch_file = SAMPLES_PATH / "iso_ir_111.patch"
         patch_provider = PatchesProvider([str(patch_file)], DiffRowType.ADDED)
 
-        with patch('logging.Logger.debug') as mocked_logger:
+        with patch('logging.Logger.log') as mocked_log:
             raw_patches = patch_provider.load_patch_data(config)
-            mocked_logger.assert_called_with("UnicodeError: Can not decode content as %s.", UTF_8)
+            mocked_log.assert_called_with(TRACE, "UnicodeError: Can not decode content as %s.", UTF_8)
 
         expected = [[
             'ëÉÒÉÌÌÉÃÁ',  #

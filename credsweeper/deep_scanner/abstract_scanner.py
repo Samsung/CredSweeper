@@ -24,6 +24,7 @@ from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.string_content_provider import StringContentProvider
 from credsweeper.file_handler.struct_content_provider import StructContentProvider
 from credsweeper.file_handler.text_content_provider import TextContentProvider
+from credsweeper.logger import TRACE
 from credsweeper.scanner.scanner import Scanner
 from credsweeper.utils.util import Util
 
@@ -98,8 +99,8 @@ class AbstractScanner(ABC):
             logger.debug("Recursive limit exhausted: size=%d, depth=%d, limit=%d, path=%s, info=%s", data_size, depth,
                          recursive_limit_size, data_provider.file_path, data_provider.info)
             return candidates
-        logger.debug("Start data_scan: size=%d, depth=%d, limit=%d, path=%s, info=%s", data_size, depth,
-                     recursive_limit_size, data_provider.file_path, data_provider.info)
+        logger.log(TRACE, "Start data_scan: size=%d, depth=%d, limit=%d, path=%s, info=%s", data_size, depth,
+                   recursive_limit_size, data_provider.file_path, data_provider.info)
 
         if FilePathExtractor.is_find_by_ext_file(self.config, data_provider.file_type):
             # Skip scanning file and makes fake candidate due the extension is suspicious
@@ -203,8 +204,8 @@ class AbstractScanner(ABC):
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
         """
         candidates: List[Candidate] = []
-        logger.debug("Start struct_scan: depth=%d, limit=%d, path=%s, info=%s", depth, recursive_limit_size,
-                     struct_provider.file_path, struct_provider.info)
+        logger.log(TRACE, "Start struct_scan: depth=%d, limit=%d, path=%s, info=%s", depth, recursive_limit_size,
+                   struct_provider.file_path, struct_provider.info)
 
         structure_size = AbstractScanner.structure_size(struct_provider.struct)
         recursive_limit_size -= structure_size

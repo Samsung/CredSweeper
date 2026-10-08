@@ -1,7 +1,6 @@
 import contextlib
 import itertools
 import random
-import sys
 import unittest
 import zlib
 

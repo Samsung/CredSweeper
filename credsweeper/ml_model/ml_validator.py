@@ -10,7 +10,7 @@ from onnxruntime import InferenceSession, SessionOptions
 from credsweeper.common.constants import ThresholdPreset, ML_HUNK
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.credentials.candidate_key import CandidateKey
-from credsweeper.logger.logger import TRACE
+from credsweeper.logger import TRACE
 from credsweeper.ml_model import features
 from credsweeper.utils.util import Util
 
