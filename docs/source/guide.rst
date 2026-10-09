@@ -55,7 +55,7 @@ Get all argument list:
       --config PATH         use custom config (default: built-in)
       --log_config PATH     use custom log config (default: built-in)
       --denylist PATH       path to a plain text file with lines or secrets to ignore
-      --find-by-ext         find files by predefined extension
+      --find-by-ext         find files by predefined extension (requires pedantic)
       --pedantic, --no-pedantic
                             process files without extension
       --depth POSITIVE_INT  additional recursive search in data (experimental)

@@ -186,15 +186,19 @@ class TestMain(unittest.TestCase):
                 open(file_path, 'w').write(AZ_STRING)
 
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            argv = ["--path", tmp_dir, "--find-by-ext", "--no-stdout", "--save-json", json_filename, "--log", "silence"]
+            argv = [
+                "--path", tmp_dir, "--pedantic", "--find-by-ext", "--no-stdout", "--save-json", json_filename, "--log",
+                "silence"
+            ]
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
                 report = json.load(json_file)
-                self.assertEqual(4, len(report), report)
+                self.assertEqual(6, len(report), report)
                 for t in report:
                     self.assertEqual(0, t["line_data_list"][0]["line_num"])
-                    self.assertIn(str(t["line_data_list"][0]["path"][-4:]), [".pem", ".cer", ".csr", ".deR"])
+                    self.assertIn(str(t["line_data_list"][0]["path"][-4:]),
+                                  [".pem", ".p12", ".pfx", ".cer", ".csr", ".deR"])
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

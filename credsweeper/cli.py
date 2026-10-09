@@ -158,7 +158,7 @@ def parse_arguments(argv: List[str]) -> Namespace:
                         dest="denylist_path",
                         metavar="PATH")
     parser.add_argument("--find-by-ext",
-                        help="find files by predefined extension",
+                        help="find files by predefined extension (requires pedantic)",
                         dest="find_by_ext",
                         action="store_true")
     parser.add_argument("--pedantic",

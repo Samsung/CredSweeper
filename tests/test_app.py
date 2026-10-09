@@ -14,7 +14,6 @@ from unittest.mock import patch, call, ANY, MagicMock
 
 import deepdiff
 import psutil
-import pytest
 
 from credsweeper import Confidence
 from credsweeper.app import APP_PATH, CredSweeper
@@ -208,7 +207,8 @@ class TestMain(unittest.TestCase):
         exclude_containers_items = config_dict["exclude"]["containers"]
         self.assertTrue(isinstance(exclude_containers_items, list))
         containers_conflict = find_by_ext_list_set.intersection(exclude_containers_items)
-        self.assertSetEqual(set(), containers_conflict)
+        # binaries formats are excluded in plain scan and may be skipped
+        self.assertSetEqual({".p12", ".der", ".csr", ".cer", ".snk", ".pfx", ".jks"}, containers_conflict)
         # check whether extension and containers have no duplicates
         containers_extension_conflict = set(exclude_extension_items).intersection(exclude_containers_items)
         self.assertSetEqual(set(), containers_extension_conflict)
@@ -260,7 +260,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]), progress_callback=callback_mock)
             mocked_logger.assert_has_calls([
-                call("Scan in %s processes for %s providers", nproc, SAMPLES_FILES_COUNT - 28),
+                call("Scan in %s processes for %s providers", nproc, SAMPLES_FILES_COUNT - 34),
                 ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
                 call("Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
@@ -288,7 +288,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider, progress_callback=progress.callback)
             mocked_logger.assert_has_calls([
-                call(f"Scan in %s processes for %s providers", nproc, SAMPLES_FILES_COUNT - 28),
+                call(f"Scan in %s processes for %s providers", nproc, SAMPLES_FILES_COUNT - 34),
                 ANY,  # Run ML Validation for \d+ groups
                 # no init
                 call(f"Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
@@ -310,7 +310,7 @@ class TestMain(unittest.TestCase):
                 with open(os.path.join(tmp_dir, f"dummy{ext}.bak"), "wb") as f:
                     f.write(AZ_DATA)
             content_provider: AbstractProvider = FilesProvider([tmp_dir])
-            cred_sweeper = CredSweeper(find_by_ext=True)
+            cred_sweeper = CredSweeper(find_by_ext=True, pedantic=True)
             cred_sweeper.run(content_provider=content_provider)
             credentials = cred_sweeper.credential_manager.get_credentials()
             self.assertEqual(len(ext_list), len(credentials))
@@ -860,6 +860,7 @@ class TestMain(unittest.TestCase):
             "subtext": True,
             "json_filename": "doc.json",
             "doc": True,
+            "pedantic": True,
             "ml_threshold": ZERO_ML_THRESHOLD,  # enables ML but no creds are seaved
         })
 
