@@ -32,8 +32,9 @@ from cryptography.hazmat.primitives.serialization import load_der_private_key
 from cryptography.hazmat.primitives.serialization.pkcs12 import load_key_and_certificates
 from lxml import etree
 
-from credsweeper.common.constants import AVAILABLE_ENCODINGS, \
-    DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, CHUNK_STEP_SIZE, ASCII, UTF_16_LE, UTF_16_BE
+from credsweeper.logger import TRACE
+from credsweeper.common.constants import AVAILABLE_ENCODINGS, DEFAULT_ENCODING, LATIN_1, CHUNK_SIZE, MAX_LINE_LENGTH, \
+    CHUNK_STEP_SIZE, ASCII, UTF_16_LE, UTF_16_BE
 
 logger = logging.getLogger(__name__)
 
@@ -241,7 +242,7 @@ class Util:
                 return text
             except UnicodeError:
                 binary_suggest = True
-                logger.debug("UnicodeError: Can not decode content as %s.", encoding)
+                logger.log(TRACE, "UnicodeError: Can not decode content as %s.", encoding)
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 # fallback
                 logger.error("Unexpected Error: Can not read content as %s. %s:%s", encoding, type(exc), exc)

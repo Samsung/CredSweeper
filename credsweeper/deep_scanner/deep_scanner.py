@@ -246,25 +246,27 @@ class DeepScanner(
             # only StringsScanner may be applied for the formats effective
             if 0 < depth:
                 fallback_scanners.append(StringsScanner)
-        elif not Util.is_binary(data) and data_provider.text:
+        elif not Util.is_binary(data):
             # keep ByteScanner first to apply real value position if possible
             deep_scanners.append(ByteScanner)
             if 0 < depth:
                 deep_scanners.append(PatchScanner)
-                deep_scanners.append(LangScanner)
-                if LexerScanner.match(data):
-                    deep_scanners.append(LexerScanner)
-                if TomlScanner.match(data):
-                    deep_scanners.append(TomlScanner)
-                if CsvScanner.match(data):
-                    deep_scanners.append(CsvScanner)
-                if EncoderScanner.match(data):
-                    deep_scanners.append(EncoderScanner)
                 if ZlibScanner.match(data):
                     deep_scanners.append(ZlibScanner)
+                if data_provider.text:
+                    # data provider data can be transformed to text
+                    deep_scanners.append(LangScanner)
+                    if LexerScanner.match(data):
+                        deep_scanners.append(LexerScanner)
+                    if TomlScanner.match(data):
+                        deep_scanners.append(TomlScanner)
+                    if CsvScanner.match(data):
+                        deep_scanners.append(CsvScanner)
+                    if EncoderScanner.match(data):
+                        deep_scanners.append(EncoderScanner)
         else:
-            unknown_warning = not (
-                        data_provider.descriptor.info.endswith("|BASE64") or "|PROTO:" in data_provider.descriptor.info)
+            unknown_warning = not (data_provider.descriptor.info.endswith("|BASE64")
+                                   or "|PROTO:" in data_provider.descriptor.info)
             if 0 < depth:
                 if ZlibScanner.match(data):
                     deep_scanners.append(ZlibScanner)
@@ -277,6 +279,6 @@ class DeepScanner(
                 else:
                     deep_scanners.append(StringsScanner)
             if unknown_warning:
-                logger.warning("Cannot apply a deep scanner for data(%d) %s %s", len(data), repr(data[:32]),
-                               data_provider.descriptor)
+                logger.debug("Cannot apply a deep scanner for data(%d) %s %s", len(data), repr(data[:32]),
+                             data_provider.descriptor)
         return deep_scanners, fallback_scanners

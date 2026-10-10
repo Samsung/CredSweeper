@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup, Tag, XMLParsedAsHTMLWarning
 from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
-from credsweeper.logger.logger import TRACE
+from credsweeper.logger import TRACE
 from credsweeper.utils.util import Util
 
 warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning, module='bs4')
@@ -88,10 +88,10 @@ class DataContentProvider(ContentProvider):
         if '{' in self.text and '}' in self.text and '"' in self.text and ':' in self.text:
             try:
                 self.structure = json.loads(self.text)
-                logger.debug("CONVERTED from json")
+                logger.log(TRACE, "CONVERTED from json")
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 # fallback
-                logger.debug("Cannot parse as json %s:%s %s", type(exc), exc, self.descriptor)
+                logger.log(TRACE, "Cannot parse as json %s:%s %s", type(exc), exc, self.descriptor)
             else:
                 if self.__is_structure():
                     return True
@@ -100,10 +100,10 @@ class DataContentProvider(ContentProvider):
                 for line in self.text.splitlines():
                     # each line must be in json format, otherwise - exception rises
                     self.structure.append(json.loads(line))
-                logger.debug("CONVERTED from ndjson")
+                logger.log(TRACE, "CONVERTED from ndjson")
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 # fallback
-                logger.debug("Cannot parse as ndjson %s:%s %s", type(exc), exc, self.descriptor)
+                logger.log(TRACE, "Cannot parse as ndjson %s:%s %s", type(exc), exc, self.descriptor)
                 self.structure = None
             else:
                 if self.__is_structure():
@@ -117,12 +117,12 @@ class DataContentProvider(ContentProvider):
             if (';' in self.text or 2 < self.text.count('\n') or 2 < self.text.count('\r')) \
                     and ('"' in self.text or "'" in self.text):
                 self.structure = Util.parse_python(self.text)
-                logger.debug("CONVERTED from Python")
+                logger.log(TRACE, "CONVERTED from Python")
             else:
                 logger.log(TRACE, "Data do not contain line feed - weak PYTHON")
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
-            logger.debug("Cannot parse as Python %s:%s %s", type(exc), exc, self.descriptor)
+            logger.log(TRACE, "Cannot parse as Python %s:%s %s", type(exc), exc, self.descriptor)
         else:
             if self.__is_structure():
                 return True
@@ -130,12 +130,12 @@ class DataContentProvider(ContentProvider):
         try:
             if ':' in self.text and (2 < self.text.count('\n') or 2 < self.text.count('\r')):
                 self.structure = yaml.safe_load(self.text)
-                logger.debug("CONVERTED from yaml")
+                logger.log(TRACE, "CONVERTED from yaml")
             else:
                 logger.log(TRACE, "Data do not contain colon mark - weak YAML")
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
-            logger.debug("Cannot parse as yaml %s:%s %s", type(exc), exc, self.descriptor)
+            logger.log(TRACE, "Cannot parse as yaml %s:%s %s", type(exc), exc, self.descriptor)
         else:
             if self.__is_structure():
                 return True
@@ -157,12 +157,12 @@ class DataContentProvider(ContentProvider):
             if '<' in self.text and '>' in self.text and "</" in self.text:
                 xml_text = self.text.splitlines()
                 self.lines, self.line_numbers = Util.get_xml_from_lines(xml_text)
-                logger.debug("CONVERTED from xml")
+                logger.log(TRACE, "CONVERTED from xml")
                 return bool(self.lines and self.line_numbers)
             logger.log(TRACE, "Weak data to parse as XML")
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
-            logger.debug("Cannot parse as XML %s:%s %s", type(exc), exc, self.descriptor)
+            logger.log(TRACE, "Cannot parse as XML %s:%s %s", type(exc), exc, self.descriptor)
         return None
 
     def _check_multiline_cell(self, cell: Tag) -> Optional[Tuple[int, str]]:
@@ -377,12 +377,12 @@ class DataContentProvider(ContentProvider):
                     # of all accompanying losses per objects allocation
                     self._html_tables_representation(html, depth, recursive_limit_size >> 1,
                                                      keywords_required_substrings_check)
-                    logger.debug("CONVERTED from html")
+                    logger.log(TRACE, "CONVERTED from html")
             else:
                 logger.log(TRACE, "Data do not contain specific tags - weak HTML")
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
-            logger.debug("Cannot parse as HTML %s:%s %s", type(exc), exc, self.descriptor)
+            logger.log(TRACE, "Cannot parse as HTML %s:%s %s", type(exc), exc, self.descriptor)
         else:
             return bool(self.lines and self.line_numbers)
         return None

@@ -20,14 +20,17 @@ class DataContentProviderTest(unittest.TestCase):
 
     def test_wrong_xml_n(self) -> None:
         content_provider1 = DataContentProvider(data=b"")
-        with patch('logging.Logger.debug') as mocked_logger:
+        with patch('logging.Logger.log') as mocked_log1:
             self.assertFalse(content_provider1.represent_as_xml())
-            mocked_logger.assert_not_called()
+            mocked_log1.assert_not_called()
         content_provider2 = DataContentProvider(data=AZ_DATA)
+        with patch('logging.Logger.log') as mocked_log2:
+            self.assertFalse(content_provider2.represent_as_xml())
+            mocked_log2.assert_called()
         content_provider3 = DataContentProvider(data=b"</wrong XML text>")
-        with patch('logging.Logger.debug') as mocked_logger:
+        with patch('logging.Logger.log') as mocked_log3:
             self.assertFalse(content_provider3.represent_as_xml())
-            mocked_logger.assert_called()
+            mocked_log3.assert_called()
 
     def test_scan_wrong_provider_n(self) -> None:
         content_provider = DataContentProvider(b"dummy", "dummy")

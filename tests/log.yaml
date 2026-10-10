@@ -15,34 +15,34 @@ handlers:
     formatter: simple
     stream: ext://sys.stdout
 
-#  debug:
-#    class: logging.handlers.TimedRotatingFileHandler
-#    level: DEBUG
-#    formatter: verbose
-#    filename: ./log/debug.log
-#    backupCount: 3
-#    delay: True
-#    when: midnight
+  debug:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: TRACE
+    formatter: verbose
+    filename: ./log/debug.log
+    backupCount: 3
+    delay: True
+    when: midnight
 
-#  error:
-#    class: logging.handlers.RotatingFileHandler
-#    level: ERROR
-#    formatter: verbose
-#    filename: ./log/error.log
-#    maxBytes: 1048576
-#    backupCount: 7
+  warning:
+    class: logging.handlers.RotatingFileHandler
+    level: WARNING
+    formatter: verbose
+    filename: ./log/warning.log
+    maxBytes: 10485760
+    backupCount: 7
 
 root:
   level: NOTSET
-  handlers: [ console ]
+  handlers: [ console, debug, warning ]
 
 loggers:
   git:
     level: WARNING
-    handlers: [ console ]
+    handlers: [ console, warning ]
     propagate: False
 
   pdfminer:
     level: WARNING
-    handlers: [ console ]
+    handlers: [ console, warning ]
     propagate: False

@@ -23357,6 +23357,48 @@
         ]
     },
     {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "a75ea7b1-8643-dead-beef-42f3af69f8b5",
+                "line_num": 1,
+                "path": "./tests/samples/sample.png",
+                "info": "FILE:./tests/samples/sample.png|PNG_ITXT_0:Uuid itxt plain:en:Magic ID:0xa6|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "a75ea7b1-8643-dead-beef-42f3af69f8b5",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.76007
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "f99080e6-91be-dead-beef-381896d6e93c",
+                "line_num": 1,
+                "path": "./tests/samples/sample.png",
+                "info": "FILE:./tests/samples/sample.png|PNG_TEXT:Uuid text:0x29|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "f99080e6-91be-dead-beef-381896d6e93c",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 3.52037
+            }
+        ]
+    },
+    {
         "rule": "AWS Client ID",
         "severity": "medium",
         "confidence": "moderate",
@@ -23615,7 +23657,7 @@
         "ml_probability": 1.0,
         "line_data_list": [
             {
-                "line": "tp_token_value=\"b035d48j9X2dfjF0hb9sd8Guf5hWu2ia\"",
+                "line": "tp_token_value = \"b035d48j9X2dfjF0hb9sd8Guf5hWu2ia\"",
                 "line_num": 7,
                 "path": "./tests/samples/sample.toml",
                 "info": "FILE:./tests/samples/sample.toml|RAW",
@@ -23623,8 +23665,8 @@
                 "variable_start": 0,
                 "variable_end": 14,
                 "value": "b035d48j9X2dfjF0hb9sd8Guf5hWu2ia",
-                "value_start": 16,
-                "value_end": 48,
+                "value_start": 18,
+                "value_end": 50,
                 "entropy": 4.22641
             }
         ]

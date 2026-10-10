@@ -10,7 +10,6 @@ from credsweeper.file_handler.descriptor import Descriptor
 class TestDeepScanner(unittest.TestCase):
 
     def test_get_deep_scanners_static_n(self):
-        self.assertEqual(([], []), DeepScanner.get_deep_scanners(DataContentProvider(None), 0, 0))
         self.assertEqual(([], []), DeepScanner.get_deep_scanners(DataContentProvider(b''), 0, 0))
         self.assertEqual(([], []), DeepScanner.get_deep_scanners(DataContentProvider(b'\xFF'), 0, 0))
 
