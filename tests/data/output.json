@@ -14452,6 +14452,69 @@
         ]
     },
     {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "gi_reo_gi_token = \"G1Re06G1BdgNseiJDN21Z094M\"",
+                "line_num": 4,
+                "path": "./tests/samples/sample.toml",
+                "info": "",
+                "variable": "gi_reo_gi_token",
+                "variable_start": 0,
+                "variable_end": 15,
+                "value": "G1Re06G1BdgNseiJDN21Z094M",
+                "value_start": 19,
+                "value_end": 44,
+                "entropy": 4.13366
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "# Token-> DemoToken: Nxs094M3ed2s1Re0F4M3ed2GZ8M= <- for User : demo",
+                "line_num": 5,
+                "path": "./tests/samples/sample.toml",
+                "info": "",
+                "variable": "DemoToken",
+                "variable_start": 10,
+                "variable_end": 19,
+                "value": "Nxs094M3ed2s1Re0F4M3ed2GZ8M=",
+                "value_start": 21,
+                "value_end": 49,
+                "entropy": 4.03915
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "tp_token_value = \"b035d48j9X2dfjF0hb9sd8Guf5hWu2ia\"",
+                "line_num": 7,
+                "path": "./tests/samples/sample.toml",
+                "info": "",
+                "variable": "tp_token_value",
+                "variable_start": 0,
+                "variable_end": 14,
+                "value": "b035d48j9X2dfjF0hb9sd8Guf5hWu2ia",
+                "value_start": 18,
+                "value_end": 50,
+                "entropy": 4.22641
+            }
+        ]
+    },
+    {
         "rule": "Nonce",
         "severity": "low",
         "confidence": "moderate",
@@ -16080,69 +16143,6 @@
                 "value_start": 0,
                 "value_end": 50,
                 "entropy": 5.16386
-            }
-        ]
-    },
-    {
-        "rule": "Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "gi_reo_gi_token = \"G1Re06G1BdgNseiJDN21Z094M\"",
-                "line_num": 1,
-                "path": "./tests/samples/token.toml",
-                "info": "",
-                "variable": "gi_reo_gi_token",
-                "variable_start": 0,
-                "variable_end": 15,
-                "value": "G1Re06G1BdgNseiJDN21Z094M",
-                "value_start": 19,
-                "value_end": 44,
-                "entropy": 4.13366
-            }
-        ]
-    },
-    {
-        "rule": "Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "Token-> DemoToken: Nxs094M3ed2s1Re0F4M3ed2GZ8M= <- for User : demo",
-                "line_num": 2,
-                "path": "./tests/samples/token.toml",
-                "info": "",
-                "variable": "DemoToken",
-                "variable_start": 8,
-                "variable_end": 17,
-                "value": "Nxs094M3ed2s1Re0F4M3ed2GZ8M=",
-                "value_start": 19,
-                "value_end": 47,
-                "entropy": 4.03915
-            }
-        ]
-    },
-    {
-        "rule": "Token",
-        "severity": "high",
-        "confidence": "moderate",
-        "ml_probability": 1.0,
-        "line_data_list": [
-            {
-                "line": "tp_token_value=\"b035d48j9X2dfjF0hb9sd8Guf5hWu2ia\"",
-                "line_num": 4,
-                "path": "./tests/samples/token.toml",
-                "info": "",
-                "variable": "tp_token_value",
-                "variable_start": 0,
-                "variable_end": 14,
-                "value": "b035d48j9X2dfjF0hb9sd8Guf5hWu2ia",
-                "value_start": 16,
-                "value_end": 48,
-                "entropy": 4.22641
             }
         ]
     },

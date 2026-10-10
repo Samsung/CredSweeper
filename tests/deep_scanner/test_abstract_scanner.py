@@ -22,6 +22,8 @@ class TestAbstractScanner(unittest.TestCase):
         self.assertListEqual([], list(AbstractScanner.structure_processing(structure={"key": False})))
 
     def test_structure_processing_p(self):
+        self.assertListEqual([("key[0]", 1), ("key[1]", 2), ("key[2]", 3)],
+                             list(AbstractScanner.structure_processing(structure=(1, 2, 3), parent_key="key")))
         self.assertListEqual([(0, 1), (1, 2), (2, 3)], list(AbstractScanner.structure_processing(structure=(1, 2, 3))))
         self.assertListEqual([(0, 1), (1, 2), (2, 3)], list(AbstractScanner.structure_processing(structure=[1, 2, 3])))
         self.assertListEqual([(0, 1), (1, 2), (2, 3)],
