@@ -18,7 +18,6 @@ from credsweeper.credentials.candidate import Candidate
 from credsweeper.file_handler.byte_content_provider import ByteContentProvider
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.file_handler.data_content_provider import DataContentProvider
-from credsweeper.file_handler.descriptor import Descriptor
 from credsweeper.file_handler.diff_content_provider import DiffContentProvider
 from credsweeper.file_handler.file_path_extractor import FilePathExtractor
 from credsweeper.file_handler.string_content_provider import StringContentProvider
@@ -63,7 +62,7 @@ class AbstractScanner(ABC):
 
     @staticmethod
     @abstractmethod
-    def get_deep_scanners(data: bytes, descriptor: Descriptor, depth: int, limit: int) -> Tuple[List[Any], List[Any]]:
+    def get_deep_scanners(data_provider: DataContentProvider, depth: int, limit: int) -> Tuple[List[Any], List[Any]]:
         """Returns possibly scan methods for the data depends on content and fallback scanners"""
         raise NotImplementedError(__name__)
 
@@ -152,14 +151,14 @@ class AbstractScanner(ABC):
             for key, value in structure.items():
                 size += AbstractScanner.structure_size(key)
                 size += AbstractScanner.structure_size(value)
-        elif isinstance(structure, (list, tuple)):
+        elif isinstance(structure, (list, tuple, frozenset, set)):
             size += sum(AbstractScanner.structure_size(x) for x in structure)
         return size
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     @staticmethod
-    def structure_processing(structure: Any) -> Generator[Tuple[Any, Any], None, None]:
+    def structure_processing(structure: Any, parent_key: str = '') -> Generator[Tuple[Any, Any], None, None]:
         """Yields pair `key, value` from given structure if applicable"""
         if isinstance(structure, dict):
             # transform dictionary to list
@@ -167,25 +166,33 @@ class AbstractScanner(ABC):
                 if not value:
                     # skip empty values
                     continue
-                if isinstance(value, (list, tuple)):
+                if isinstance(value, (list, tuple, frozenset, set)):
                     if 1 == len(value):
                         # simplify some structures like YAML when single item in new line is a value
-                        yield key, value[0]
-                        continue
-                # all other data will be precessed in next code
-                yield key, value
+                        yield key, next(iter(value), None)
+                    else:
+                        yield from AbstractScanner.structure_processing(value, parent_key=key)
+                else:
+                    # all other data will be precessed in next code
+                    yield key, value
             yield from AbstractScanner.key_value_combination(structure)
-        elif isinstance(structure, (list, tuple, set)):
+        elif isinstance(structure, (list, tuple, frozenset, set)):
             # enumerate the items to fit for return structure
             for key, value in enumerate(structure):
-                yield key, value
+                if parent_key:
+                    yield f"{parent_key}[{key}]", value
+                else:
+                    yield key, value
         elif isinstance(structure, CodeType):
             # enumerate the items to fit for return structure
             for key, value in enumerate(structure.co_consts):
                 if isinstance(value, CodeType):
                     yield from AbstractScanner.structure_processing(value)
                 elif value:
-                    yield key, value
+                    if parent_key:
+                        yield f"{parent_key}[{key}]", value
+                    else:
+                        yield key, value
         else:
             logger.warning("Not supported type:%s val:%s", str(type(structure)), repr(structure))
 
@@ -195,13 +202,15 @@ class AbstractScanner(ABC):
             self,  #
             struct_provider: StructContentProvider,  #
             depth: int,  #
-            recursive_limit_size: int) -> List[Candidate]:
+            recursive_limit_size: int,  #
+            parent_key: str = '') -> List[Candidate]:
         """Recursive function to scan structured data
 
             Args:
                 struct_provider: DataContentProvider object may be a container
                 depth: maximal level of recursion
                 recursive_limit_size: maximal bytes of opened files to prevent recursive zip-bomb attack
+                parent_key: upper key if matched a keyword
         """
         candidates: List[Candidate] = []
         logger.log(TRACE, "Start struct_scan: depth=%d, limit=%d, path=%s, info=%s", depth, recursive_limit_size,
@@ -217,17 +226,30 @@ class AbstractScanner(ABC):
         depth -= 1
 
         augmented_lines_for_keyword_rules = []
-        for key, value in AbstractScanner.structure_processing(struct_provider.struct):
+        for key, value in AbstractScanner.structure_processing(struct_provider.struct, parent_key):
+            if not value or isinstance(value,
+                                       (int, float, complex, slice, EllipsisType, datetime.date, datetime.datetime)):
+                # skip useless types
+                continue
             # a keyword rule may be applicable for `key` (str only) and `value` (str, bytes)
             keyword_match = bool(isinstance(key, str) and self.scanner.keywords_required_substrings_check(key.lower()))
-
-            if isinstance(value, (dict, list, tuple, frozenset, set)) and value:
+            if isinstance(value, dict):
                 # recursive scan for not empty structured `value`
                 val_struct_provider = StructContentProvider(struct=value,
                                                             file_path=struct_provider.file_path,
                                                             file_type=struct_provider.file_type,
-                                                            info=f"{struct_provider.info}|STRUCT:{key}")
+                                                            info=f"{struct_provider.info}|DICT:{key}")
                 new_candidates = self.structure_scan(val_struct_provider, depth, recursive_limit_size)
+                candidates.extend(new_candidates)
+            elif isinstance(value, (list, tuple, frozenset, set)):
+                val_struct_provider = StructContentProvider(struct=value,
+                                                            file_path=struct_provider.file_path,
+                                                            file_type=struct_provider.file_type,
+                                                            info=f"{struct_provider.info}|SEQUENCE:{key}")
+                new_candidates = self.structure_scan(val_struct_provider,
+                                                     depth,
+                                                     recursive_limit_size,
+                                                     parent_key=parent_key if keyword_match else '')
                 candidates.extend(new_candidates)
             elif isinstance(value, (bytes, bytearray)):
                 # recursive data scan
@@ -256,10 +278,6 @@ class AbstractScanner(ABC):
                         candidates.extend(new_candidates)
                 if keyword_match and MIN_VALUE_LENGTH <= len(stripped_value):
                     augmented_lines_for_keyword_rules.append(f"{key} = {repr(stripped_value)}")
-            elif not value or isinstance(value,
-                                         (int, float, complex, slice, EllipsisType, datetime.date, datetime.datetime)):
-                # skip useless types
-                pass
             else:
                 logger.warning("Not supported type:%s value(%s)", str(type(value)), str(value))
 
@@ -288,8 +306,7 @@ class AbstractScanner(ABC):
 
         """
         candidates: List[Candidate] = []
-        deep_scanners, fallback_scanners = self.get_deep_scanners(data_provider.data, data_provider.descriptor, depth,
-                                                                  recursive_limit_size)
+        deep_scanners, fallback_scanners = self.get_deep_scanners(data_provider, depth, recursive_limit_size)
         fallback = True
         for scan_class in deep_scanners:
             new_candidates = scan_class.data_scan(self, data_provider, depth, recursive_limit_size)

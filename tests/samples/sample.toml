@@ -1,0 +1,27 @@
+expited_datetime = 2038-01-19T03:14:07Z
+
+[legacy]
+gi_reo_gi_token = "G1Re06G1BdgNseiJDN21Z094M"
+# Token-> DemoToken: Nxs094M3ed2s1Re0F4M3ed2GZ8M= <- for User : demo
+fp_tokenized_value = "b035d48j9X2dfjF0hb9sd8Guf5hWu2ia"
+tp_token_value = "b035d48j9X2dfjF0hb9sd8Guf5hWu2ia"
+
+[list.sample]
+tokens = [
+    "baf8b6ffb1500dbaa204d5b5d6f9168e8f84d3d2",
+    "9b305fb417a268d878a09ce9db8b2be931dfc6bf",
+    "1607997c52db7fd09864047493c82f538573339a"
+]
+
+[multiline.sample.backslash]
+private_tokens = """\
+Gm7NB0PPydhAq7QfPjVIylntn2lCv7K8vlVEr12b8geyBvfA8zGLXTqZ91TDsdbipN7X/pdDUtGG\
+U7lBHAxqmHNCDe57aqcWZZdRR6k2fUBsWXjG/Ffycj1AyECYJP13dJjOBUXxOdc1rrrdmOCli3Ko\
+w1c81zImpn4ujItplYaHlGTtNxPDcUPY8j/HDheWsjiKpPXKTl0r9udX0dXwldKX6EGTUDOHiAUf\
+"""
+
+[multiline.sample.plain]
+secret_tokens = """
+Xhe5OL067NVOjv2Yyi9VuN3ynG9INcgkSGgv3/eZeD6gFZHUIznqM73xjoebwoJar2fr0tUrG8PU
+PD+db4jyBcYPMNxr5OJkP73wJloVySNC1N30+T4MxSRkU6fbOudKXLiYmK0R337lr4FZIIBC6ey1
+B+y3amlm0ygEAcMNTQgVsK3vCym9V+dF2RLxw/tq+Cu81wUqj6t90i7WQ+DraQlcrlcO8atG+/Fa"""
