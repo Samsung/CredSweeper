@@ -153,7 +153,7 @@ class Util:
         return entropy < min_entropy
 
     @staticmethod
-    def is_binary(data: Union[bytes, bytearray]) -> bool:
+    def is_binary(data: bytes | bytearray) -> bool:
         """
         Returns True when two zeroes sequence is found in begin of data.
         The sequence never exists in text format (UTF-8, UTF-16). UTF-32 is not supported.
@@ -168,7 +168,7 @@ class Util:
         .difference(set(x for x in range(0xA0, 0x100)))
 
     @staticmethod
-    def is_latin1(data: Union[bytes, bytearray]) -> bool:
+    def is_latin1(data: bytes | bytearray) -> bool:
         """Returns True when data looks like LATIN-1 for first MAX_LINE_LENGTH bytes."""
         result = False
         if data:
@@ -275,7 +275,7 @@ class Util:
         return []
 
     @staticmethod
-    def get_asn1_size(data: Union[bytes, bytearray]) -> int:
+    def get_asn1_size(data: bytes | bytearray) -> int:
         """Only sequence type 0x30 and size correctness are checked
         Returns size of ASN1 data over 128 bytes or -1 if no interested data
         """

@@ -6,6 +6,7 @@ from typing import List, Optional
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
+from credsweeper.logger import TRACE
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +53,8 @@ class ZlibScanner(AbstractScanner, ABC):
                                                         info=f"{data_provider.info}|ZLIB:{len(decompressed)}")
             zlib_candidates = self.recursive_scan(zlib_content_provider, depth, recursive_limit_size)
             return zlib_candidates
+        except zlib.error as zlib_exc:
+            logger.log(TRACE, "%s %s", data_provider.descriptor, zlib_exc)
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
             logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
