@@ -237,7 +237,7 @@ class DeepScanner(
             if data_provider.descriptor.extension in (".eml", ".mht"):
                 deep_scanners.append(EmlScanner)
             else:
-                if 0 < depth:
+                if 0 < depth and PatchScanner.match(data):
                     # a formal patch looks like an eml
                     deep_scanners.append(PatchScanner)
                 fallback_scanners.append(EmlScanner)
@@ -250,7 +250,8 @@ class DeepScanner(
             # keep ByteScanner first to apply real value position if possible
             deep_scanners.append(ByteScanner)
             if 0 < depth:
-                deep_scanners.append(PatchScanner)
+                if PatchScanner.match(data):
+                    deep_scanners.append(PatchScanner)
                 if ZlibScanner.match(data):
                     deep_scanners.append(ZlibScanner)
                 if data_provider.text:
