@@ -18,7 +18,9 @@ class PatchScanner(AbstractScanner, ABC):
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
         """Match logic in data_scan"""
-        return True
+        if b"---" in data and b"+++" in data and b"\n-" in data and b"\n+" in data:
+            return True
+        return False
 
     def data_scan(
             self,  #

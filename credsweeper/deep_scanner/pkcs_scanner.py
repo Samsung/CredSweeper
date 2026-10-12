@@ -1,7 +1,7 @@
 import base64
 import logging
 from abc import ABC
-from typing import List, Optional, Union
+from typing import List, Optional
 
 from credsweeper.common.constants import Severity, Confidence
 from credsweeper.credentials.candidate import Candidate
@@ -16,7 +16,7 @@ class PkcsScanner(AbstractScanner, ABC):
     """Implements pkcs12 scanning"""
 
     @staticmethod
-    def match(data: Union[bytes, bytearray]) -> bool:
+    def match(data: bytes | bytearray) -> bool:
         """Matched ASN1 structure with exactly size"""
         if 0x80 < Util.get_asn1_size(data):
             # no real credentials in a file less than 128 bytes
