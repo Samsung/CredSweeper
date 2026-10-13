@@ -8,6 +8,7 @@ from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.struct_content_provider import StructContentProvider
+from credsweeper.logger import TRACE
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +43,8 @@ class TomlScanner(AbstractScanner, ABC):
                 new_limit = recursive_limit_size - len(data_provider.text)
                 struct_candidates = self.structure_scan(struct_content_provider, depth, new_limit)
                 return struct_candidates
+        except tomllib.TOMLDecodeError as toml_exc:
+            logger.log(TRACE, "%s %s", toml_exc, data_provider.descriptor)
         except Exception as exc:  # pylint: disable=broad-exception-caught
-            logger.debug("%s:%s", data_provider.file_path, exc)
+            logger.debug("%s %s", exc, data_provider.descriptor)
         return None
