@@ -46,5 +46,6 @@ class TomlScanner(AbstractScanner, ABC):
         except tomllib.TOMLDecodeError as toml_exc:
             logger.log(TRACE, "%s %s", toml_exc, data_provider.descriptor)
         except Exception as exc:  # pylint: disable=broad-exception-caught
+            # fallback
             logger.debug("%s %s", exc, data_provider.descriptor)
         return None
