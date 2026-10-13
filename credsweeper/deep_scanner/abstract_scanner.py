@@ -89,8 +89,8 @@ class AbstractScanner(ABC):
         data_size = len(data_provider.data)
         if MIN_DATA_LEN > data_size:
             # break recursion for minimal data size
-            logger.debug("Too small data: size=%d, depth=%d, limit=%d, path=%s, info=%s", data_size, depth,
-                         recursive_limit_size, data_provider.file_path, data_provider.info)
+            logger.log(TRACE, "Too small data: size=%d, depth=%d, limit=%d, path=%s, info=%s", data_size, depth,
+                       recursive_limit_size, data_provider.file_path, data_provider.info)
             return candidates
         recursive_limit_size -= data_size
         if MIN_DATA_LEN > recursive_limit_size:
