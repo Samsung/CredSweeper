@@ -8,6 +8,7 @@ import whatthepatch
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
+from credsweeper.logger import TRACE
 
 logger = logging.getLogger(__name__)
 
@@ -206,7 +207,7 @@ class DiffContentProvider(ContentProvider):
                 else:
                     logger.warning("Unknown type of line %s", type(text))
             else:
-                logger.debug("Change has no valuable text %s", change)
+                logger.log(TRACE, "Change has no valuable text %s", change)
 
         return rows_data
 

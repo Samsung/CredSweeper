@@ -8,6 +8,7 @@ from credsweeper.common.constants import Severity, Confidence
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
+from credsweeper.logger import TRACE
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +57,7 @@ class JksScanner(AbstractScanner, ABC):
                 candidate.line_data_list[0].value_end = len(value)
                 return [candidate]
             except jks.util.KeystoreException as jks_exc:
-                logger.debug("%s:%s:%s:%s", pw_probe, type(jks_exc), jks_exc, data_provider.descriptor)
+                logger.log(TRACE, "%s:%s:%s:%s", pw_probe, type(jks_exc), jks_exc, data_provider.descriptor)
             except Exception as exc:  # pylint: disable=broad-exception-caught
                 # fallback
                 logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
