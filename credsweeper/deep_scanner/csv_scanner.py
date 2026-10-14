@@ -85,7 +85,9 @@ class CsvScanner(AbstractScanner, ABC):
                 new_limit = recursive_limit_size - sum(len(x) for x in rows)
                 struct_candidates = self.structure_scan(struct_content_provider, depth, new_limit)
                 return struct_candidates
+        except csv.Error as csv_exc:
+            logger.log(TRACE, "%s %s", csv_exc, data_provider.descriptor)
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
-            logger.debug("%s:%s:%s", type(exc), exc, data_provider.descriptor)
+            logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
         return None

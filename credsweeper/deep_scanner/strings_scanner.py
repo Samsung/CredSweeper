@@ -25,12 +25,12 @@ class StringsScanner(AbstractScanner, ABC):
         enumerated_lines = []
         offset = -1
         line_items = []
-        for n, x in enumerate(data):
+        for i, x in enumerate(data):
             if 0x09 == x or 0x20 <= x <= 0x7E:
                 # TAB, SPACE and visible ASCII symbols
                 if 0 > offset:
                     # use start of string as line number
-                    offset = n
+                    offset = i
                 line_items.append(chr(x))
                 continue
             if MIN_DATA_LEN <= len(line_items):

@@ -3,9 +3,8 @@ from typing import Dict, List, Set
 
 import numpy as np
 
-from credsweeper.common.constants import Chars, ML_HUNK
+from credsweeper.common.constants import Chars, ML_HUNK, MIN_DATA_LEN
 from credsweeper.credentials.candidate import Candidate
-from credsweeper.file_handler.data_content_provider import MIN_DATA_LEN
 from credsweeper.ml_model.features.feature import Feature
 
 

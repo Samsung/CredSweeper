@@ -21,7 +21,7 @@ class XmlScanner(AbstractScanner, ABC):
 
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
-        """Used to detect xml format from raw bytes"""
+        """Used to detect XML format from raw bytes"""
         if XmlScanner.XML_FIRST_BRACKET_PATTERN.search(data, 0, MAX_LINE_LENGTH):
             if first_bracket_match := XmlScanner.XML_OPENING_TAG_PATTERN.search(data, 0, MAX_LINE_LENGTH):
                 start_pos = first_bracket_match.start()
