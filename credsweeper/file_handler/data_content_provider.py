@@ -1,11 +1,9 @@
 import json
 import logging
-import warnings
 from functools import cached_property
 from typing import List, Optional, Any, Generator
 
 import yaml
-from bs4 import XMLParsedAsHTMLWarning
 
 from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -13,7 +11,6 @@ from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.logger import TRACE
 from credsweeper.utils.util import Util
 
-warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning, module='bs4')
 logger = logging.getLogger(__name__)
 
 # <t>12345678</t> - minimal xml with a credential

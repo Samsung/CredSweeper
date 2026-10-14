@@ -1,5 +1,10 @@
 import logging
+import warnings
 from typing import List, Optional, Callable, Tuple
+
+from bs4 import XMLParsedAsHTMLWarning
+
+warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning)
 
 from bs4 import BeautifulSoup, Tag
 
