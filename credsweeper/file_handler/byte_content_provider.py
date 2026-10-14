@@ -1,4 +1,5 @@
 import logging
+import re
 from functools import cached_property
 from typing import List, Optional, Generator
 
@@ -11,6 +12,9 @@ logger = logging.getLogger(__name__)
 
 class ByteContentProvider(ContentProvider):
     """Allow to scan byte sequence instead of extra reading a file"""
+
+    # protobuf unknown data may be not recognized
+    PROTO_RAW = re.compile(r".*\|PROTO:0x[0-9a-f]+\|RAW")
 
     def __init__(
             self,  #
@@ -47,7 +51,7 @@ class ByteContentProvider(ContentProvider):
         if self.__lines is None:
             text = Util.decode_text(self.__data)
             if text is None:
-                if not self.info.endswith("|BASE64|RAW"):
+                if not self.info.endswith("|BASE64|RAW") and not ByteContentProvider.PROTO_RAW.fullmatch(self.info):
                     if isinstance(self.__data, (bytes, bytearray)):
                         # avoid extra warnings for the hypothesis
                         logger.warning("Binary data(%d) detected %s %s %s", len(self.__data), self.file_path, self.info,
