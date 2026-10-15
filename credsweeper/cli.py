@@ -46,13 +46,12 @@ def threshold_or_float_or_zero(arg: str) -> Union[int, float, ThresholdPreset]:
         return 0
     with contextlib.suppress(ValueError):
         value = float(arg)
-        if 1 < value:
-            logger.warning("Value '%s' sews out all ML candidates", arg)
-        return value
+        if 0.0 <= value <= 1.0:
+            return value
     allowed_presents = [e.value for e in ThresholdPreset]
     if arg in allowed_presents:
         return ThresholdPreset[arg]
-    raise ArgumentTypeError(f"Value must be int, float or one of {allowed_presents}")
+    raise ArgumentTypeError(f"Value must be int[0;1], float[0.0;1.0] or one of {allowed_presents}")
 
 
 def logger_levels(log_level: str) -> str:
