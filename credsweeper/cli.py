@@ -13,10 +13,10 @@ logger = logging.getLogger(__name__)
 def positive_int(value: Any) -> int:
     """Check if number of parallel processes is not a positive number."""
     int_value = int(value)
-    if int_value <= 0:
-        logger.error("Number of parallel processes should be a positive number: %s", value)
-        raise ArgumentTypeError(f"{value} should be greater than 0")
-    return int_value
+    if 0 < int_value:
+        return int_value
+    logger.error("Number of parallel processes should be a positive number: %s", value)
+    raise ArgumentTypeError(f"{value} must be greater than 0")
 
 
 def positive_float(value: Any) -> float:
@@ -26,7 +26,7 @@ def positive_float(value: Any) -> float:
         if 0.0 < float_value:
             return float_value
     logger.error("Time limit must be a positive number: %s", value)
-    raise ArgumentTypeError(f"{value} should be positive")
+    raise ArgumentTypeError(f"{value} must be positive")
 
 
 def threshold_or_float_or_zero(arg: str) -> Union[int, float, ThresholdPreset]:

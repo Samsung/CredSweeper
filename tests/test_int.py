@@ -669,12 +669,22 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_timeout_n(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            args = ["--path", str(SAMPLES_PATH / "changeme_key.jks"), "--depth", "3", "--time_limit", "10"]
-            _stdout, _stderr = self._m_credsweeper(args)
-            self.assertNotIn("WARNING", _stdout)
-            self.assertNotIn("timed out", _stdout)
-            self.assertIn("Detected Credentials: 1", _stdout)
+        args = ["--path", str(SAMPLES_PATH / "changeme_key.jks"), "--depth", "3", "--time_limit", "10"]
+        # 10 seconds are enough
+        _stdout, _stderr = self._m_credsweeper(args)
+        self.assertNotIn("WARNING", _stdout)
+        self.assertNotIn("timed out", _stdout)
+        self.assertIn("Detected Credentials: 1", _stdout)
+
+        # negative case
+        args[-1] = "-10"
+        _stdout, _stderr = self._m_credsweeper(args)
+        self.assertIn("Time limit must be a positive number:", _stderr)
+
+        # zero case
+        args[-1] = "0.0"
+        _stdout, _stderr = self._m_credsweeper(args)
+        self.assertIn("Time limit must be a positive number:", _stderr)
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
