@@ -280,7 +280,7 @@ def parse_arguments(argv: List[str]) -> Namespace:
     parser.add_argument("--time_limit",
                         help="set time limit per file in scanning sequence (float seconds)",
                         dest="time_limit",
-                        type=float,
+                        type=positive_float,
                         default=None,
                         metavar="POSITIVE_FLOAT")
     parser.add_argument("--banner",
