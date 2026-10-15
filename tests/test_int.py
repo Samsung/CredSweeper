@@ -676,6 +676,21 @@ CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t
             self.assertNotIn("timed out", _stdout)
             self.assertIn("Detected Credentials: 1", _stdout)
 
+            for time_limit in ["-1", "0"]:
+                args = [
+                    "--path",
+                    str(SAMPLES_PATH / "changeme_key.jks"),
+                    "--depth",
+                    "3",
+                    "--time_limit",
+                    time_limit,
+                ]
+                _stdout, _stderr = self._m_credsweeper(args)
+                self.assertIn(
+                    "Time limit must be a positive number:",
+                    _stderr,
+                )
+
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_timeout_p(self) -> None:
