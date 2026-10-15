@@ -440,7 +440,8 @@ class CredSweeper:
 
         """
         candidates: List[Candidate] = []
-        logger.debug("Start scan file: %s %s", content_provider.file_path, content_provider.info)
+        start_time = time.perf_counter()
+        logger.debug("Started scanning file: %s %s", content_provider.file_path, content_provider.info)
 
         if FilePathExtractor.is_find_by_ext_file(self.config, content_provider.file_type):
             # Skip the file scanning and create fake candidate because the extension is suspicious
@@ -457,6 +458,8 @@ class CredSweeper:
                     # Regular file scanning
                     candidates = self.scanner.scan(content_provider)
 
+        logger.debug("Finished scanning file: %s %s (%s sec)", content_provider.file_path, content_provider.info,
+                     time.perf_counter() - start_time)
         # finally return result from 'file_scan'
         return candidates
 
