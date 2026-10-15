@@ -44,7 +44,7 @@ class LexerScanner(AbstractScanner, ABC):
     SUPPORTED_EXTENSIONS = tuple(x for y in LEXER_MATCHER.keys() for x in y)
     SUPPORTED_LEXERS = tuple(LEXER_MATCHER.values())
     # the lexers that were guessed without extensions
-    GUESSED_LEXERS = tuple(x for x in LEXER_MATCHER.values() if x not in (VerilogLexer, ObjectiveCLexer))
+    GUESSED_LEXERS = tuple(x for x in LEXER_MATCHER.values() if x not in (VerilogLexer, ObjectiveCLexer, Perl6Lexer))
 
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
