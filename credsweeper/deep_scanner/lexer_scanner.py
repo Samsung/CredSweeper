@@ -44,7 +44,7 @@ class LexerScanner(AbstractScanner, ABC):
     SUPPORTED_EXTENSIONS = tuple(x for y in LEXER_MATCHER.keys() for x in y)
     SUPPORTED_LEXERS = tuple(LEXER_MATCHER.values())
     # the lexers that were guessed without extensions
-    GUESSED_LEXERS = tuple(x for x in LEXER_MATCHER.values() if x not in (VerilogLexer, ObjectiveCLexer))
+    GUESSED_LEXERS = tuple(x for x in LEXER_MATCHER.values() if x not in (VerilogLexer, ObjectiveCLexer, Perl6Lexer))
 
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
@@ -77,14 +77,15 @@ class LexerScanner(AbstractScanner, ABC):
             lexer = guess_lexer_for_filename(descriptor.info, text)
         else:
             best_rv = 0.0
-            # simple text lexer by default
+            # the dummy text lexer by default
             best_lexer = cast(type[Lexer], TextLexer)
             # 8~9Mb of sqlite amalgamation
             _text = text if len(text) < 10_000_000 else text[:10_000_000]
             for _lexer in LexerScanner.GUESSED_LEXERS:
                 rv = _lexer.analyse_text(_text)
-                if 0.0 < rv and best_rv < rv:
+                if best_rv < rv:
                     best_lexer = _lexer
+                    best_rv = rv
             lexer = best_lexer()
         return lexer
 

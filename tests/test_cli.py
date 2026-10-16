@@ -34,13 +34,18 @@ class TestCli(unittest.TestCase):
     def test_threshold_or_float_or_zero_n(self):
         with self.assertRaises(ArgumentTypeError):
             threshold_or_float_or_zero("DUMMY STRING")
+        with self.assertRaises(ArgumentTypeError):
+            threshold_or_float_or_zero("42")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_threshold_or_float_or_zero_p(self):
         f = random.random()
         self.assertEqual(f, threshold_or_float_or_zero(str(f)))
-        self.assertEqual(42.0, threshold_or_float_or_zero("42"))
+        self.assertEqual(0.0, threshold_or_float_or_zero("0.0"))
+        self.assertEqual(1.0, threshold_or_float_or_zero("1.0"))
+        self.assertEqual(1.0, threshold_or_float_or_zero("1"))
+        self.assertEqual(0, threshold_or_float_or_zero("0"))
         self.assertIsInstance(threshold_or_float_or_zero('0'), int)
         t = random.choice(list(ThresholdPreset))
         self.assertEqual(t, threshold_or_float_or_zero(t.value))
