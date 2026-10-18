@@ -2,6 +2,7 @@ import contextlib
 import datetime
 import io
 import logging
+import plistlib
 from abc import abstractmethod, ABC
 from bz2 import BZ2File
 from collections.abc import Sized
@@ -227,8 +228,8 @@ class AbstractScanner(ABC):
 
         augmented_lines_for_keyword_rules = []
         for key, value in AbstractScanner.structure_processing(struct_provider.struct, parent_key):
-            if not value or isinstance(value,
-                                       (int, float, complex, slice, EllipsisType, datetime.date, datetime.datetime)):
+            if not value or isinstance(
+                    value, (int, float, complex, slice, EllipsisType, datetime.date, datetime.datetime, plistlib.UID)):
                 # skip useless types
                 continue
             # a keyword rule may be applicable for `key` (str only) and `value` (str, bytes)

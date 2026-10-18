@@ -12,6 +12,7 @@ from typing import AnyStr, Tuple
 from unittest import TestCase
 
 import pytest
+from git import Repo
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import RECURSIVE_SCAN_LIMITATION, ASCII, UTF_8
@@ -105,6 +106,8 @@ class TestInt(TestCase):
             self.fail(f"Check output: '{_stdout}' or '{_stderr}'")
         else:
             self.assertRegex(banner_text, banner_regex, _stderr or _stdout)
+        repo = Repo(TESTS_PATH.parent)
+        self.assertFalse(repo.is_dirty(), f"Repo {repo} has modified files - commit them")
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 

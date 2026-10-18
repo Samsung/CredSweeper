@@ -4,6 +4,7 @@ from abc import ABC
 from typing import List, Optional
 
 import pandas as pd
+from xlrd.biffh import XLRDError
 
 from credsweeper.credentials.augment_candidates import augment_candidates
 from credsweeper.credentials.candidate import Candidate
@@ -49,6 +50,8 @@ class PandasScanner(AbstractScanner, ABC):
                     augment_candidates(candidates, row_candidates)
 
             return candidates
+        except XLRDError as xlrd_exc:
+            logger.debug("%s %s", xlrd_exc, data_provider.descriptor)
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
             logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)

@@ -5,12 +5,14 @@ from typing import List, Optional
 
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import LAParams, LTText, LTItem
+from pdfminer.pdfparser import PDFSyntaxError
 
 from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.string_content_provider import StringContentProvider
+from credsweeper.logger import TRACE
 
 logger = logging.getLogger(__name__)
 
@@ -61,6 +63,8 @@ class PdfScanner(AbstractScanner, ABC):
                     else:
                         logger.warning("Unsupported %s", element)
             return candidates
+        except PDFSyntaxError as pdf_exc:
+            logger.log(TRACE, "%s %s", pdf_exc, data_provider.descriptor)
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
             logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
