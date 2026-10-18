@@ -106,7 +106,7 @@ class TestInt(TestCase):
             self.fail(f"Check output: '{_stdout}' or '{_stderr}'")
         else:
             self.assertRegex(banner_text, banner_regex, _stderr or _stdout)
-        if APP_PATH.exists():
+        if (TESTS_PATH.parent / "credsweeper").exists():
             repo = Repo(TESTS_PATH.parent)
             self.assertFalse(repo.is_dirty(), f"Repo {repo} has modified files - commit them")
 
