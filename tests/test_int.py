@@ -634,13 +634,9 @@ class TestInt(TestCase):
                                  r" config:'.+' md5:([0-9a-f]{32}).*")
         _stdout, _stderr = self._m_credsweeper([
             "--ml_threads_limit",
-            str(self.jobs),
-            "--jobs",
-            str(self.jobs),
-            "--log", "INFO", "--error", "--progress",
-            "--path",
-            str(APP_PATH),
-            "--ml_config",
+            str(self.jobs), "--jobs",
+            str(self.jobs), "--log", "INFO", "--error", "--progress", "--path",
+            str(APP_PATH), "--ml_config",
             str(APP_PATH / "ml_model" / "ml_config.json")
         ])
         # tqdm produces progress in stderr

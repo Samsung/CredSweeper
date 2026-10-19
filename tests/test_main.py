@@ -249,7 +249,7 @@ class TestMain(unittest.TestCase):
             argv = [
                 "--ml_threads_limit",
                 str(self.jobs), "--log", "silence", "--path",
-                str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename, "--depth", "3"
+                str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename, "--depth", "3", "--pedantic"
             ]
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(json_filename))
