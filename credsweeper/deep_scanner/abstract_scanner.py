@@ -233,7 +233,8 @@ class AbstractScanner(ABC):
                 # skip useless types
                 continue
             # a keyword rule may be applicable for `key` (str only) and `value` (str, bytes)
-            keyword_match = bool(isinstance(key, str) and self.scanner.keywords_required_substrings_check(key.lower()))
+            keyword_match = bool(
+                isinstance(key, str) and key and self.scanner.keywords_required_substrings_check(key.lower()))
             if isinstance(value, dict):
                 # recursive scan for not empty structured `value`
                 val_struct_provider = StructContentProvider(struct=value,

@@ -264,7 +264,11 @@ class TestGit(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, "report.json")
             # add --pedantic to produce report file
-            argv = ["--path", str(self.temp_dir_path), "--pedantic", "--save-json", str(json_filename)]
+            argv = [  #
+                "--ml_threshold", "0", "--path",
+                str(self.temp_dir_path), "--pedantic", "--save-json",
+                str(json_filename)
+            ]
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(json_filename))
             report = Util.json_load(json_filename)
@@ -273,8 +277,8 @@ class TestGit(unittest.TestCase):
     def test_git_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, "report.json")
-            args_mock = [
-                "--git",
+            args_mock = [  #
+                "--ml_threshold", "0", "--git",
                 str(self.temp_dir_path), "--ref", "b7b09c8cdec2904dbb6f77eec2aa6abaef975252", "--save-json",
                 str(json_filename)
             ]

@@ -9309,6 +9309,27 @@
         ]
     },
     {
+        "rule": "OpenRouter API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 1,
+                "path": "./tests/samples/openrouter",
+                "info": "FILE:./tests/samples/openrouter|RAW",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "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",
+                "value_start": 0,
+                "value_end": 73,
+                "entropy": 4.17462
+            }
+        ]
+    },
+    {
         "rule": "OTP / 2FA Secret",
         "severity": "info",
         "confidence": "weak",
