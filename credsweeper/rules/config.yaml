@@ -390,11 +390,11 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>dp\.pt\.[0-9A-Za-z]{43})
+    - (?P<value>dp\.(pt|st|ct|sa|scim|audit)\.[0-9A-Za-z]{43})
   filter_type: GeneralPattern
   min_line_len: 49
   required_substrings:
-    - dp.pt.
+    - dp.
   target:
     - code
     - doc
@@ -1174,13 +1174,14 @@
   confidence: strong
   type: pattern
   values:
-    - (?P<value>do[opr]_v1_[a-f0-9]{64})(?![0-9A-Za-z_-])
+    - (?P<value>do[oprs]_v1_[a-f0-9]{64})(?![0-9A-Za-z_-])
   filter_type: TokenPattern
   min_line_len: 71
   required_substrings:
     - doo_v1_
     - dop_v1_
     - dor_v1_
+    - dos_v1_
   target:
     - code
     - doc
@@ -1519,6 +1520,21 @@
     - T3BlbkFJ
     - 9wZW5BS
     - PcGVuQU
+  target:
+    - code
+    - doc
+
+- name: OpenRouter API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>sk-or-v1-[0-9a-f]{64})
+  filter_type:
+    - ValuePatternCheck
+  min_line_len: 73
+  required_substrings:
+    - sk-or-v1-
   target:
     - code
     - doc
