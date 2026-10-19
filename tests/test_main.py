@@ -8,6 +8,7 @@ import unittest
 
 import numpy as np
 import pandas as pd
+import psutil
 import pytest
 import tabulate
 import yaml
@@ -24,6 +25,12 @@ class TestMain(unittest.TestCase):
 
     def setUp(self):
         self.maxDiff = None
+        try:
+            current_process = psutil.Process()
+            self.jobs = len(current_process.cpu_affinity())
+        except AttributeError:
+            # dalvik or something else
+            self.jobs = int(os.cpu_count())
 
     def tearDown(self):
         pass
@@ -34,6 +41,8 @@ class TestMain(unittest.TestCase):
         target_path = SAMPLES_PATH / "password.patch"
         with tempfile.TemporaryDirectory() as tmp_dir:
             argv = [
+                "--ml_threshold",
+                "0",
                 "--diff",
                 str(target_path),
                 "--save-json",
@@ -57,9 +66,9 @@ class TestMain(unittest.TestCase):
         target_path = SAMPLES_PATH / "multifile.patch"
         with tempfile.TemporaryDirectory() as tmp_dir:
             argv = [
-                "--diff_path",
+                "--ml_threshold", "0", "--diff_path",
                 str(target_path), "--save-json",
-                str(os.path.join(tmp_dir, f"{__name__}.json")), "--ml_threshold", "0", "--depth", "9"
+                str(os.path.join(tmp_dir, f"{__name__}.json")), "--depth", "9"
             ]
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, f"{__name__}.deleted.json")))
@@ -76,10 +85,10 @@ class TestMain(unittest.TestCase):
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             xlsx_filename = os.path.join(tmp_dir, f"{__name__}.xlsx")
             argv = [
-                "--path",
-                str(SAMPLES_PATH),
                 "--ml_threshold",
                 "0",
+                "--path",
+                str(SAMPLES_PATH),
                 "--save-json",
                 str(json_filename),
                 "--save-xlsx",
@@ -140,7 +149,9 @@ class TestMain(unittest.TestCase):
                         f"root:\n"
                         f"  level: NOTSET\n"
                         f"  handlers: [logfile]\n")
-            argv = ["--banner", "--log_config", test_filename, "--log", "notset", "--path", tmp_dir]
+            argv = [
+                "--ml_threshold", "0", "--banner", "--log_config", test_filename, "--log", "notset", "--path", tmp_dir
+            ]
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log")))
             self.assertTrue(os.path.exists(os.path.join(tmp_dir, "log", "logfile.log")))
@@ -154,7 +165,10 @@ class TestMain(unittest.TestCase):
                 self.assertFalse(os.path.exists(file_path))
                 open(file_path, 'w').write(AZ_STRING)
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            argv = ["--path", tmp_dir, "--no-stdout", "--save-json", json_filename, "--log", "silence"]
+            argv = [
+                "--ml_threshold", "0", "--path", tmp_dir, "--no-stdout", "--save-json", json_filename, "--log",
+                "silence"
+            ]
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
@@ -206,7 +220,11 @@ class TestMain(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth is not set
-            argv = ["--log", "silence", "--path", str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename]
+            argv = [
+                "--ml_threads_limit",
+                str(self.jobs), "--log", "silence", "--path",
+                str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename
+            ]
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(json_filename))
             with open(json_filename, "r") as json_file:
@@ -229,8 +247,9 @@ class TestMain(unittest.TestCase):
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             # depth = 3
             argv = [
-                "--log", "silence", "--path",
-                str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename, "--depth", "3"
+                "--ml_threads_limit",
+                str(self.jobs), "--log", "silence", "--path",
+                str(SAMPLES_PATH), "--no-stdout", "--save-json", json_filename, "--depth", "3", "--pedantic"
             ]
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(json_filename))
@@ -291,10 +310,10 @@ class TestMain(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             argv = [
-                "--path",
-                str(SAMPLES_PATH),
                 "--ml_threshold",
                 "0",
+                "--path",
+                str(SAMPLES_PATH),
                 "--save-json",
                 json_filename,
             ]
@@ -313,6 +332,8 @@ class TestMain(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             argv = [
+                "--ml_threads_limit",
+                str(self.jobs),
                 "--path",
                 str(SAMPLES_PATH),
                 "--save-json",
@@ -356,10 +377,12 @@ class TestMain(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
             argv = [
-                "--path",
-                str(SAMPLES_PATH),
+                "--ml_threads_limit",
+                str(self.jobs),
                 "--ml_threshold",
                 "0",
+                "--path",
+                str(SAMPLES_PATH),
                 "--no-filters",
                 "--save-json",
                 json_filename,
@@ -375,6 +398,8 @@ class TestMain(unittest.TestCase):
         # uuid is info level - no report
         with tempfile.TemporaryDirectory() as tmp_dir:
             argv = [  #
+                "--ml_threads_limit",
+                str(self.jobs),
                 "--severity",
                 "low",
                 "--confidence",
@@ -401,6 +426,8 @@ class TestMain(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             xlsx_filename = os.path.join(tmp_dir, f"{__name__}.xlsx")
             argv = [  #
+                "--ml_threads_limit",
+                str(self.jobs),
                 "--severity",
                 "info",
                 "--confidence",

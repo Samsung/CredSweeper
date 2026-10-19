@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import AnyStr, Tuple
 from unittest import TestCase
 
+import psutil
 import pytest
 from git import Repo
 
@@ -34,6 +35,12 @@ class TestInt(TestCase):
 
     def setUp(self):
         self.maxDiff = None
+        try:
+            current_process = psutil.Process()
+            self.jobs = len(current_process.cpu_affinity())
+        except AttributeError:
+            # dalvik or something else
+            self.jobs = int(os.cpu_count())
 
     @staticmethod
     def _m_credsweeper(args) -> Tuple[str, str]:
@@ -163,7 +170,8 @@ class TestInt(TestCase):
 
     def test_it_works_with_patch_p(self) -> None:
         target_path = str(SAMPLES_PATH / "uuid-update.patch")
-        _stdout, _stderr = self._m_credsweeper(["--diff", target_path, "--log", "silence"])
+        _stdout, _stderr = self._m_credsweeper(
+            ["--ml_threads_limit", str(self.jobs), "--diff", target_path, "--log", "silence"])
         output = " ".join(_stdout.split()[:-1])
 
         expected = """
@@ -196,7 +204,8 @@ class TestInt(TestCase):
 
     def test_it_works_with_multiline_in_patch_p(self) -> None:
         target_path = str(SAMPLES_PATH / "multiline.patch")
-        _stdout, _stderr = self._m_credsweeper(["--diff_path", target_path, "--log", "silence"])
+        _stdout, _stderr = self._m_credsweeper(
+            ["--ml_threads_limit", str(self.jobs), "--diff_path", target_path, "--log", "silence"])
         output = " ".join(re.sub(r"(.*ml_probability: 0\.[0-9]{5})[0-9]*\b(.*)", r"\1\2", _stdout).split()[:-1])
 
         expected = """
@@ -242,8 +251,10 @@ class TestInt(TestCase):
 
     def test_it_works_with_patch_color_p(self) -> None:
         target_path = str(SAMPLES_PATH / "uuid-update.patch")
-        _stdout, _stderr = self._m_credsweeper(
-            ["--diff_path", target_path, "--log", "silence", "--color", "--no-stdout"])
+        _stdout, _stderr = self._m_credsweeper([
+            "--ml_threads_limit",
+            str(self.jobs), "--diff_path", target_path, "--log", "silence", "--color", "--no-stdout"
+        ])
         output = " ".join(_stdout.split()[:-1])
         expected = """
                    \x1b[1mUUID uuid:added:1\x1b[0m
@@ -337,7 +348,7 @@ class TestInt(TestCase):
                 # should be ERROR + CRITICAL for wrong config
                 tmp_filename,
                 "--jobs",
-                "2",
+                str(self.jobs),
                 "--path",
                 str(SAMPLES_PATH),
                 "not_existed_path_for_warning",
@@ -366,7 +377,7 @@ class TestInt(TestCase):
             # should be CRITICAL for wrong config
             str(APP_PATH / "secret" / "config.json"),
             "--jobs",
-            "2",
+            str(self.jobs),
             "--path",
             str(SAMPLES_PATH),
             "not_existed_path_for_warning",
@@ -395,9 +406,11 @@ class TestInt(TestCase):
                 # enable all handlers and add for the root
                 fo.write(t.replace("filename: ./log/", f"filename: {test_log_dir}/"))
             _stdout, _stderr = TestInt._m_credsweeper([
-                "--path",
+                "--ml_threads_limit",
+                str(self.jobs), "--jobs",
+                str(self.jobs), "--path",
                 str(SAMPLES_PATH), "--log_config",
-                str(test_log_cfg), "--jobs", "2", "--log", "INFO", "--no-stdout"
+                str(test_log_cfg), "--log", "INFO", "--no-stdout"
             ])
             self.assertNotIn("| TRACE |", _stdout)
             self.assertNotIn("| DEBUG |", _stdout)
@@ -437,6 +450,8 @@ class TestInt(TestCase):
     def test_log_silence_n(self) -> None:
         # silence - no log output
         _stdout, _stderr = self._m_credsweeper([
+            "--ml_threads_limit",
+            str(self.jobs),
             "--log",
             "SILENCE",
             "--depth",
@@ -445,7 +460,7 @@ class TestInt(TestCase):
             # should be CRITICAL for wrong config
             str(APP_PATH / "secret" / "config.json"),
             "--jobs",
-            "2",
+            str(self.jobs),
             "--path",
             str(SAMPLES_PATH),
             "not_existed_path_for_warning",
@@ -501,8 +516,11 @@ class TestInt(TestCase):
         target_path = str(SAMPLES_PATH / "password.patch")
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, f"{__name__}.json")
-            _stdout, _stderr = self._m_credsweeper(
-                ["--diff_path", target_path, "--no-stdout", "--save-json", json_filename, "--log", "silence"])
+            _stdout, _stderr = self._m_credsweeper([
+                "--ml_threads_limit",
+                str(self.jobs), "--diff_path", target_path, "--no-stdout", "--save-json", json_filename, "--log",
+                "silence"
+            ])
             self.assertIn("Added File Credentials:", _stdout)
             self.assertIn("Deleted File Credentials:", _stdout)
             self.assertIn("Time Elapsed:", _stdout)
@@ -515,7 +533,12 @@ class TestInt(TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             custom_config = os.path.join(tmp_dir, f"{__name__}.json")
             shutil.copyfile(APP_PATH / "secret" / "config.json", custom_config)
-            args = ["--config", custom_config, "--path", str(APP_PATH), "--find-by-ext", "--log", "CRITICAL"]
+            args = [
+                "--ml_threads_limit",
+                str(self.jobs), "--jobs",
+                str(self.jobs), "--config", custom_config, "--path",
+                str(APP_PATH), "--find-by-ext", "--log", "CRITICAL"
+            ]
             _stdout, _stderr = self._m_credsweeper(args)
 
             # workaround for GitHub Action
@@ -576,7 +599,10 @@ class TestInt(TestCase):
     def test_external_ml_n(self) -> None:
         # not existed ml_config
         _stdout, _stderr = self._m_credsweeper([
-            "--jobs", "2", "--ml_threads_limit", "2", "--log", "INFO", "--error", "--progress", "--path",
+            "--ml_threads_limit",
+            str(self.jobs), "--jobs",
+            str(self.jobs), "--ml_threads_limit",
+            str(self.jobs), "--log", "INFO", "--error", "--progress", "--path",
             str(APP_PATH), "--ml_config",
             str(APP_PATH / "secret" / "config.json")
         ])
@@ -603,11 +629,13 @@ class TestInt(TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_external_ml_p(self) -> None:
-        log_pattern = re.compile(r".*Init ML validator with providers: \S+ ; threads:2 ;"
+        log_pattern = re.compile(r".*Init ML validator with providers: \S+ ; threads:[0-9]+ ;"
                                  r" model:'.+' md5:([0-9a-f]{32}) ;"
                                  r" config:'.+' md5:([0-9a-f]{32}).*")
         _stdout, _stderr = self._m_credsweeper([
-            "--jobs", "2", "--ml_threads_limit", "2", "--log", "INFO", "--error", "--progress", "--path",
+            "--ml_threads_limit",
+            str(self.jobs), "--jobs",
+            str(self.jobs), "--log", "INFO", "--error", "--progress", "--path",
             str(APP_PATH), "--ml_config",
             str(APP_PATH / "ml_model" / "ml_config.json")
         ])
@@ -660,7 +688,9 @@ INSERT INTO t VALUES (1, 'root', 'P6V3T-M79JT-GP9CU-VW6XY-GJ7KV'), (2, 'user', '
 CREATE TABLE "t a, t b, t c, t d, t e, t f, t g, t h, t i, t j, t k, t l, t m, t n, t o, t p, t q, t r, t s, t t, t u, t v, t w, t x, t y" (id INTEGER);
 """)
                 conn.commit()
-            _stdout, _stderr = self._m_credsweeper(["--path", sqlite_filename, "--depth", "3", "--log", "DEBUG"])
+            _stdout, _stderr = self._m_credsweeper(
+                ["--ml_threads_limit",
+                 str(self.jobs), "--path", sqlite_filename, "--depth", "3", "--log", "DEBUG"])
 
             # workaround for GitHub Action
             if not all(x in _stderr for x in GITHUB_ONNX_WARNS):
