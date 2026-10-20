@@ -5,6 +5,7 @@ import os
 import platform
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
@@ -480,3 +481,12 @@ class TestMain(unittest.TestCase):
                 self.assertEqual(EXIT_SUCCESS, main(argv))
                 report = Util.json_load(json_filename)
                 self.assertListEqual(expected_rules, sorted(x["rule"] for x in report), confidence)
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_banner_only_p(self) -> None:
+        # only banner argument must succeed regardless of sys.argv
+        self.assertEqual(EXIT_SUCCESS, main(["--banner"]))
+        # the same arguments are taken from command line
+        with patch("sys.argv", ["credsweeper", "--banner"]):
+            self.assertEqual(EXIT_SUCCESS, main())
