@@ -106,3 +106,34 @@ class TestDiffContentProvider(unittest.TestCase):
     def test_data_n(self) -> None:
         with self.assertRaises(NotImplementedError):
             _ = DiffContentProvider("file_path", DiffRowType.ADDED, []).data
+
+    def test_patch2files_diff_same_file_p(self) -> None:
+        """Evaluate that changes of the same file from several patches in one series are all kept"""
+        raw_patch = [
+            "diff --git a/c.py b/c.py",
+            "index 1111111..2222222 100644",
+            "--- a/c.py",
+            "+++ b/c.py",
+            "@@ -1,3 +1,3 @@",
+            " x = 1",
+            "-x = 2",
+            "+first_added",
+            " x = 3",
+            "diff --git a/c.py b/c.py",
+            "index 2222222..3333333 100644",
+            "--- a/c.py",
+            "+++ b/c.py",
+            "@@ -28,3 +28,3 @@",
+            " x = 28",
+            "-x = 29",
+            "+second_added",
+            " x = 30",
+        ]
+        added = DiffContentProvider.patch2files_diff(raw_patch, DiffRowType.ADDED)
+        self.assertListEqual(["c.py"], list(added.keys()))
+        added_lines = [x["line"] for x in added["c.py"] if x["old"] is None]
+        self.assertListEqual(["first_added", "second_added"], added_lines)
+        deleted = DiffContentProvider.patch2files_diff(raw_patch, DiffRowType.DELETED)
+        self.assertListEqual(["c.py"], list(deleted.keys()))
+        deleted_lines = [x["line"] for x in deleted["c.py"] if x["new"] is None]
+        self.assertListEqual(["x = 2", "x = 29"], deleted_lines)
