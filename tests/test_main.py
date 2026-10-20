@@ -5,6 +5,7 @@ import os
 import platform
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
@@ -454,3 +455,64 @@ class TestMain(unittest.TestCase):
             self.assertTrue(np.isin(deleted_value, book["deleted"].values))
             added_value = f'"{added_report[0]["line_data_list"][0]["value"]}"'
             self.assertTrue(np.isin(added_value, book["added"].values))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_confidence_n(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            target_path = os.path.join(tmp_dir, "conf.py")
+            with open(target_path, "w", encoding=UTF_8) as f:
+                f.write('aws_id = "AKIAGIREOGIAWSKEY123"\n'
+                        'request_id = "c1f3a9e2-5b7d-4e8a-9f0c-2d6b8e4a7c31"\n')
+            json_filename = os.path.join(tmp_dir, "report.json")
+            argv = [  #
+                "--path",
+                target_path,
+                "--ml_threshold",
+                "0",
+                "--confidence",
+                "strong",
+                "--no-stdout",
+                "--save-json",
+                json_filename,
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            report = Util.json_load(json_filename)
+            # only UUID with strong confidence is reported
+            self.assertEqual(1, len(report))
+            self.assertEqual("UUID", report[0]["rule"])
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_confidence_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            target_path = os.path.join(tmp_dir, "conf.py")
+            with open(target_path, "w", encoding=UTF_8) as f:
+                f.write('aws_id = "AKIAGIREOGIAWSKEY123"\n'
+                        'request_id = "c1f3a9e2-5b7d-4e8a-9f0c-2d6b8e4a7c31"\n')
+            json_filename = os.path.join(tmp_dir, "report.json")
+            argv = [  #
+                "--path",
+                target_path,
+                "--ml_threshold",
+                "0",
+                "--confidence",
+                "weak",
+                "--no-stdout",
+                "--save-json",
+                json_filename,
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            report = Util.json_load(json_filename)
+            # both rules are reported
+            self.assertEqual(2, len(report))
+            self.assertSetEqual({"AWS Client ID", "UUID"}, {x["rule"] for x in report})
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_banner_only_p(self) -> None:
+        # only banner argument must succeed regardless of sys.argv
+        self.assertEqual(EXIT_SUCCESS, main(["--banner"]))
+        # the same arguments are taken from command line
+        with patch("sys.argv", ["credsweeper", "--banner"]):
+            self.assertEqual(EXIT_SUCCESS, main())
