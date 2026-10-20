@@ -73,6 +73,7 @@ def get_credsweeper(args: Namespace) -> CredSweeper:
         depth=args.depth,
         doc=args.doc,
         severity=args.severity,
+        confidence=args.confidence,
         size_limit=args.size_limit,
         time_limit=args.time_limit,
         exclude_lines=denylist,

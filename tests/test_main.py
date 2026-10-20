@@ -454,3 +454,29 @@ class TestMain(unittest.TestCase):
             self.assertTrue(np.isin(deleted_value, book["deleted"].values))
             added_value = f'"{added_report[0]["line_data_list"][0]["value"]}"'
             self.assertTrue(np.isin(added_value, book["added"].values))
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_confidence_p(self) -> None:
+        # moderate confidence rule is reported with weak level and omitted with strong level
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            target_path = os.path.join(tmp_dir, "conf.py")
+            with open(target_path, "w", encoding=UTF_8) as f:
+                f.write('aws_id = "AKIAGIREOGIAWSKEY123"\n'
+                        'request_id = "c1f3a9e2-5b7d-4e8a-9f0c-2d6b8e4a7c31"\n')
+            for confidence, expected_rules in [("weak", ["AWS Client ID", "UUID"]), ("strong", ["UUID"])]:
+                json_filename = os.path.join(tmp_dir, f"{confidence}.json")
+                argv = [  #
+                    "--path",
+                    target_path,
+                    "--ml_threshold",
+                    "0",
+                    "--confidence",
+                    confidence,
+                    "--no-stdout",
+                    "--save-json",
+                    json_filename,
+                ]
+                self.assertEqual(EXIT_SUCCESS, main(argv))
+                report = Util.json_load(json_filename)
+                self.assertListEqual(expected_rules, sorted(x["rule"] for x in report), confidence)
