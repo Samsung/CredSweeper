@@ -458,29 +458,55 @@ class TestMain(unittest.TestCase):
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-    def test_confidence_p(self) -> None:
-        # moderate confidence rule is reported with weak level and omitted with strong level
+    def test_confidence_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             target_path = os.path.join(tmp_dir, "conf.py")
             with open(target_path, "w", encoding=UTF_8) as f:
                 f.write('aws_id = "AKIAGIREOGIAWSKEY123"\n'
                         'request_id = "c1f3a9e2-5b7d-4e8a-9f0c-2d6b8e4a7c31"\n')
-            for confidence, expected_rules in [("weak", ["AWS Client ID", "UUID"]), ("strong", ["UUID"])]:
-                json_filename = os.path.join(tmp_dir, f"{confidence}.json")
-                argv = [  #
-                    "--path",
-                    target_path,
-                    "--ml_threshold",
-                    "0",
-                    "--confidence",
-                    confidence,
-                    "--no-stdout",
-                    "--save-json",
-                    json_filename,
-                ]
-                self.assertEqual(EXIT_SUCCESS, main(argv))
-                report = Util.json_load(json_filename)
-                self.assertListEqual(expected_rules, sorted(x["rule"] for x in report), confidence)
+            json_filename = os.path.join(tmp_dir, "report.json")
+            argv = [  #
+                "--path",
+                target_path,
+                "--ml_threshold",
+                "0",
+                "--confidence",
+                "strong",
+                "--no-stdout",
+                "--save-json",
+                json_filename,
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            report = Util.json_load(json_filename)
+            # only UUID with strong confidence is reported
+            self.assertEqual(1, len(report))
+            self.assertEqual("UUID", report[0]["rule"])
+
+    # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+    def test_confidence_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            target_path = os.path.join(tmp_dir, "conf.py")
+            with open(target_path, "w", encoding=UTF_8) as f:
+                f.write('aws_id = "AKIAGIREOGIAWSKEY123"\n'
+                        'request_id = "c1f3a9e2-5b7d-4e8a-9f0c-2d6b8e4a7c31"\n')
+            json_filename = os.path.join(tmp_dir, "report.json")
+            argv = [  #
+                "--path",
+                target_path,
+                "--ml_threshold",
+                "0",
+                "--confidence",
+                "weak",
+                "--no-stdout",
+                "--save-json",
+                json_filename,
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(argv))
+            report = Util.json_load(json_filename)
+            # both rules are reported
+            self.assertEqual(2, len(report))
+            self.assertSetEqual({"AWS Client ID", "UUID"}, {x["rule"] for x in report})
 
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
