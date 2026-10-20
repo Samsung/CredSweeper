@@ -214,7 +214,6 @@ class DeepScanner(
             deep_scanners.append(RtfScanner)
             fallback_scanners.append(StringsScanner)
         elif CpioScanner.match(data):
-            logger.info('match')
             deep_scanners.append(CpioScanner)
             fallback_scanners.append(StringsScanner)
         elif XmlScanner.match(data):
