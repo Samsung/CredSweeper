@@ -154,7 +154,7 @@ def drill(args: Namespace) -> Tuple[int, int]:
                 commits_sha1 = {args.ref}  # single commit sha1 reference
         else:
             commits_sha1 = set(x.commit.hexsha for x in repo.refs
-                               if x.name.startswith('origin/') or x.name.startswith('refs/heads/'))
+                               if x.name.startswith('origin/') or x.path.startswith('refs/heads/'))
         logger.info("Git repository %s with commits: %s", args.git, commits_sha1)
         # then - credsweeper
         credsweeper = get_credsweeper(args)
