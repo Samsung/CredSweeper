@@ -168,6 +168,24 @@ class TestFilePathExtractor(unittest.TestCase):
         self.config.size_limit = parse_size("11MiB")
         self.assertFalse(FilePathExtractor.check_file_size(self.config, ""))
 
+    def test_get_file_paths_size_limit_n(self) -> None:
+        # the file is over the size limit - it is skipped
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            target_path = os.path.join(tmp_dir, "target")
+            with open(target_path, "w") as f:
+                f.write(AZ_STRING)
+            self.config.size_limit = 10
+            self.assertListEqual([], FilePathExtractor.get_file_paths(self.config, target_path))
+
+    def test_get_file_paths_size_limit_p(self) -> None:
+        # the file is under the size limit - it is scanned
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            target_path = os.path.join(tmp_dir, "target")
+            with open(target_path, "w") as f:
+                f.write(AZ_STRING)
+            self.config.size_limit = 1000
+            self.assertListEqual([target_path], FilePathExtractor.get_file_paths(self.config, target_path))
+
     def test_skip_symlink_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             sub_dir = os.path.join(tmp_dir, "sub_dir")

@@ -290,3 +290,19 @@ class TestGit(unittest.TestCase):
             git_report_filename = os.path.join(tmp_dir, "report.9d3df94e8257240aa2b98dee47dc17992c0b7476.json")
             report = Util.json_load(git_report_filename)
             self.assertLessEqual(1, len(report))
+
+    def test_git_no_ref_p(self) -> None:
+        # local branch of repository without remote is scanned when no --ref provided
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, "report.json")
+            args_mock = [  #
+                "--ml_threshold", "0", "--git",
+                str(self.temp_dir_path), "--save-json",
+                str(json_filename)
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(args_mock))
+
+            git_report_filename = os.path.join(tmp_dir, "report.9d3df94e8257240aa2b98dee47dc17992c0b7476.json")
+            self.assertTrue(os.path.exists(git_report_filename))
+            report = Util.json_load(git_report_filename)
+            self.assertLessEqual(1, len(report))

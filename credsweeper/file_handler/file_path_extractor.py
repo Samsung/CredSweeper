@@ -52,7 +52,8 @@ class FilePathExtractor:
         file_paths = []
         if os.path.isfile(path):
             # suppose, the file is located outside and should be scanned
-            if not FilePathExtractor.check_exclude_file(config, path):
+            if not FilePathExtractor.check_exclude_file(config, path) \
+                    and not FilePathExtractor.check_file_size(config, path):
                 file_paths.append(path)
         elif os.path.isdir(path):
             for dirpath, _, filenames in os.walk(path):
