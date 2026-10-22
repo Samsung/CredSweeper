@@ -18,6 +18,8 @@ logger = logging.getLogger(__name__)
 class MxfileScanner(AbstractScanner, ABC):
     """Scanner for drawio diagram"""
 
+    shelf = True
+
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
         """Used to detect mxfile (drawio) format. Suppose, invocation of is_xml() was True before."""

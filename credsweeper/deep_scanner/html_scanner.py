@@ -16,6 +16,8 @@ logger = logging.getLogger(__name__)
 class HtmlScanner(AbstractScanner, ABC):
     """Implements HTML scanning if possible"""
 
+    shelf = True
+
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
         """Used to detect HTML format. Suppose, invocation of is_xml() was True before."""

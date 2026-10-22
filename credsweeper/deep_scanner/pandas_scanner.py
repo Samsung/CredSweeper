@@ -19,6 +19,8 @@ logger = logging.getLogger(__name__)
 class PandasScanner(AbstractScanner, ABC):
     """Implements xlsx scanning"""
 
+    shelf = True
+
     def data_scan(
             self,  #
             data_provider: DataContentProvider,  #

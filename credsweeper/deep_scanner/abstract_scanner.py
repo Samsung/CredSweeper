@@ -34,6 +34,9 @@ logger = logging.getLogger(__name__)
 class AbstractScanner(ABC):
     """Base abstract class for all recursive scanners"""
 
+    # whether the scanner may scan with depth=0
+    shelf: bool | None = False
+
     @property
     @abstractmethod
     def config(self) -> Config:

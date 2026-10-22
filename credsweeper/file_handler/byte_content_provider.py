@@ -14,7 +14,7 @@ class ByteContentProvider(ContentProvider):
     """Allow to scan byte sequence instead of extra reading a file"""
 
     # protobuf unknown data may be not recognized
-    PROTO_RAW = re.compile(r".*\|PROTO:0x[0-9a-f]+\|RAW")
+    PROTO_RAW = re.compile(r".*\|PROTO:0x[0-9a-f]+\|TEXT")
 
     def __init__(
             self,  #
@@ -51,7 +51,7 @@ class ByteContentProvider(ContentProvider):
         if self.__lines is None:
             text = Util.decode_text(self.__data)
             if text is None:
-                if not self.info.endswith("|BASE64|RAW") and not ByteContentProvider.PROTO_RAW.fullmatch(self.info):
+                if not self.info.endswith("|BASE64|TEXT") and not ByteContentProvider.PROTO_RAW.fullmatch(self.info):
                     if isinstance(self.__data, (bytes, bytearray)):
                         # avoid extra warnings for the hypothesis
                         logger.warning("Binary data(%d) detected %s %s %s", len(self.__data), self.file_path, self.info,

@@ -15,6 +15,8 @@ logger = logging.getLogger(__name__)
 class PatchScanner(AbstractScanner, ABC):
     """Implements .patch scanning"""
 
+    shelf = True
+
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
         """Match logic in data_scan"""
