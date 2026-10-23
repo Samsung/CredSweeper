@@ -10,7 +10,7 @@ ML_DELTA = 0.0001
 ZERO_ML_THRESHOLD = 0.0
 
 # with option --doc & ZERO_ML_THRESHOLD
-SAMPLES_IN_DOC = 1046
+SAMPLES_IN_DOC = 1070
 
 # credentials count after scan without filters and ML validations
 SAMPLES_REGEX_COUNT = 854
@@ -22,9 +22,9 @@ SAMPLES_FILTERED_COUNT = 669
 SAMPLES_POST_CRED_COUNT = 620
 
 # archived credentials that are not found without --depth
-SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 200
-SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 52
-SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 12
+SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 221
+SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 31
+SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 8
 
 # well known string with all latin letters
 AZ_DATA = b"The quick brown fox jumps over the lazy dog"

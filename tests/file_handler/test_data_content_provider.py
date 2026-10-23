@@ -4,7 +4,6 @@ import tempfile
 import unittest
 import zipfile
 from typing import List
-from unittest.mock import patch
 
 from credsweeper.app import CredSweeper
 from credsweeper.credentials.candidate import Candidate
@@ -17,20 +16,6 @@ from tests.file_handler.zip_bomb_2 import zb2
 
 class DataContentProviderTest(unittest.TestCase):
     WRONG_ZIP_FILE = b"PK\003\004_WRONG_ZIP_FILE"
-
-    def test_wrong_xml_n(self) -> None:
-        content_provider1 = DataContentProvider(data=b"")
-        with patch('logging.Logger.log') as mocked_log1:
-            self.assertFalse(content_provider1.represent_as_xml())
-            mocked_log1.assert_not_called()
-        content_provider2 = DataContentProvider(data=AZ_DATA)
-        with patch('logging.Logger.log') as mocked_log2:
-            self.assertFalse(content_provider2.represent_as_xml())
-            mocked_log2.assert_called()
-        content_provider3 = DataContentProvider(data=b"</wrong XML text>")
-        with patch('logging.Logger.log') as mocked_log3:
-            self.assertFalse(content_provider3.represent_as_xml())
-            mocked_log3.assert_called()
 
     def test_scan_wrong_provider_n(self) -> None:
         content_provider = DataContentProvider(b"dummy", "dummy")

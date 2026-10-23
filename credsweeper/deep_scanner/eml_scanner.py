@@ -15,6 +15,8 @@ logger = logging.getLogger(__name__)
 class EmlScanner(AbstractScanner, ABC):
     """Implements eml scanning"""
 
+    shelf = True
+
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
         """According to https://datatracker.ietf.org/doc/html/rfc822 lookup the fields: Date, From, To or Subject"""

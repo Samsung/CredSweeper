@@ -16,6 +16,8 @@ logger = logging.getLogger(__name__)
 class PptxScanner(AbstractScanner, ABC):
     """Implements pptx scanning"""
 
+    shelf = True
+
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
         """Assume, ZIP prefix and common office files were checked before"""

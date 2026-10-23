@@ -15,6 +15,8 @@ logger = logging.getLogger(__name__)
 class PkcsScanner(AbstractScanner, ABC):
     """Implements pkcs12 scanning"""
 
+    shelf = True
+
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
         """Matched ASN1 structure with exactly size"""
