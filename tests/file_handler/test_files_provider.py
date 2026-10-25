@@ -92,11 +92,11 @@ class TestFilesProvider(unittest.TestCase):
     def test_is_git_ignored_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             dir_path = Path(tmp_dir)
-            repo=git.Repo.init(dir_path)
+            repo = git.Repo.init(dir_path)
             with open(dir_path / "password.txt", "w") as f:
                 f.write("PW:13263622")
             repo.index.add(dir_path / "password.txt")
-            with open(dir_path/ ".gitignore", "w") as f:
+            with open(dir_path / ".gitignore", "w") as f:
                 f.write(".*\n*.txt\n*.log\n*.so")
             # init arguments
             provider = FilesProvider(MagicMock())

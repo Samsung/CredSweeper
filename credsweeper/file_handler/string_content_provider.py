@@ -1,10 +1,13 @@
 from functools import cached_property
 from typing import List, Optional, Generator
 
+from typing_extensions import deprecated
+
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 
 
+@deprecated("This class will be removed from the public exports and refactored in a future release.")
 class StringContentProvider(ContentProvider):
     """Provider performs scan simple text lines"""
 

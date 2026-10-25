@@ -85,8 +85,7 @@ class FilesProvider(AbstractProvider):
                 all_files = FilePathExtractor.get_file_paths(config, path)
                 # extend with all wiles except git ignored is configured
                 content_provider_list.extend(
-                    TextContentProvider(x) for x in all_files if not self.skip_ignored or not self.is_git_ignored(x)
-                )
+                    TextContentProvider(x) for x in all_files if not self.skip_ignored or not self.is_git_ignored(x))
             elif isinstance(path, io.BytesIO):
                 content_provider_list.append(TextContentProvider((":memory:", path)))
             elif isinstance(path, tuple) and (isinstance(path[0], (str, Path))) and isinstance(path[1], io.BytesIO):
