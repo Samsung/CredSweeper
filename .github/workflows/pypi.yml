@@ -45,7 +45,7 @@ jobs:
 
       - name: Publish
         if: ${{ 'release' == github.event_name }}
-        uses: pypa/gh-action-pypi-publish@cef221092ed1bacb1cc03d23a2d87d1d172e277b # v1.14.0 - 2026.04.07
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3 - 2026.10.20
         with:
           user: __token__
           password: ${{ secrets.PYPI_PASSWORD }}
