@@ -1,4 +1,5 @@
 import os.path
+import pathlib
 import tempfile
 import unittest
 from typing import List
@@ -182,3 +183,6 @@ class TestFilePathExtractor(unittest.TestCase):
             paths = FilePathExtractor.get_file_paths(self.config, tmp_dir)
             self.assertEqual(1, len(paths))
             self.assertEqual(target_path, paths[0])
+
+    def test_get_file_paths_n(self) -> None:
+        self.assertListEqual([], FilePathExtractor.get_file_paths(self.config, pathlib.Path("~/not_existed_path")))
