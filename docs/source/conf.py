@@ -4,14 +4,11 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import os
+import pathlib
 import sys
 
-sys.path.insert(0, os.path.abspath('../..'))
-di = os.path.abspath(os.pardir)
-remove_docs = di.strip('docs')
-
-for r, d, f in os.walk(r"{}credsweeper".format(remove_docs)):
-    sys.path.append(r)
+ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
+sys.path.insert(0, str(ROOT))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -22,14 +19,14 @@ author = 'CredTeam'
 
 from credsweeper import __version__ as credsweeper_version
 
-# The short X.Y version
+# The short MAJOR.MINOR version
 version = '.'.join(credsweeper_version.split('.')[0:2])
 
 # The full version, including alpha/beta/rc tags
 release = credsweeper_version
 
 # The master toctree document.
-master_doc = 'index'
+root_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -74,6 +71,9 @@ source_suffix = {
 }
 
 myst_heading_anchors = 3
+
+# fix dataclass duplicated docs
+napoleon_use_ivar = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -122,13 +122,10 @@ html_scaled_image_link = False
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'ci_doc'
 
-# -- Suppress unusual parts ... in json e.g.
-suppress_warnings = ['misc.highlighting_failure']
-
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, 'ci', u'CI Documentation', [author], 1)]
+man_pages = [(root_doc, 'ci', u'CI Documentation', [author], 1)]
 
 sys.path.append(os.path.dirname(__file__) + '/..')
