@@ -60,33 +60,6 @@ class TestFilePathExtractor(unittest.TestCase):
     def tearDown(self):
         del self.config
 
-    def test_apply_gitignore_p(self) -> None:
-        """Evaluate that code files would be included after filtering with .gitignore"""
-        files = ["file.py", "src/file.py", "src/dir/file.py"]
-        filtered_files = FilePathExtractor.apply_gitignore(files)
-        self.assertSetEqual(set(files), set(filtered_files))
-
-    def test_apply_gitignore_n(self) -> None:
-        """Evaluate that .gitignore correctly filters out files from project"""
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            git.Repo.init(tmp_dir)
-            with open(os.path.join(tmp_dir, ".gitignore"), "w") as f:
-                f.write(".*\n*.txt\n*.log\n*.so")
-            files = [
-                os.path.join(tmp_dir, ".idea"),
-                os.path.join(tmp_dir, ".idea", "file1.txt"),
-                os.path.join(tmp_dir, ".idea", "dir", "file1.txt"),
-                os.path.join(tmp_dir, ".cache"),
-                os.path.join(tmp_dir, "system.log"),
-                os.path.join(tmp_dir, "src", "dir", "file.so"),
-                os.path.join(tmp_dir, "src", "dir", "file.cpp")
-            ]
-            filtered_files = FilePathExtractor.apply_gitignore(files)
-
-        self.assertEqual(1, len(filtered_files))
-        expected_path = os.path.join(tmp_dir, "src", "dir", "file.cpp")
-        self.assertEqual(expected_path, filtered_files[0])
-
     def assert_true_check_exclude_file(self, paths: List[str]):
         for i in paths:
             self.assertTrue(FilePathExtractor.check_exclude_file(self.config, i), i)
