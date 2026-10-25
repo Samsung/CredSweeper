@@ -95,7 +95,7 @@ class TestFilesProvider(unittest.TestCase):
             repo = git.Repo.init(dir_path)
             with open(dir_path / "password.txt", "w") as f:
                 f.write("PW:13263622")
-            repo.index.add(dir_path / "password.txt")
+            repo.index.add("password.txt")
             with open(dir_path / ".gitignore", "w") as f:
                 f.write(".*\n*.txt\n*.log\n*.so")
             # init arguments
