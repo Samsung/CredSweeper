@@ -4,6 +4,7 @@ from functools import cached_property
 from typing import List, Tuple, Generator, TypedDict, Optional, Union, Any, Dict, cast
 
 import whatthepatch
+from typing_extensions import deprecated
 
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -31,6 +32,7 @@ class DiffRowData:
     line: str
 
 
+@deprecated("This class will be removed from the public exports and refactored in a future release.")
 class DiffContentProvider(ContentProvider):
     """Provide data from a single `.patch` file.
 

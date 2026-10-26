@@ -2,9 +2,7 @@ import io
 import logging
 import os
 from pathlib import Path
-from typing import List, Dict, Union, Tuple
-
-from git import InvalidGitRepositoryError, NoSuchPathError, Repo
+from typing import List, Union, Tuple
 
 from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.config.config import Config
@@ -17,22 +15,6 @@ class FilePathExtractor:
     """Util class to browse files in directories"""
 
     FIND_BY_EXT_RULE = "Suspicious File Extension"
-    located_repos: Dict[Path, Repo] = {}
-
-    @staticmethod
-    def apply_gitignore(detected_files: List[str]) -> List[str]:
-        """Apply gitignore rules for each file.
-
-        Args:
-            detected_files: list of files to be checked
-
-        Return:
-            List of files with all files ignored by git removed
-
-        """
-        filtered_files = [file_path for file_path in detected_files if FilePathExtractor.is_valid_path(file_path)]
-
-        return filtered_files
 
     @staticmethod
     def get_file_paths(config: Config, path: Union[str, Path]) -> List[str]:
@@ -46,17 +28,17 @@ class FilePathExtractor:
             List all non-excluded files in the directory
 
         """
-        path = os.path.expanduser(path)  # Replace ~ character with a full path to the home directory
-        if not os.path.exists(path):
-            logger.warning("Path '%s' does not exist", path)
+        _path = os.path.expanduser(path)  # Replace ~ character with a full path to the home directory
+        if not os.path.exists(_path):
+            logger.warning("Path '%s' does not exist", _path)
         file_paths = []
-        if os.path.isfile(path):
+        if os.path.isfile(_path):
             # suppose, the file is located outside and should be scanned
-            if not FilePathExtractor.check_exclude_file(config, path) \
-                    and not FilePathExtractor.check_file_size(config, path):
-                file_paths.append(path)
-        elif os.path.isdir(path):
-            for dirpath, _, filenames in os.walk(path):
+            if not FilePathExtractor.check_exclude_file(config, _path) \
+                    and not FilePathExtractor.check_file_size(config, _path):
+                file_paths.append(_path)
+        elif os.path.isdir(_path):
+            for dirpath, _, filenames in os.walk(_path):
                 for filename in filenames:
                     file_path = os.path.join(f"{dirpath}", f"{filename}")
                     if FilePathExtractor.check_exclude_file(config, file_path) or os.path.islink(file_path):
@@ -66,41 +48,6 @@ class FilePathExtractor:
         else:
             pass  # symbolic links and so on
         return file_paths
-
-    @classmethod
-    def is_valid_path(cls, path: str) -> bool:
-        """Locate nearest .git directory to the path and check if path is ignored.
-
-        Args:
-            path: path to the file or directory to check
-
-        Return:
-            False if file is ignored by git. True otherwise
-
-        """
-        parent_directory = Path(path).parent
-
-        # Iterate over file path to find nearest ".git" directory
-        while True:
-            try:
-                if parent_directory in cls.located_repos:
-                    repo = cls.located_repos[parent_directory]
-                else:
-                    # The directory must have ".git" in it. If not it occurs error.
-                    repo = Repo(parent_directory)
-
-                    # Cache already located repositories, so we would not need to load it for each new file
-                    cls.located_repos[parent_directory] = repo
-
-                # Return True if there is no ignored file in 'path' and False if any.
-                return len(repo.ignored(path)) == 0
-
-            except (InvalidGitRepositoryError, NoSuchPathError):
-                new_parent = parent_directory.parent
-                # If we encountered root and cannot move further: no .git directory located in the entire path
-                if new_parent == parent_directory:
-                    return True
-                parent_directory = new_parent
 
     @staticmethod
     def is_find_by_ext_file(config: Config, extension: str) -> bool:
@@ -150,8 +97,10 @@ class FilePathExtractor:
         return False
 
     @staticmethod
-    def check_file_size(config: Config, reference: Union[str, Path, io.BytesIO, Tuple[Union[str, Path],
-                                                                                      io.BytesIO]]) -> bool:
+    def check_file_size(
+            config: Config,  #
+            reference: Union[str, Path, io.BytesIO, Tuple[Union[str, Path], io.BytesIO]],  #
+    ) -> bool:
         """
         Checks whether the file is over the size limit from configuration or less MIN_DATA_LEN
 

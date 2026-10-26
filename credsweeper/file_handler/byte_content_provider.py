@@ -3,6 +3,8 @@ import re
 from functools import cached_property
 from typing import List, Optional, Generator
 
+from typing_extensions import deprecated
+
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.content_provider import ContentProvider
 from credsweeper.utils.util import Util
@@ -10,6 +12,7 @@ from credsweeper.utils.util import Util
 logger = logging.getLogger(__name__)
 
 
+@deprecated("This class will be removed from the public exports and refactored in a future release.")
 class ByteContentProvider(ContentProvider):
     """Allow to scan byte sequence instead of extra reading a file"""
 

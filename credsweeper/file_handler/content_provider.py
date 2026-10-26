@@ -3,6 +3,8 @@ from abc import ABC, abstractmethod
 from functools import cached_property
 from typing import List, Optional, Generator
 
+from typing_extensions import deprecated
+
 from credsweeper.common.constants import MAX_LINE_LENGTH
 from credsweeper.file_handler.analysis_target import AnalysisTarget
 from credsweeper.file_handler.descriptor import Descriptor
@@ -11,6 +13,7 @@ from credsweeper.utils.util import Util
 logger = logging.getLogger(__name__)
 
 
+@deprecated("This class will be removed from the public exports and refactored in a future release.")
 class ContentProvider(ABC):
     """Base class to provide access to analysis targets for scanned object."""
 

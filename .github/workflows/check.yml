@@ -22,7 +22,7 @@ jobs:
       # # # MUST be full history to check git workflow
 
       - name: Harden Runner
-        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4 - 2026.05.21
+        uses: step-security/harden-runner@dc2769abcc0fcfbadfc1df54081c1608579ef6b2 # v2.22.2 - 2026.10.19
         with:
           egress-policy: audit
 
@@ -96,7 +96,7 @@ jobs:
       - name: Banner and version check
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         env:
-          CREDSWEEPER_BANNER: "CredSweeper 1.19.4 crc32:b00543c7"
+          CREDSWEEPER_BANNER: "CredSweeper 1.19.5 crc32:7fdec650"
         run: |
           banner="$(python -m credsweeper --banner | grep CredSweeper | head -1)"
           echo "banner = '${banner}'"
