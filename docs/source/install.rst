@@ -6,8 +6,8 @@ Currently `CredSweeper` requires the following prerequisites:
 * Python version 3.11, 3.12, 3.13, 3.14
 
 .. note::
-    We recommend to use credsweeper in a separate virtual enviroment. Some heave dependencies as Tensorflow
-    might create a conflict with other dependencies othervise
+    We recommend to use credsweeper in a separate virtual environment. Some heavy dependencies as Tensorflow
+    might create a conflict with other dependencies otherwise
 
 Via pip
 -------
@@ -17,7 +17,7 @@ Via pip
     pip install credsweeper
 
 .. note::
-    If you didn't installed git, you may encounter the following error:
+    If you didn't install git, you may encounter the following error:
     
     .. code-block:: bash
 
