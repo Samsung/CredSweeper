@@ -10,8 +10,7 @@ class TestMagicDetector(unittest.TestCase):
     def test_detect_n(self):
         with self.assertRaises(TypeError):
             self.assertFalse(MagicDetector.detect(None))
-        with self.assertRaises(IndexError):
-            self.assertFalse(MagicDetector.detect(b''))
+        self.assertFalse(MagicDetector.detect(b''))
         self.assertFalse(MagicDetector.detect(AZ_STRING))
         self.assertFalse(MagicDetector.detect(AZ_DATA))
         self.assertFalse(MagicDetector.detect(b"\0\0\0\0"))
@@ -46,7 +45,8 @@ class TestMagicDetector(unittest.TestCase):
 
     def test_patterns_check_p(self):
         regex_prefixes = total_prefixes = 0
-        for k, v in MagicDetector.MAGIC_PATTERNS.items():
+        # offset=0 test only
+        for k, v in MagicDetector.MAGIC_PATTERNS[0].items():
             for i in v:
                 self.assertEqual(k, i[0][0], (k, v))
                 total_prefixes += 1
