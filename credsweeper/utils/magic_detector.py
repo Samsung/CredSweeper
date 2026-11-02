@@ -198,6 +198,12 @@ class MagicDetector:
                  re.compile(b"icns\x00[\x00-\xFF]{3}"
                             b"(IC(ON|N#)|ic([hms][#48]|s[bB]|l[48]|p[456]|0[45789]|1[0-4])"
                             b"|is32|s8mk|il32|l8mk|ih32|h8mk|it32|t8mk|sb24|SB24)")),
+                # Magick Image File Format
+                (b"id=ImageMagick",
+                 re.compile(b"id=ImageMagick[\x09\x0A\x0D\x20-\x7E\xA0-\xFF]+"
+                            b"(columns=[0-9]+[\x09\x0A\x0D\x20-\x7E\xA0-\xFF]+rows=[0-9]+"
+                            b"|rows=[0-9]+[\x09\x0A\x0D\x20-\x7E\xA0-\xFF]+columns=[0-9]+)"
+                            b"[\x09\x0A\x0D\x20-\x7E\xA0-\xFF]+[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x8F]")),
             ],
             0x74: [
                 # TrueType Collection v1
