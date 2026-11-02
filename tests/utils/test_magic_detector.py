@@ -10,8 +10,7 @@ class TestMagicDetector(unittest.TestCase):
     def test_detect_n(self):
         with self.assertRaises(TypeError):
             self.assertFalse(MagicDetector.detect(None))
-        with self.assertRaises(IndexError):
-            self.assertFalse(MagicDetector.detect(b''))
+        self.assertFalse(MagicDetector.detect(b''))
         self.assertFalse(MagicDetector.detect(AZ_STRING))
         self.assertFalse(MagicDetector.detect(AZ_DATA))
         self.assertFalse(MagicDetector.detect(b"\0\0\0\0"))
@@ -21,6 +20,12 @@ class TestMagicDetector(unittest.TestCase):
         self.assertFalse(MagicDetector.detect(b"BMP is a picture"))
 
     def test_detect_p(self):
+        self.assertTrue(
+            MagicDetector.detect(b"\x84\n\x02\x00\x9c\t\x01\x00\x01\x00\x02\x00\x00\x00\x00\x00\x00\x00"
+                                 b"\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x90\x01\x00\x00\x00\x00"
+                                 b"LP\xef\x00\x00\x80\xed\xec\x00\x10\x00\x00\x00\x00\x00\x00\x00\x00"
+                                 b"\x8f\x00\x00 \x00\x00\x03&3\xbe\xba\xd0\x00\x00\x00\x00\x00\x00\x00"
+                                 b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x12\x00"))
         self.assertTrue(MagicDetector.detect(b"FWS\x08\xd3<\x00\x00x\x00\x05_\x00\x00\x0f\xa0\x00\x00\x0c\x01\x00X"))
         self.assertTrue(MagicDetector.detect(b"\xabKTX 33\xbb\r\n\x1a\n\x01\x02\x03\x04\x0b\x14\x00\x00\x02\x00\x00"))
         self.assertTrue(MagicDetector.detect(b"glTF\x02\x00\x00\x00\xa8\xe3[\x00p\x1d\x00\x00JSON"))
@@ -40,7 +45,8 @@ class TestMagicDetector(unittest.TestCase):
 
     def test_patterns_check_p(self):
         regex_prefixes = total_prefixes = 0
-        for k, v in MagicDetector.MAGIC_PATTERNS.items():
+        # offset=0 test only
+        for k, v in MagicDetector.MAGIC_PATTERNS[0].items():
             for i in v:
                 self.assertEqual(k, i[0][0], (k, v))
                 total_prefixes += 1
