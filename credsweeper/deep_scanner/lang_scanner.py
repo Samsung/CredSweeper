@@ -3,6 +3,7 @@ import json
 import logging
 import warnings
 from abc import ABC
+from json import JSONDecodeError
 from typing import List, Optional
 
 from credsweeper.common.constants import MAX_LINE_LENGTH
@@ -14,6 +15,10 @@ from credsweeper.file_handler.struct_content_provider import StructContentProvid
 from credsweeper.logger import TRACE
 
 logger = logging.getLogger(__name__)
+
+
+class JSONMismatch(ValueError):
+    """Auxiliary class to skip wrong recognized data"""
 
 
 class LangScanner(AbstractScanner, ABC):
@@ -30,7 +35,8 @@ class LangScanner(AbstractScanner, ABC):
                 and 0 < data.rfind(b'}', max(0, len(data) - MAX_LINE_LENGTH)):
             # JSON which requires "key":"value":
             return True
-        if quot and 0 <= data.find(b'[', 0, MAX_LINE_LENGTH) and data.rfind(b']', max(0, len(data) - MAX_LINE_LENGTH)):
+        if quot and 0 <= data.find(b'[', 0, MAX_LINE_LENGTH) \
+                and 0 < data.rfind(b']', max(0, len(data) - MAX_LINE_LENGTH)):
             # listed JSON or NDJSON
             return True
         # check for python text
@@ -60,9 +66,13 @@ class LangScanner(AbstractScanner, ABC):
         # try to parse as NDJSON
         try:
             ndjson_candidates = []
-            for n, line in enumerate(data_provider.text.splitlines(), start=1):
+            for n, line in enumerate(data_provider.lines, start=1):
+                _line = line.strip()
                 # each line must be in json format, otherwise - exception rises
-                structure = json.loads(line)
+                if not ('"' in _line and (_line.startswith('{') and _line.endswith('}')
+                                          or _line.startswith('[') and _line.endswith(']'))):
+                    raise JSONMismatch("Not a NDJSON")
+                structure = json.loads(_line)
                 ndjson_data_provider = StructContentProvider(struct=structure,
                                                              file_path=data_provider.file_path,
                                                              file_type=data_provider.file_type,
@@ -70,22 +80,30 @@ class LangScanner(AbstractScanner, ABC):
                 candidates = self.structure_scan(ndjson_data_provider, depth, new_limit)
                 ndjson_candidates.extend(candidates)
             return ndjson_candidates
+        except (JSONDecodeError, JSONMismatch):
+            pass
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
-            logger.log(TRACE, "Cannot parse as ndjson %s:%s %s", type(exc), exc, data_provider.descriptor)
+            logger.log(TRACE, "Cannot parse as NDJSON %s:%s %s", type(exc), exc, data_provider.descriptor)
 
-        # plain JSON probe
-        try:
-            structure = json.loads(data_provider.text)
-            json_data_provider = StructContentProvider(struct=structure,
-                                                       file_path=data_provider.file_path,
-                                                       file_type=data_provider.file_type,
-                                                       info=f"{data_provider.info}|JSON")
-            candidates = self.structure_scan(json_data_provider, depth, new_limit)
-            return candidates
-        except Exception as exc:  # pylint: disable=broad-exception-caught
-            # fallback
-            logger.log(TRACE, "Cannot parse as json %s:%s %s", type(exc), exc, data_provider.descriptor)
+        if '"' in data_provider.text \
+                and '{' in data_provider.text \
+                and ':' in data_provider.text \
+                and '}' in data_provider.text:
+            # JSON probe if there are the markers of well-structured JSON
+            try:
+                structure = json.loads(data_provider.text)
+                json_data_provider = StructContentProvider(struct=structure,
+                                                           file_path=data_provider.file_path,
+                                                           file_type=data_provider.file_type,
+                                                           info=f"{data_provider.info}|JSON")
+                candidates = self.structure_scan(json_data_provider, depth, new_limit)
+                return candidates
+            except JSONDecodeError:
+                pass
+            except Exception as exc:  # pylint: disable=broad-exception-caught
+                # fallback
+                logger.log(TRACE, "Cannot parse as JSON %s:%s %s", type(exc), exc, data_provider.descriptor)
 
         # try to parse as Python code
         try:
