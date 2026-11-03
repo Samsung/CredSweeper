@@ -68,6 +68,9 @@ class LangScanner(AbstractScanner, ABC):
             ndjson_candidates = []
             for n, line in enumerate(data_provider.lines, start=1):
                 _line = line.strip()
+                if not _line:
+                    # skip entirely empty lines
+                    continue
                 # each line must be in json format, otherwise - exception rises
                 if not ('"' in _line and (_line.startswith('{') and _line.endswith('}')
                                           or _line.startswith('[') and _line.endswith(']'))):
