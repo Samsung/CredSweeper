@@ -1,7 +1,8 @@
+import string
 from typing import Optional
 
 from credsweeper.common import static_keyword_checklist
-from credsweeper.common.constants import Chars
+from credsweeper.common.constants import Chars, MAX_LINE_LENGTH
 from credsweeper.config.config import Config
 from credsweeper.credentials.line_data import LineData
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -34,7 +35,8 @@ class ValueFilePathCheck(Filter):
             True, if need to filter candidate and False if left
 
         """
-        value = line_data.value
+        # limit the value length for the filter
+        value = line_data.value[:MAX_LINE_LENGTH]
         bit_length = len(value).bit_length()
         morpheme_threshold = 1 if 6 > bit_length else bit_length - 4
         contains_unix_separator = '/' in value
@@ -59,22 +61,37 @@ class ValueFilePathCheck(Filter):
             else:
                 # all symbols are from base64 alphabet
                 entropy = Util.get_shannon_entropy(value)
-                if 0 == min_entropy or min_entropy > entropy:
+                if 0 == min_entropy or entropy < min_entropy:
+                    # low shannon entropy points that the value maybe not a high randomized value in base64
                     contains_unix_separator = 1 < value.count('/')
                 else:
                     # high entropy means base64 encoded data
                     contains_unix_separator = False
 
-            # low shannon entropy points that the value maybe not a high randomized value in base64
-        contains_windows_separator = ':\\' in value
+        contains_windows_separator_pos = value.find(":\\")
+        contains_windows_separator = 0 < contains_windows_separator_pos
+        contains_windows_disk = False
+        if 1 == contains_windows_separator_pos:
+            contains_windows_disk = True
+        elif 1 < contains_windows_separator_pos:
+            if value[contains_windows_separator_pos - 1] in string.ascii_letters:
+                contains_windows_disk = value[contains_windows_separator_pos - 2] not in Chars.BASE62_CHARS.value
         if contains_unix_separator or contains_windows_separator:
-            unusual_symbols_in_path = self.unusual_linux_symbols_in_path if contains_unix_separator \
-                else self.unusual_windows_symbols_in_path
+            if contains_windows_disk or not contains_unix_separator:
+                # disk pattern is preferred
+                unusual_symbols_in_path = self.unusual_windows_symbols_in_path
+            else:
+                unusual_symbols_in_path = self.unusual_linux_symbols_in_path
+            if contains_windows_disk:
+                value = value[contains_windows_separator_pos:]
             for i in unusual_symbols_in_path:
                 if i in value:
                     # the symbols which not passed in a path usually
                     break
             else:
+                if contains_windows_disk:
+                    # no morphemes check if a disk name present
+                    return True
                 if contains_unix_separator ^ contains_windows_separator:
                     return static_keyword_checklist.check_morphemes(value.lower(), morpheme_threshold)
         return False

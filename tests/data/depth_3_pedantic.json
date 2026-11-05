@@ -19964,6 +19964,27 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "\"\"\"pswrd=\"Zf2Fv%s2\";\\r\"\"\"",
+                "line_num": 1,
+                "path": "./tests/samples/sample.json",
+                "info": "FILE:./tests/samples/sample.json|JSON|STRING:line|Python",
+                "variable": "pswrd",
+                "variable_start": 3,
+                "variable_end": 8,
+                "value": "Zf2Fv%s2",
+                "value_start": 10,
+                "value_end": 18,
+                "entropy": 2.75
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
         "ml_probability": 0.993,
         "line_data_list": [
             {
@@ -20041,6 +20062,69 @@
                 "value_start": 32,
                 "value_end": 46,
                 "entropy": 3.18201
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "password = 'UuG!gf5su&mP1'",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ndjson.lz4",
+                "info": "FILE:./tests/samples/sample.ndjson.lz4|LZ4:138|NDJSON[1]|KEYWORD",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "UuG!gf5su&mP1",
+                "value_start": 12,
+                "value_end": 25,
+                "entropy": 3.54659
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "password = 'gf5su&mPUuG!3'",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ndjson.lz4",
+                "info": "FILE:./tests/samples/sample.ndjson.lz4|LZ4:138|NDJSON[3]|KEYWORD",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "gf5su&mPUuG!3",
+                "value_start": 12,
+                "value_end": 25,
+                "entropy": 3.54659
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "password = 'su&mP2UuG!gf5'",
+                "line_num": 2,
+                "path": "./tests/samples/sample.ndjson.lz4",
+                "info": "FILE:./tests/samples/sample.ndjson.lz4|LZ4:138|NDJSON[2]|KEYWORD",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "su&mP2UuG!gf5",
+                "value_start": 12,
+                "value_end": 25,
+                "entropy": 3.54659
             }
         ]
     },

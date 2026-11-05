@@ -3,7 +3,7 @@
 
 # build requirement
 build==1.6.1
-hatchling==1.32.4
+hatchling==1.33.0
 # check build
 twine==7.0.0
 
@@ -30,12 +30,12 @@ onnxruntime==1.31.1
 openpyxl==3.1.5
 
 # pandas - ML requirement and excel data reading
-pandas==3.1.0
+pandas==3.1.1
 
 pdfminer.six==20260107
 pybase62==1.0.0
 pyjks==20.0.0
-python-dateutil==3.0.0
+python-dateutil==4.0.0
 python-docx==1.2.0
 python-pptx==1.0.2
 PyYAML==6.0.3
@@ -46,6 +46,7 @@ zstandard==0.25.0; python_version < '3.14'
 brotli==1.2.1
 pygments==2.21.0
 tqdm==4.70.1
+lz4==4.4.5
 
 # Auxiliary packages for development
 # tests

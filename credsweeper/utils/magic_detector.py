@@ -15,6 +15,8 @@ class MagicDetector:
                 (b"\x00\x00\x00\x0C\x6A\x50\x20\x20\x0D\x0A\x87\x0A", None),
                 # ICO
                 (b"\x00\x00\x01\x00", None),
+                # M2V
+                (b"\x00\x00\x01\xB3", None),
                 # CUR
                 (b"\x00\x00\x02\x00\x01\x00", None),
                 # TTF
@@ -41,6 +43,14 @@ class MagicDetector:
                 (b"\x03\xf3\r\n", None),
                 # SPIR-V Shader Module (.spv)
                 (b"\x03\x02#\x07", None),
+            ],
+            0x0E: [
+                # HDF4
+                (b"\x0E\x03\x13\x01", None),
+            ],
+            0x10: [
+                # TIM
+                (b"\x10\x00\x00\x00", None),
             ],
             0x18: [
                 # .tflite
@@ -198,6 +208,12 @@ class MagicDetector:
                  re.compile(b"icns\x00[\x00-\xFF]{3}"
                             b"(IC(ON|N#)|ic([hms][#48]|s[bB]|l[48]|p[456]|0[45789]|1[0-4])"
                             b"|is32|s8mk|il32|l8mk|ih32|h8mk|it32|t8mk|sb24|SB24)")),
+                # Magick Image File Format
+                (b"id=ImageMagick",
+                 re.compile(b"id=ImageMagick[\x09\x0A\x0D\x20-\x7E\xA0-\xFF]+"
+                            b"(columns=[0-9]+[\x09\x0A\x0D\x20-\x7E\xA0-\xFF]+rows=[0-9]+"
+                            b"|rows=[0-9]+[\x09\x0A\x0D\x20-\x7E\xA0-\xFF]+columns=[0-9]+)"
+                            b"[\x09\x0A\x0D\x20-\x7E\xA0-\xFF]+[\x00-\x08\x0B\x0C\x0E-\x1F\x80-\x8F]")),
             ],
             0x74: [
                 # TrueType Collection v1
@@ -226,6 +242,10 @@ class MagicDetector:
                 # HDF5
                 (b"\x89HDF\r\n\x1A\n", None),
             ],
+            0x8B: [
+                # JNG
+                (b"\x8BJNG\x0D\x0A\x1A\x0A", None),
+            ],
             0x93: [
                 # NUMPY
                 (b"\x93NUMPY", None),
@@ -251,6 +271,10 @@ class MagicDetector:
                 # D00DFEED
                 (b"\xD0\x0D\xFE\xED", None),
             ],
+            0xD7: [
+                # WMF
+                (b"\xD7\xCD\xC6\x9A\x00\x00", None),
+            ],
             0xDE: [
                 # GNU MO
                 (b"\xDE\x12\x04\x95", None),
@@ -264,6 +288,8 @@ class MagicDetector:
             0xFF: [
                 # JPEG or MPEG-1 Layer 3
                 (b"\xFF", re.compile(b"\xFF(\xD8\xFF[\xDB\xEE\xE1\xE0\x51]|[\xFB\xF3\xF2])")),
+                # JP2
+                (b"\xFFO\xFFQc\x00\x00\x00", None),
                 # GIT: Version 2 pack-*.idx
                 (b"\xFFtOc\x00\x00\x00", None),
                 # https://github.com/llvm/llvm-project/blob/main/llvm/include/llvm/ProfileData/InstrProf.h
