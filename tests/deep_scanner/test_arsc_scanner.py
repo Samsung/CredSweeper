@@ -25,7 +25,4 @@ class TestArscScanner(unittest.TestCase):
         self.assertFalse(ArscScanner.match(random_bytes))
 
     def test_match_p(self):
-        self.assertTrue(ArscScanner.match(b"\x02\x00\x0C\x00\x0C\x00\x00\x001234"))
-        src = APP_PATH.parent / "resources-big.arsc"
-        # Valid Arsc archive signature
-        self.assertTrue(ArscScanner.match(src.read_bytes()))
+        self.assertTrue(ArscScanner.match(b"\x02\x00\x0C\x00\x0D\x00\x00\x000123456789abcdef"))

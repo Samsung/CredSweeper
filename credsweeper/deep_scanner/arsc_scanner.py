@@ -92,7 +92,7 @@ class ArscScanner(AbstractScanner, ABC):
         """Checks RES_TABLE_TYPE header and size. According https://apktool.org/wiki/advanced/resources-arsc/"""
         if data.startswith(b"\x02\x00\x0C\x00") and 12 < len(data):
             size = struct.unpack_from("<I", data, offset=4)[0]
-            return bool(size == len(data))
+            return bool(8 + size <= len(data))
         return False
 
     @staticmethod
