@@ -12,6 +12,14 @@ credsweeper.deep\_scanner.abstract\_scanner module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.deep\_scanner.arsc\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.arsc_scanner
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 credsweeper.deep\_scanner.bzip2\_scanner module
 -----------------------------------------------
 
