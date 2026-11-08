@@ -26,3 +26,4 @@ class TestArscScanner(unittest.TestCase):
 
     def test_match_p(self):
         self.assertTrue(ArscScanner.match(b"\x02\x00\x0C\x00\x0D\x00\x00\x000123456789abcdef"))
+
