@@ -8,6 +8,7 @@ from credsweeper.common.constants import MIN_DATA_LEN, UTF_16_LE
 from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
+from credsweeper.logger import TRACE
 from credsweeper.utils.util import Util
 
 logger = logging.getLogger(__name__)
@@ -160,7 +161,8 @@ class ArscScanner(AbstractScanner, ABC):
 
                 if rtype in ArscScanner.CONTAINERS:
                     yield from walk(pos + hdr_size, pos + size, child_pkg)
-                else:
+                elif MIN_DATA_LEN <= size:
+                    # skip invaluable data
                     yield pos, ctype, name, data[pos:pos + size]
 
                 pos += size
@@ -183,6 +185,8 @@ class ArscScanner(AbstractScanner, ABC):
                     info=f"{data_provider.info}|ARSC:0x{offset:x}:{ctype}:{name}")
                 candidates.extend(self.recursive_scan(arsc_content_provider, depth, recursive_limit_size))
             return candidates
+        except (TypeError, ValueError, struct.error, IndexError) as exc:
+            logger.log(TRACE, "%s %s", exc, data_provider.descriptor)
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
             logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)
