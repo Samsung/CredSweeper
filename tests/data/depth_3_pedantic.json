@@ -18523,6 +18523,90 @@
         ]
     },
     {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "secret:1ab3e9fdd5c47c81a7fcbe803fa",
+                "line_num": 1,
+                "path": "./tests/samples/sample.arsc",
+                "info": "FILE:./tests/samples/sample.arsc|ARSC:0xc:1:global[4]|TEXT",
+                "variable": "secret",
+                "variable_start": 0,
+                "variable_end": 6,
+                "value": "1ab3e9fdd5c47c81a7fcbe803fa",
+                "value_start": 7,
+                "value_end": 34,
+                "entropy": 3.70805
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.99,
+        "line_data_list": [
+            {
+                "line": "PW:@24Fs5~asF5!=MXF",
+                "line_num": 1,
+                "path": "./tests/samples/sample.arsc",
+                "info": "FILE:./tests/samples/sample.arsc|ARSC:0xc:1:global[0]|TEXT",
+                "variable": "PW",
+                "variable_start": 0,
+                "variable_end": 2,
+                "value": "@24Fs5~asF5!=MXF",
+                "value_start": 3,
+                "value_end": 19,
+                "entropy": 3.45282
+            }
+        ]
+    },
+    {
+        "rule": "AWS Client ID",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "AKIAG1RE0G123K9CD1FA!2auVch7r2aAg",
+                "line_num": 1,
+                "path": "./tests/samples/sample.arsc",
+                "info": "FILE:./tests/samples/sample.arsc|ARSC:0xc:1:global[1]|TEXT",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "AKIAG1RE0G123K9CD1FA",
+                "value_start": 0,
+                "value_end": 20,
+                "entropy": 3.64644
+            }
+        ]
+    },
+    {
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "credential = \"d32/ic~l2uGcN5*_p!\"",
+                "line_num": 1,
+                "path": "./tests/samples/sample.arsc",
+                "info": "FILE:./tests/samples/sample.arsc|ARSC:0xc:1:global[3]|TEXT",
+                "variable": "credential",
+                "variable_start": 0,
+                "variable_end": 10,
+                "value": "d32/ic~l2uGcN5*_p!",
+                "value_start": 14,
+                "value_end": 32,
+                "entropy": 3.9477
+            }
+        ]
+    },
+    {
         "rule": "PKCS without password",
         "severity": "high",
         "confidence": "strong",
