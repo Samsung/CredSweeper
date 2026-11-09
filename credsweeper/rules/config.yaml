@@ -2158,6 +2158,21 @@
     - code
     - doc
 
+- name: Kaggle API Token
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?P<value>KGAT_[0-9a-f]{32})
+  filter_type:
+    - ValuePatternCheck
+  min_line_len: 37
+  required_substrings:
+    - KGAT_
+  target:
+    - code
+    - doc
+
 - name: NTLM Token
   severity: medium
   confidence: strong

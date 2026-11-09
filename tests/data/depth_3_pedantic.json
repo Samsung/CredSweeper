@@ -8077,6 +8077,27 @@
         ]
     },
     {
+        "rule": "Kaggle API Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "KGAT_a96791586900115ddb1232c90a6a9612",
+                "line_num": 2,
+                "path": "./tests/samples/kaggle",
+                "info": "FILE:./tests/samples/kaggle|TEXT",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "KGAT_a96791586900115ddb1232c90a6a9612",
+                "value_start": 0,
+                "value_end": 37,
+                "entropy": 3.87205
+            }
+        ]
+    },
+    {
         "rule": "PEM Private Key",
         "severity": "high",
         "confidence": "strong",
