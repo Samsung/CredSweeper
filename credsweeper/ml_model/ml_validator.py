@@ -26,6 +26,8 @@ class MlValidator:
     FAKE_CHAR = '\x01'
 
     _dir_path = Path(__file__).parent
+    _default_config = _dir_path / "ml_config.json"
+    _default_model = _dir_path / "ml_model.onnx"
 
     def __init__(
             self,  #
@@ -50,7 +52,7 @@ class MlValidator:
         if ml_config:
             ml_config_path = Path(ml_config)
         else:
-            ml_config_path = MlValidator._dir_path / "ml_config.json"
+            ml_config_path = MlValidator._default_config
         with open(ml_config_path, "rb") as f:
             __ml_config_data = f.read()
 
@@ -59,7 +61,7 @@ class MlValidator:
         if ml_model:
             ml_model_path = Path(ml_model)
         else:
-            ml_model_path = MlValidator._dir_path / "ml_model.onnx"
+            ml_model_path = MlValidator._default_model
         with open(ml_model_path, "rb") as f:
             self.__ml_model_data = f.read()
 
