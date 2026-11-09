@@ -2173,6 +2173,20 @@
     - code
     - doc
 
+- name: Resend API Key
+  severity: high
+  confidence: strong
+  type: pattern
+  values:
+    - (?:^|/|[^\\0-9A-Za-z+_-]|\\[0abfnrtv]|(?:%|\\x)[0-9A-Fa-f]{2}|\\[0-7]{3}|\\[Uu][0-9A-Fa-f]{4}|\x1B\[[0-9;]{0,80}m)(?P<value>re_[1-9A-HJ-NP-Za-km-z]{8}_[1-9A-HJ-NP-Za-km-z]{24})(?![0-9A-Za-z_-])
+  filter_type: TokenPattern
+  min_line_len: 36
+  required_substrings:
+    - re_
+  target:
+    - code
+    - doc
+
 - name: NTLM Token
   severity: medium
   confidence: strong
