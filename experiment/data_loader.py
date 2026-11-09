@@ -13,7 +13,7 @@ from colorama import Fore, Style, Back
 from credsweeper.common.constants import ML_HUNK
 from credsweeper.utils.util import Util
 
-# path, line, val_start, val_end
+# path, line_number, val_start, val_end
 identifier = Tuple[str, int, int, int]
 
 
