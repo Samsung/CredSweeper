@@ -43,7 +43,7 @@ jobs:
       - name: Check ml_config.json and ml_model.onnx integrity
         if: ${{ always() && steps.code_checkout.conclusion == 'success' }}
         run: |
-          echo "326a4f7543f5cee73e92e05289362664 *credsweeper/ml_model/ml_config.json" | md5sum --check
+          echo "11ba0f0270e62898beb657d6f67075b5 *credsweeper/ml_model/ml_config.json" | md5sum --check
           echo "a3054b55c88dd63a168f8e1fe27bbbdf *credsweeper/ml_model/ml_model.onnx" | md5sum --check
 
       # # # line ending
@@ -96,7 +96,7 @@ jobs:
       - name: Banner and version check
         if: ${{ always() && steps.setup_credsweeper.conclusion == 'success' }}
         env:
-          CREDSWEEPER_BANNER: "CredSweeper 1.19.6 crc32:a4383414"
+          CREDSWEEPER_BANNER: "CredSweeper 1.19.6 crc32:a6b978c4"
         run: |
           banner="$(python -m credsweeper --banner | grep CredSweeper | head -1)"
           echo "banner = '${banner}'"

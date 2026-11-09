@@ -1,18 +1,30 @@
 import json
 import mimetypes
-from typing import Dict
+import pathlib
+from typing import Dict, Any
 
 import pandas as pd
 
 from credsweeper.app import APP_PATH
 from credsweeper.common.constants import UTF_8
-from credsweeper.utils.util import Util
 
 ML_CONFIG_PATH = APP_PATH / "ml_model" / "ml_config.json"
 
 
+def load_model_config(ml_config_path: pathlib.Path) -> dict:
+    with open(ml_config_path, 'r', encoding=UTF_8) as f:
+        model_config = json.load(f)
+    assert isinstance(model_config, dict), type(model_config)
+    return model_config
+
+
+def write_model_config(ml_config_path: pathlib.Path, model_config: Any):
+    with open(ml_config_path, 'w', encoding=UTF_8) as f:
+        json.dump(model_config, f, indent=4, sort_keys=True, ensure_ascii=True)
+
+
 def model_config_preprocess(df_all: pd.DataFrame, doc_target: bool) -> Dict[str, float]:
-    model_config = Util.json_load(ML_CONFIG_PATH)
+    model_config = load_model_config(ML_CONFIG_PATH)
     ascii_char_set = ''.join(chr(x) for x in range(0x20, 0x7F))
     extra_char_set = "\x1B\t\n\r"  # ESC code, tab and line end variations
     doc_char_set = " ●가개공기께내는님당드등따로메면문밀방번보복본비사생서석성슈스시암에요용워으의이작정주지채체큰키토팅패필하할호화" if doc_target else ''
@@ -48,8 +60,7 @@ def model_config_preprocess(df_all: pd.DataFrame, doc_target: bool) -> Dict[str,
                         # collect all unknown extensions for error log
                         print(f"UNKNOWN EXTENSION: {extension}", flush=True)
                         unknown_extensions.append(extension)
-                with open(ML_CONFIG_PATH, 'w', encoding=UTF_8) as f:
-                    json.dump(model_config, f, indent=4, sort_keys=True, ensure_ascii=True)
+                write_model_config(ML_CONFIG_PATH, model_config)
                 if known_extensions != set(x["kwargs"]["extensions"]):
                     # the process must be restarted with updated config
                     raise RuntimeError("RESTART: differences in extensions:"
@@ -79,7 +90,7 @@ def model_config_preprocess(df_all: pd.DataFrame, doc_target: bool) -> Dict[str,
         for x in model_config["features"]:
             if "RuleName" == x["type"]:
                 x["kwargs"]["rule_names"] = sorted_rules
-                Util.json_dump(model_config, ML_CONFIG_PATH)
+                write_model_config(ML_CONFIG_PATH, model_config)
                 break
         # the process must be restarted with updated config
         raise RuntimeError(f"RESTART: differences in rules:"
