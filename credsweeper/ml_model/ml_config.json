@@ -1,186 +1,178 @@
 {
     "char_set": "\u001b\t\n\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
-    "thresholds": {
-        "lowest": 0.22917,
-        "low": 0.35739,
-        "medium": 0.62204,
-        "high": 0.79791,
-        "highest": 0.92996
-    },
     "features": [
         {
-            "type": "RuleSeverity",
             "comment": "INFO=0.0, LOW=0.25, MEDIUM=0.5, HIGH=0.75, CRITICAL=1.0",
-            "kwargs": {}
+            "kwargs": {},
+            "type": "RuleSeverity"
         },
         {
-            "type": "EntropyEvaluation",
-            "kwargs": {}
+            "kwargs": {},
+            "type": "EntropyEvaluation"
         },
         {
-            "type": "LengthOfAttribute",
             "kwargs": {
                 "attribute": "line"
-            }
+            },
+            "type": "LengthOfAttribute"
         },
         {
-            "type": "LengthOfAttribute",
             "kwargs": {
                 "attribute": "variable"
-            }
+            },
+            "type": "LengthOfAttribute"
         },
         {
-            "type": "LengthOfAttribute",
             "kwargs": {
                 "attribute": "value"
-            }
+            },
+            "type": "LengthOfAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "Bash variable",
             "kwargs": {
-                "pattern": "^\\$([A-Za-z_][0-9A-Za-z_]*|\\{[A-Za-z_][0-9A-Za-z_]*\\})",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "^\\$([A-Za-z_][0-9A-Za-z_]*|\\{[A-Za-z_][0-9A-Za-z_]*\\})"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "PossibleComment replacing",
             "kwargs": {
-                "pattern": "^\\s*(#|\\*|/\\*|//|--\\s)",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "^\\s*(#|\\*|/\\*|//|--\\s)"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "Example pattern",
             "kwargs": {
-                "pattern": "^<[\\w\\s.-]*>",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "^<[\\w\\s.-]*>"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "Repeated symbol",
             "kwargs": {
-                "pattern": "(?:(\\S)(\\S))((\\1.)|(.\\2)){7,}",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "(?:(\\S)(\\S))((\\1.)|(.\\2)){7,}"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "SHA marker",
             "kwargs": {
-                "pattern": "(?i:sha)[_-]?(224|256|384|512)",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "(?i:sha)[_-]?(224|256|384|512)"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "ASN1 prefix for PEM keys",
             "kwargs": {
-                "pattern": "\\b(MII|LS0t)",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "\\b(MII|LS0t)"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "camelStyle naming detection",
             "kwargs": {
-                "pattern": "^[a-z][a-z]{1,16}[0-9]*([A-Z]([a-z]{1,16}[0-9]*|[0-9]{1,16})){1,8}$",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "^[a-z][a-z]{1,16}[0-9]*([A-Z]([a-z]{1,16}[0-9]*|[0-9]{1,16})){1,8}$"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "PascalStyle naming detection",
             "kwargs": {
-                "pattern": "^([A-Z]([a-z]{1,16}[0-9]*|[0-9]{1,16})){1,8}$",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "^([A-Z]([a-z]{1,16}[0-9]*|[0-9]{1,16})){1,8}$"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "UPPERCASE naming detection",
             "kwargs": {
-                "pattern": "^(_+[0-9]{1,16}|_*[A-Z]{1,16}[0-9]*)(_+([0-9]{1,16}|[A-Z]{1,16}[0-9]*)){1,8}_*$",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "^(_+[0-9]{1,16}|_*[A-Z]{1,16}[0-9]*)(_+([0-9]{1,16}|[A-Z]{1,16}[0-9]*)){1,8}_*$"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "lowercase naming detection",
             "kwargs": {
-                "pattern": "^(_+[0-9]{1,16}|_*[a-z]{1,16}[0-9]*)(_+([0-9]{1,16}|[a-z]{1,16}[0-9]*)){1,8}_*$",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "^(_+[0-9]{1,16}|_*[a-z]{1,16}[0-9]*)(_+([0-9]{1,16}|[a-z]{1,16}[0-9]*)){1,8}_*$"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "VariableNotAllowedPatternCheck",
             "kwargs": {
-                "pattern": "(^(@|<|\\{\\{))|([!><+*/^|)](\\s)?$)",
-                "attribute": "variable"
-            }
+                "attribute": "variable",
+                "pattern": "(^(@|<|\\{\\{))|([!><+*/^|)](\\s)?$)"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - hash mentioned",
             "kwargs": {
-                "pattern": "(?i:( h1$|md5|sha[_-]?(224|256|384|512)))",
-                "attribute": "variable"
-            }
+                "attribute": "variable",
+                "pattern": "(?i:( h1$|md5|sha[_-]?(224|256|384|512)))"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - ID detect",
             "kwargs": {
-                "pattern": "(guid|[^a-z](?i:u?id)|([^A-Z](G?U)?I[dD])s?)$",
-                "attribute": "variable"
-            }
+                "attribute": "variable",
+                "pattern": "(guid|[^a-z](?i:u?id)|([^A-Z](G?U)?I[dD])s?)$"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "AWS Key ID - true ID",
             "kwargs": {
-                "pattern": "^A[0-9A-Z]{19,20}$",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "^A[0-9A-Z]{19,20}$"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "UUID pattern",
             "kwargs": {
-                "pattern": "^(?i:[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})$",
-                "attribute": "value"
-            }
+                "attribute": "value",
+                "pattern": "^(?i:[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12})$"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - key rule",
             "kwargs": {
-                "pattern": "(?i:(?:uniq(?:ue)?|escap(?:e|ing)|resources?|projects?|filters?|pub(?:lic)?)_?keys?)",
-                "attribute": "variable"
-            }
+                "attribute": "variable",
+                "pattern": "(?i:(?:uniq(?:ue)?|escap(?:e|ing)|resources?|projects?|filters?|pub(?:lic)?)_?keys?)"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "VariableNotAllowedNameCheck - word at end",
             "kwargs": {
-                "pattern": "(?i:(icon|label|mode|field|format|number|sum|size|len(gth)?|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate|code|fingerprint)s?$)",
-                "attribute": "variable"
-            }
+                "attribute": "variable",
+                "pattern": "(?i:(icon|label|mode|field|format|number|sum|size|len(gth)?|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate|code|fingerprint)s?$)"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "SearchInAttribute",
             "comment": "PWD invocation",
             "kwargs": {
-                "pattern": "(?i:(^\\$pwd$)|(^\\$\\{#?pwd[^}]*\\}$)|(^\\$\\(pwd\\)$)|(^`pwd`$))",
-                "attribute": "variable"
-            }
+                "attribute": "variable",
+                "pattern": "(?i:(^\\$pwd$)|(^\\$\\{#?pwd[^}]*\\}$)|(^\\$\\(pwd\\)$)|(^`pwd`$))"
+            },
+            "type": "SearchInAttribute"
         },
         {
-            "type": "WordInVariable",
             "kwargs": {
                 "words": [
                     " ",
@@ -255,10 +247,10 @@
                     "version",
                     "view"
                 ]
-            }
+            },
+            "type": "WordInVariable"
         },
         {
-            "type": "WordInValue",
             "kwargs": {
                 "words": [
                     "%",
@@ -320,10 +312,10 @@
                     "xxx",
                     "xyz"
                 ]
-            }
+            },
+            "type": "WordInValue"
         },
         {
-            "type": "WordInPreamble",
             "kwargs": {
                 "words": [
                     "$",
@@ -369,10 +361,10 @@
                     "width",
                     "word"
                 ]
-            }
+            },
+            "type": "WordInPreamble"
         },
         {
-            "type": "WordInTransition",
             "kwargs": {
                 "words": [
                     "%2",
@@ -405,10 +397,10 @@
                     "test",
                     "unit"
                 ]
-            }
+            },
+            "type": "WordInTransition"
         },
         {
-            "type": "WordInPostamble",
             "kwargs": {
                 "words": [
                     "$",
@@ -456,10 +448,10 @@
                     "width",
                     "word"
                 ]
-            }
+            },
+            "type": "WordInPostamble"
         },
         {
-            "type": "WordInPath",
             "kwargs": {
                 "words": [
                     "test",
@@ -520,7 +512,8 @@
                     "/etc",
                     "/fuzz"
                 ]
-            }
+            },
+            "type": "WordInPath"
         },
         {
             "type": "MorphemeDense"
@@ -532,7 +525,6 @@
             "type": "IsSecretNumeric"
         },
         {
-            "type": "FileExtension",
             "kwargs": {
                 "extensions": [
                     "",
@@ -706,10 +698,10 @@
                     ".yml",
                     ".zsh"
                 ]
-            }
+            },
+            "type": "FileExtension"
         },
         {
-            "type": "RuleName",
             "kwargs": {
                 "rule_names": [
                     "API",
@@ -729,7 +721,15 @@
                     "Token",
                     "URL Credentials"
                 ]
-            }
+            },
+            "type": "RuleName"
         }
-    ]
+    ],
+    "thresholds": {
+        "high": 0.79791,
+        "highest": 0.92996,
+        "low": 0.35739,
+        "lowest": 0.22917,
+        "medium": 0.62204
+    }
 }
