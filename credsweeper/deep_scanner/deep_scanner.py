@@ -4,6 +4,7 @@ from typing import List, Any, Tuple, Sequence
 from credsweeper.common.constants import MIN_DATA_LEN
 from credsweeper.config.config import Config
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
+from credsweeper.deep_scanner.arsc_scanner import ArscScanner
 from credsweeper.deep_scanner.bzip2_scanner import Bzip2Scanner
 from credsweeper.deep_scanner.cpio_scanner import CpioScanner
 from credsweeper.deep_scanner.crx_scanner import CrxScanner
@@ -60,6 +61,7 @@ logger = logging.getLogger(__name__)
 
 
 class DeepScanner(
+    ArscScanner,  #
     Bzip2Scanner,  #
     CpioScanner,  #
     CrxScanner,  #
@@ -111,7 +113,7 @@ class DeepScanner(
     BINARY_SCANNERS = (JksScanner, PdfScanner, SnkScanner, Sqlite3Scanner, CrxScanner, Bzip2Scanner, LzmaScanner,
                        GzipScanner, ZstdScanner, SquashfsScanner, GritScanner, DebScanner, RpmScanner, PngScanner,
                        JclassScanner, PkcsScanner, XlsScanner, TarScanner, PickleScanner, DexScanner, PlistScanner,
-                       RtfScanner, PycacheScanner, CpioScanner, LZ4Scanner)
+                       RtfScanner, PycacheScanner, CpioScanner, LZ4Scanner, ArscScanner)
 
     shelf = None
 

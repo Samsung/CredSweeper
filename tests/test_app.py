@@ -250,7 +250,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]), progress_callback=callback_mock)
             mocked_logger.assert_has_calls([
-                call("Scan in %s processes for %s providers", self.jobs, SAMPLES_FILES_COUNT - 34),
+                call("Scan in %s processes for %s providers", self.jobs, SAMPLES_FILES_COUNT - 35),
                 ANY,  # Run ML Validation for \d+ groups
                 ANY,  # initial ML with various arguments, cannot predict
                 call("Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
@@ -278,7 +278,7 @@ class TestMain(unittest.TestCase):
         with patch('logging.Logger.info') as mocked_logger:
             cred_sweeper.run(content_provider=content_provider, progress_callback=progress.callback)
             mocked_logger.assert_has_calls([
-                call(f"Scan in %s processes for %s providers", self.jobs, SAMPLES_FILES_COUNT - 34),
+                call(f"Scan in %s processes for %s providers", self.jobs, SAMPLES_FILES_COUNT - 35),
                 ANY,  # Run ML Validation for \d+ groups
                 # no init
                 call(f"Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
