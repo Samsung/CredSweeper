@@ -352,7 +352,7 @@ class CredSweeper:
 
             def log_relay(log_queue: queue.Queue) -> None:
                 while True:
-                    with contextlib.suppress(queue.Empty):
+                    with contextlib.suppress(queue.Empty, BrokenPipeError):
                         record = log_queue.get(timeout=1)
                         if record is None:
                             break
