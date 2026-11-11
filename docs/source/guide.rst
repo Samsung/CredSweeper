@@ -224,16 +224,12 @@ Minimal example for scanning line list:
     from credsweeper import CredSweeper, StringContentProvider
 
 
-    to_scan = ["line one", "password='in_line_2'"]
+    to_scan = ["line one", "password='cackle!'"]
     cred_sweeper = CredSweeper()
     provider = StringContentProvider(to_scan)
     results = cred_sweeper.file_scan(provider)
-    for r in results:
-        print(r)
-
-.. code-block:: text
-
-    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
+    for candidate in results:
+        print(candidate)
 
 Minimal example for scanning bytes:
 
@@ -246,41 +242,67 @@ Minimal example for scanning bytes:
     cred_sweeper = CredSweeper()
     provider = ByteContentProvider(to_scan)
     results = cred_sweeper.file_scan(provider)
-    for r in results:
-        print(r)
+    for candidate in results:
+        print(candidate)
 
-.. code-block:: text
-
-    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
-
+.. note::
+    ``file_scan`` scans one content provider and returns detected candidates. It does not run
+    the ML post-processing stage, so ``ml_probability`` is not populated by these examples.
+    Use ``CredSweeper.run()`` for the complete scan and post-processing workflow.
 
 Minimal example for the ML validation:
 
 .. code-block:: python
 
     from credsweeper import CredSweeper, StringContentProvider, MlValidator, ThresholdPreset
+    from credsweeper.credentials.candidate_key import CandidateKey
 
 
-    to_scan = ["line one", "password='cackle!'", "secret='template'"]
+    to_scan = ["line one", "password='cackle!'"]
     cred_sweeper = CredSweeper()
     provider = StringContentProvider(to_scan)
 
-    # You can select lower or higher threshold to get more or less reports respectively
-    threshold = ThresholdPreset.medium
-    validator = MlValidator(threshold=threshold)
+    # Scan the input and collect candidate credentials.
+    candidates = cred_sweeper.file_scan(provider)
 
-    results = cred_sweeper.file_scan(provider)
-    for candidate in results:
-        # For each results detected by a CredSweeper, you can validate them using MlValidator
-        is_credential, with_probability = validator.validate(candidate)
-        if is_credential:
-            print(candidate)
+    # Group candidates that refer to the same line and value.
+    grouped_candidates = {}
+    for candidate in candidates:
+        key = CandidateKey(candidate.line_data_list[0])
+        grouped_candidates.setdefault(key, []).append(candidate)
 
-Note that `"secret='template'"` is not reported due to failing check by the `MlValidator`.
+    # Keep groups that contain at least one candidate requiring ML validation.
+    groups_for_ml = [
+        (key, group)
+        for key, group in grouped_candidates.items()
+        if any(candidate.use_ml for candidate in group)
+    ]
 
-.. code-block:: text
+    # Select the ML decision threshold.
+    validator = MlValidator(threshold=ThresholdPreset.medium)
 
-    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
+    # validate_groups() accepts groups, not individual Candidate objects.
+    is_credential, probabilities = validator.validate_groups(
+        groups_for_ml,
+        batch_size=16,
+        progress_callback=None,
+    )
+
+    # Print candidates accepted by the ML model.
+    for (_, group), accepted, probability in zip(
+        groups_for_ml, is_credential, probabilities
+    ):
+        if accepted:
+            for candidate in group:
+                if candidate.use_ml:
+                    candidate.ml_probability = float(probability)
+                    print(candidate)
+
+.. note::
+    ``MlValidator.validate_groups()`` returns one decision and probability for each candidate
+    group. Candidates in the same group share the same ML prediction. ``file_scan()`` performs
+    scanning only; this example calls the validator explicitly. The normal ``CredSweeper.run()``
+    workflow performs ML post-processing automatically.
 
 Configurations
 --------------
