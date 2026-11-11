@@ -7,6 +7,7 @@ from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.struct_content_provider import StructContentProvider
+from credsweeper.logger import TRACE
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +34,7 @@ class Sqlite3Scanner(AbstractScanner, ABC):
                 for row in cursor:
                     yield table_name, dict(row)
             except sqlite3.DatabaseError as exc:
-                print(f"Error reading table {table_name}: {exc}")
+                logger.log(TRACE, "Error reading table %s: %s", table_name, exc)
 
     @staticmethod
     def walk_sqlite(data: bytes) -> Generator[Tuple[str, Any], None, None]:
@@ -59,6 +60,8 @@ class Sqlite3Scanner(AbstractScanner, ABC):
                 if new_candidates := self.structure_scan(struct_content_provider, depth, new_limit):
                     candidates.extend(new_candidates)
             return candidates
+        except (sqlite3.DatabaseError, sqlite3.OperationalError) as sql_exc:
+            logger.log(TRACE, "%s %s", sql_exc, data_provider.descriptor)
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
             logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)

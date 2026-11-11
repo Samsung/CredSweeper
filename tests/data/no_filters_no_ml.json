@@ -9782,6 +9782,48 @@
         ]
     },
     {
+        "rule": "Kaggle API Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "KGAT_a96791586900115ddb1232c90a6a9612",
+                "line_num": 2,
+                "path": "./tests/samples/kaggle",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "KGAT_a96791586900115ddb1232c90a6a9612",
+                "value_start": 0,
+                "value_end": 37,
+                "entropy": 3.87205
+            }
+        ]
+    },
+    {
+        "rule": "Kaggle API Token",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "KGAT_a96791586900115ddb1232c90abcdef0",
+                "line_num": 4,
+                "path": "./tests/samples/kaggle",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "KGAT_a96791586900115ddb1232c90abcdef0",
+                "value_start": 0,
+                "value_end": 37,
+                "entropy": 4.10797
+            }
+        ]
+    },
+    {
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
@@ -11031,6 +11073,48 @@
                 "value_start": 0,
                 "value_end": 56,
                 "entropy": 4.12555
+            }
+        ]
+    },
+    {
+        "rule": "OpenRouter API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "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",
+                "line_num": 1,
+                "path": "./tests/samples/openrouter",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "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",
+                "value_start": 0,
+                "value_end": 73,
+                "entropy": 4.17462
+            }
+        ]
+    },
+    {
+        "rule": "OpenRouter API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "sk-or-v1-0000000000000000000000000000000000000000000000000000000000000000",
+                "line_num": 2,
+                "path": "./tests/samples/openrouter",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "sk-or-v1-0000000000000000000000000000000000000000000000000000000000000000",
+                "value_start": 0,
+                "value_end": 73,
+                "entropy": 0.86442
             }
         ]
     },
@@ -16684,6 +16768,48 @@
                 "value_start": 0,
                 "value_end": 179,
                 "entropy": 5.57691
+            }
+        ]
+    },
+    {
+        "rule": "Resend API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "re_URdbcjwf_xCzth4KJtUmaHokKonGf5fjz",
+                "line_num": 2,
+                "path": "./tests/samples/resend",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "re_URdbcjwf_xCzth4KJtUmaHokKonGf5fjz",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 4.64896
+            }
+        ]
+    },
+    {
+        "rule": "Resend API Key",
+        "severity": "high",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "re_URdbcjwf_xCzth4KJtUmaHokKabcdefgh",
+                "line_num": 5,
+                "path": "./tests/samples/resend",
+                "info": "",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "re_URdbcjwf_xCzth4KJtUmaHokKabcdefgh",
+                "value_start": 0,
+                "value_end": 36,
+                "entropy": 4.55881
             }
         ]
     },

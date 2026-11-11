@@ -17,6 +17,8 @@ logger = logging.getLogger(__name__)
 class TmxScanner(AbstractScanner, ABC):
     """Realises tmX files scanning for values only. Image tags are skipped."""
 
+    shelf = True
+
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
         """Used to detect tm7,tm6,etc. (ThreadModeling) format."""

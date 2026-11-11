@@ -15,6 +15,13 @@ class ProtobufScanner(AbstractScanner, ABC):
     """Implements protobuf (ar) scanning"""
 
     @staticmethod
+    def match(data: bytes | bytearray) -> bool:
+        """Simple structure check for whole data"""
+        if data:
+            return ProtobufScanner.match_protobuf(data, 0, len(data))
+        return False
+
+    @staticmethod
     def read_wire(data: bytes | bytearray, offset: int) -> Tuple[int, int]:
         """Reads wire to detect sizes
 
@@ -58,13 +65,6 @@ class ProtobufScanner(AbstractScanner, ABC):
                 break
         else:
             return bool(offset == limit)
-        return False
-
-    @staticmethod
-    def match(data: bytes | bytearray) -> bool:
-        """Simple structure check for whole data"""
-        if data:
-            return ProtobufScanner.match_protobuf(data, 0, len(data))
         return False
 
     @staticmethod

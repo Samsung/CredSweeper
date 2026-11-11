@@ -4,6 +4,7 @@ from functools import cached_property
 from typing import List, Tuple, Generator, TypedDict, Optional, Union, Any, Dict, cast
 
 import whatthepatch
+from typing_extensions import deprecated
 
 from credsweeper.common.constants import DiffRowType
 from credsweeper.file_handler.analysis_target import AnalysisTarget
@@ -31,6 +32,7 @@ class DiffRowData:
     line: str
 
 
+@deprecated("This class will be removed from the public exports and refactored in a future release.")
 class DiffContentProvider(ContentProvider):
     """Provide data from a single `.patch` file.
 
@@ -132,8 +134,9 @@ class DiffContentProvider(ContentProvider):
                     change_dict = cast(DiffDict, change._asdict())
                     changes.append(change_dict)
                 if patch.header:
-                    added_files[patch.header.new_path] = changes
-                    deleted_files[patch.header.old_path] = changes
+                    # the same file may be changed in several patches of a series (e.g. git format-patch --stdout)
+                    added_files.setdefault(patch.header.new_path, []).extend(changes)
+                    deleted_files.setdefault(patch.header.old_path, []).extend(changes)
             if change_type == DiffRowType.ADDED:
                 return added_files
             if change_type == DiffRowType.DELETED:

@@ -73,6 +73,7 @@ def get_credsweeper(args: Namespace) -> CredSweeper:
         depth=args.depth,
         doc=args.doc,
         severity=args.severity,
+        confidence=args.confidence,
         size_limit=args.size_limit,
         time_limit=args.time_limit,
         exclude_lines=denylist,
@@ -153,7 +154,7 @@ def drill(args: Namespace) -> Tuple[int, int]:
                 commits_sha1 = {args.ref}  # single commit sha1 reference
         else:
             commits_sha1 = set(x.commit.hexsha for x in repo.refs
-                               if x.name.startswith('origin/') or x.name.startswith('refs/heads/'))
+                               if x.name.startswith('origin/') or x.path.startswith('refs/heads/'))
         logger.info("Git repository %s with commits: %s", args.git, commits_sha1)
         # then - credsweeper
         credsweeper = get_credsweeper(args)
@@ -215,7 +216,9 @@ def main(argv: Optional[List[str]] = None) -> int:
     start_time = time.perf_counter()
     result = EXIT_FAILURE
     credentials_number = 0
-    args = parse_arguments(sys.argv[1:] if argv is None else argv)
+    if argv is None:
+        argv = sys.argv[1:]
+    args = parse_arguments(argv)
     if args.banner:
         print(f"CredSweeper {__version__} crc32:{check_integrity():08x}")
     Logger.init_logging(args.log, args.log_config_path)
@@ -260,7 +263,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         config_dict = Util.yaml_load(APP_PATH / "secret" / "log.yaml")
         Util.yaml_dump(config_dict, args.export_log_config)
         result = EXIT_SUCCESS
-    elif args.banner and 2 == len(sys.argv):
+    elif args.banner and 1 == len(argv):
         # only extend version invocation
         result = EXIT_SUCCESS
     else:

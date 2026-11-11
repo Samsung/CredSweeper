@@ -15,6 +15,8 @@ logger = logging.getLogger(__name__)
 class SnkScanner(AbstractScanner, ABC):
     """Implements Snk files scanning"""
 
+    shelf = True
+
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
         """https://github.com/dotnet/runtime/blob/main/docs/project/strong-name-signing.md"""

@@ -1,4 +1,4 @@
-.. |CredSweeper_logo| image:: ../images/Logo.png
+.. |CredSweeper_logo| image:: https://raw.githubusercontent.com/Samsung/CredSweeper/main/docs/images/Logo.png
    :width: 100
    :alt: Alternative text
 

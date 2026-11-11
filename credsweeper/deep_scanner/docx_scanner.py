@@ -29,6 +29,8 @@ class DocxScanner(AbstractScanner, ABC):
             return True
         return False
 
+    shelf = True
+
     @staticmethod
     def _iter_block_items(block):
         if isinstance(block, Paragraph):

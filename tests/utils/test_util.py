@@ -594,24 +594,7 @@ class TestUtils(unittest.TestCase):
             with open(file_path, "rb") as f:
                 self.assertEqual(0, len(f.read()))
 
-    def test_parse_py_p(self):
-        result = Util.parse_python("""password = \
-        "Hello" \
-        ' World!'""")
-        self.assertIsInstance(result, list)
-        self.assertListEqual(["password = 'Hello World!'"], result)
-
-    def test_parse_py_n(self):
-        # empty
-        self.assertFalse(Util.parse_python(''))
-        # wrong syntax
-        with self.assertRaises(SyntaxError):
-            Util.parse_python("""<html>"Hello World!"</html>""")
-        with self.assertRaises(SyntaxError):
-            Util.parse_python("""{'wrong': ': '"\." is syntax warning'}""")
-
     def test_decode_base64_p(self):
-        self.assertTrue(Util.parse_python("""regexa=r'\.'"""))
         self.assertEqual(AZ_DATA, Util.decode_base64("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw=="))
         self.assertEqual(b"\xFF\xFF\xFF", Util.decode_base64("////"))
         self.assertEqual(b"\xFB\xEF\xBE", Util.decode_base64("++++"))

@@ -1,6 +1,8 @@
 import unittest
 
-from credsweeper.deep_scanner.dex_scanner import DexScanner
+from hypothesis import given, strategies
+
+from credsweeper.deep_scanner.dex_scanner import DexScanner, ModifiedUtf8Error
 
 
 class TestDexScanner(unittest.TestCase):
@@ -21,3 +23,10 @@ class TestDexScanner(unittest.TestCase):
     def test_match_p(self):
         self.assertTrue(DexScanner.match(b"dex\n035\0"))
         self.assertTrue(DexScanner.match(b"dey\n039\0"))
+
+    @given(strategies.binary())
+    def test_get_deep_scanners_hypothesis_n(self, data):
+        try:
+            self.assertIsInstance(DexScanner.decode_mutf8(data), bytes)
+        except Exception as exc:
+            self.assertIsInstance(exc, ModifiedUtf8Error)

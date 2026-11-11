@@ -8,6 +8,7 @@ from credsweeper.credentials.candidate import Candidate
 from credsweeper.deep_scanner.abstract_scanner import AbstractScanner
 from credsweeper.file_handler.data_content_provider import DataContentProvider
 from credsweeper.file_handler.struct_content_provider import StructContentProvider
+from credsweeper.logger import TRACE
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +37,8 @@ class PlistScanner(AbstractScanner, ABC):
                                                             info=f"{data_provider.info}|BPLIST")
             candidates = self.structure_scan(struct_content_provider, depth, recursive_limit_size)
             return candidates
+        except plistlib.InvalidFileException as plist_exc:
+            logger.log(TRACE, "%s %s", plist_exc, data_provider.descriptor)
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
             logger.warning("%s:%s:%s", type(exc), exc, data_provider.descriptor)

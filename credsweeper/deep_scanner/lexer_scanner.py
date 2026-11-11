@@ -46,6 +46,8 @@ class LexerScanner(AbstractScanner, ABC):
     # the lexers that were guessed without extensions
     GUESSED_LEXERS = tuple(x for x in LEXER_MATCHER.values() if x not in (VerilogLexer, ObjectiveCLexer, Perl6Lexer))
 
+    shelf = True
+
     @staticmethod
     def match(data: bytes | bytearray) -> bool:
         """Suggestion may be done with file extension, however the """

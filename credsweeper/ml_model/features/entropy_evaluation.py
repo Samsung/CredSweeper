@@ -55,8 +55,8 @@ class EntropyEvaluation(Feature):
             # check charset for non-zero value
             # use the new variable to deal with mypy
             uniq_set = set(uniq)
-            for n, i in enumerate(EntropyEvaluation.CHAR_SET, start=3):
-                if not uniq_set.difference(i):
-                    result[n] = 1.0
+            for i, c in enumerate(EntropyEvaluation.CHAR_SET, start=3):
+                if not uniq_set.difference(c):
+                    result[i] = 1.0
 
         return result

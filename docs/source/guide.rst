@@ -138,7 +138,7 @@ Review the report file (output.json):
 .. code-block:: json
 
     [
-    ...
+        {"...SKIP..."},
         {
             "rule": "Password",
             "severity": "medium",
@@ -160,7 +160,7 @@ Review the report file (output.json):
                 }
             ]
         },
-    ...
+        {"...SKIP..."}
     ]
 
 Get CLI output only:

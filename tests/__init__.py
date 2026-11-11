@@ -1,7 +1,7 @@
 from pathlib import Path
 
 # total number of files in test samples
-SAMPLES_FILES_COUNT = 245
+SAMPLES_FILES_COUNT = 250
 
 # ML_DELTA for different platforms which may produce a dribbling in ml_probability
 ML_DELTA = 0.0001
@@ -10,21 +10,21 @@ ML_DELTA = 0.0001
 ZERO_ML_THRESHOLD = 0.0
 
 # with option --doc & ZERO_ML_THRESHOLD
-SAMPLES_IN_DOC = 1045
+SAMPLES_IN_DOC = 1072
 
 # credentials count after scan without filters and ML validations
-SAMPLES_REGEX_COUNT = 852
+SAMPLES_REGEX_COUNT = 858
 
 # credentials count after scan with filters and without ML validation
-SAMPLES_FILTERED_COUNT = 668
+SAMPLES_FILTERED_COUNT = 671
 
 # credentials count after default post-processing
-SAMPLES_POST_CRED_COUNT = 619
+SAMPLES_POST_CRED_COUNT = 622
 
 # archived credentials that are not found without --depth
-SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 181
-SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 50
-SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 12
+SAMPLES_IN_DEEP_1 = SAMPLES_POST_CRED_COUNT + 225
+SAMPLES_IN_DEEP_2 = SAMPLES_IN_DEEP_1 + 34
+SAMPLES_IN_DEEP_3 = SAMPLES_IN_DEEP_2 + 9
 
 # well known string with all latin letters
 AZ_DATA = b"The quick brown fox jumps over the lazy dog"
@@ -43,3 +43,4 @@ SAMPLE_PY = SAMPLES_PATH / "sample.py"
 SAMPLE_DEB = SAMPLES_PATH / "sample.deb"
 SAMPLE_SQLITE = SAMPLES_PATH / "sample.sqlite"
 SAMPLE_PYC = SAMPLES_PATH / "sample-311.pyc"
+SAMPLE_ARSC = SAMPLES_PATH / "sample.arsc"

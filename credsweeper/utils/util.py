@@ -1,4 +1,3 @@
-import ast
 import base64
 import contextlib
 import json
@@ -412,15 +411,6 @@ class Util:
         except Exception as exc:  # pylint: disable=broad-exception-caught
             # fallback
             logging.error("Failed to write: %s %s:%s", file_path, type(exc), exc)
-
-    @staticmethod
-    def parse_python(source: str) -> List[Any]:
-        """Parse Python source and back to remove strings merge and line wrap"""
-        with warnings.catch_warnings(record=True):
-            warnings.simplefilter("error", SyntaxWarning)
-            src = ast.parse(source)
-            result = ast.unparse(src).splitlines()
-            return result
 
     PEM_CLEANING_PATTERN = re.compile(r"\\[tnrvf]")
     WHITESPACE_TRANS_TABLE = str.maketrans('', '', string.whitespace)

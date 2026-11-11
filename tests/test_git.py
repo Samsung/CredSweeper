@@ -264,7 +264,11 @@ class TestGit(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, "report.json")
             # add --pedantic to produce report file
-            argv = ["--path", str(self.temp_dir_path), "--pedantic", "--save-json", str(json_filename)]
+            argv = [  #
+                "--ml_threshold", "0", "--path",
+                str(self.temp_dir_path), "--pedantic", "--save-json",
+                str(json_filename)
+            ]
             self.assertEqual(EXIT_SUCCESS, main(argv))
             self.assertTrue(os.path.exists(json_filename))
             report = Util.json_load(json_filename)
@@ -273,8 +277,8 @@ class TestGit(unittest.TestCase):
     def test_git_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             json_filename = os.path.join(tmp_dir, "report.json")
-            args_mock = [
-                "--git",
+            args_mock = [  #
+                "--ml_threshold", "0", "--git",
                 str(self.temp_dir_path), "--ref", "b7b09c8cdec2904dbb6f77eec2aa6abaef975252", "--save-json",
                 str(json_filename)
             ]
@@ -284,5 +288,21 @@ class TestGit(unittest.TestCase):
             self.assertFalse(os.path.exists(empty_report_filename))
 
             git_report_filename = os.path.join(tmp_dir, "report.9d3df94e8257240aa2b98dee47dc17992c0b7476.json")
+            report = Util.json_load(git_report_filename)
+            self.assertLessEqual(1, len(report))
+
+    def test_git_no_ref_p(self) -> None:
+        # local branch of repository without remote is scanned when no --ref provided
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, "report.json")
+            args_mock = [  #
+                "--ml_threshold", "0", "--git",
+                str(self.temp_dir_path), "--save-json",
+                str(json_filename)
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(args_mock))
+
+            git_report_filename = os.path.join(tmp_dir, "report.9d3df94e8257240aa2b98dee47dc17992c0b7476.json")
+            self.assertTrue(os.path.exists(git_report_filename))
             report = Util.json_load(git_report_filename)
             self.assertLessEqual(1, len(report))

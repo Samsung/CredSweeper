@@ -2,6 +2,7 @@ import contextlib
 import datetime
 import io
 import logging
+import plistlib
 from abc import abstractmethod, ABC
 from bz2 import BZ2File
 from collections.abc import Sized
@@ -32,6 +33,9 @@ logger = logging.getLogger(__name__)
 
 class AbstractScanner(ABC):
     """Base abstract class for all recursive scanners"""
+
+    # whether the scanner may scan with depth=0
+    shelf: bool | None = False
 
     @property
     @abstractmethod
@@ -227,12 +231,13 @@ class AbstractScanner(ABC):
 
         augmented_lines_for_keyword_rules = []
         for key, value in AbstractScanner.structure_processing(struct_provider.struct, parent_key):
-            if not value or isinstance(value,
-                                       (int, float, complex, slice, EllipsisType, datetime.date, datetime.datetime)):
+            if not value or isinstance(
+                    value, (int, float, complex, slice, EllipsisType, datetime.date, datetime.datetime, plistlib.UID)):
                 # skip useless types
                 continue
             # a keyword rule may be applicable for `key` (str only) and `value` (str, bytes)
-            keyword_match = bool(isinstance(key, str) and self.scanner.keywords_required_substrings_check(key.lower()))
+            keyword_match = bool(
+                isinstance(key, str) and key and self.scanner.keywords_required_substrings_check(key.lower()))
             if isinstance(value, dict):
                 # recursive scan for not empty structured `value`
                 val_struct_provider = StructContentProvider(struct=value,

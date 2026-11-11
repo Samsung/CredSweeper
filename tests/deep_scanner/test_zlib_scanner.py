@@ -4,7 +4,6 @@ import random
 import unittest
 import zlib
 
-import pytest
 from hypothesis import given, strategies
 
 from credsweeper.common.constants import MAX_LINE_LENGTH, CHUNK_SIZE, CHUNK_STEP_SIZE

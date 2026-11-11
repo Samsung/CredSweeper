@@ -1,4 +1,5 @@
 import os.path
+import pathlib
 import tempfile
 import unittest
 from typing import List
@@ -59,33 +60,6 @@ class TestFilePathExtractor(unittest.TestCase):
 
     def tearDown(self):
         del self.config
-
-    def test_apply_gitignore_p(self) -> None:
-        """Evaluate that code files would be included after filtering with .gitignore"""
-        files = ["file.py", "src/file.py", "src/dir/file.py"]
-        filtered_files = FilePathExtractor.apply_gitignore(files)
-        self.assertSetEqual(set(files), set(filtered_files))
-
-    def test_apply_gitignore_n(self) -> None:
-        """Evaluate that .gitignore correctly filters out files from project"""
-        with tempfile.TemporaryDirectory() as tmp_dir:
-            git.Repo.init(tmp_dir)
-            with open(os.path.join(tmp_dir, ".gitignore"), "w") as f:
-                f.write(".*\n*.txt\n*.log\n*.so")
-            files = [
-                os.path.join(tmp_dir, ".idea"),
-                os.path.join(tmp_dir, ".idea", "file1.txt"),
-                os.path.join(tmp_dir, ".idea", "dir", "file1.txt"),
-                os.path.join(tmp_dir, ".cache"),
-                os.path.join(tmp_dir, "system.log"),
-                os.path.join(tmp_dir, "src", "dir", "file.so"),
-                os.path.join(tmp_dir, "src", "dir", "file.cpp")
-            ]
-            filtered_files = FilePathExtractor.apply_gitignore(files)
-
-        self.assertEqual(1, len(filtered_files))
-        expected_path = os.path.join(tmp_dir, "src", "dir", "file.cpp")
-        self.assertEqual(expected_path, filtered_files[0])
 
     def assert_true_check_exclude_file(self, paths: List[str]):
         for i in paths:
@@ -168,6 +142,24 @@ class TestFilePathExtractor(unittest.TestCase):
         self.config.size_limit = parse_size("11MiB")
         self.assertFalse(FilePathExtractor.check_file_size(self.config, ""))
 
+    def test_get_file_paths_size_limit_n(self) -> None:
+        # the file is over the size limit - it is skipped
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            target_path = os.path.join(tmp_dir, "target")
+            with open(target_path, "w") as f:
+                f.write(AZ_STRING)
+            self.config.size_limit = 10
+            self.assertListEqual([], FilePathExtractor.get_file_paths(self.config, target_path))
+
+    def test_get_file_paths_size_limit_p(self) -> None:
+        # the file is under the size limit - it is scanned
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            target_path = os.path.join(tmp_dir, "target")
+            with open(target_path, "w") as f:
+                f.write(AZ_STRING)
+            self.config.size_limit = 1000
+            self.assertListEqual([target_path], FilePathExtractor.get_file_paths(self.config, target_path))
+
     def test_skip_symlink_n(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             sub_dir = os.path.join(tmp_dir, "sub_dir")
@@ -191,3 +183,6 @@ class TestFilePathExtractor(unittest.TestCase):
             paths = FilePathExtractor.get_file_paths(self.config, tmp_dir)
             self.assertEqual(1, len(paths))
             self.assertEqual(target_path, paths[0])
+
+    def test_get_file_paths_n(self) -> None:
+        self.assertListEqual([], FilePathExtractor.get_file_paths(self.config, pathlib.Path("~/not_existed_path")))
