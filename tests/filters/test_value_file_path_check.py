@@ -22,6 +22,7 @@ class TestValueFilePathCheck:
     @pytest.mark.parametrize(
         "line",
         [
+            "OTHER_ETC/job/OTHER_CPI6_COVERAGE/376/GCOV_32Coverage_32Report_12",
             "X:\\234mb6\\324bb-233nb5-v65",  #
             "~/.wine/proc/drive/@C:\\\\Program Files(x86)\\\\Games",  #
             "[DEPOT]/${path}/$(date)/config/credentials",  #
