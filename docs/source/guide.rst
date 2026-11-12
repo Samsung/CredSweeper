@@ -217,24 +217,6 @@ Then specify your config in CLI:
 Use as a python library
 -----------------------
 
-Minimal example for scanning a line list:
-
-.. code-block:: python
-
-    import io
-
-    from credsweeper import CredSweeper, FilesProvider
-
-
-    to_scan = ["line one", "password='cackle!'"]
-    cred_sweeper = CredSweeper()
-    content_provider = FilesProvider([
-        ("example.py", io.BytesIO("\\n".join(to_scan).encode("utf-8"))),
-    ])
-    cred_sweeper.run(content_provider=content_provider)
-    for candidate in cred_sweeper.credential_manager.get_credentials():
-        print(candidate)
-
 Minimal example for scanning bytes:
 
 .. code-block:: python
@@ -243,22 +225,18 @@ Minimal example for scanning bytes:
 
     from credsweeper import CredSweeper, FilesProvider
 
-
-    to_scan = b"line one\\npassword='cackle!'"
+    to_scan = b"line one\npassword='cackle!'"
     cred_sweeper = CredSweeper()
-    content_provider = FilesProvider([
-        ("example.py", io.BytesIO(to_scan)),
-    ])
+    content_provider = FilesProvider([("example.py", io.BytesIO(to_scan))])
     cred_sweeper.run(content_provider=content_provider)
     for candidate in cred_sweeper.credential_manager.get_credentials():
         print(candidate)
 
-.. note::
-    ``CredSweeper.run()`` performs scanning and ML post-processing. The lower-level
-    ``CredSweeper.file_scan()`` method scans one content provider and returns candidates
-    without running ML post-processing.
+ML validation of scanned candidates:
 
-Minimal example for the ML validation:
+The following example scans the content, groups candidates by ``CandidateKey``,
+selects groups that require ML validation, and applies the returned probabilities
+to ML-enabled candidates.
 
 .. code-block:: python
 
@@ -296,11 +274,13 @@ Minimal example for the ML validation:
                     print(candidate)
 
 .. note::
-    ``MlValidator.validate_groups()`` accepts groups of candidates and returns one
-    decision and probability for each group. Candidates in the same group share the
-    same ML prediction. This example uses ``file_scan()`` to obtain candidates and
-    invokes the ML validator explicitly. The normal ``CredSweeper.run()`` workflow
-    performs ML post-processing automatically.
+    ``CredSweeper.run()`` performs scanning and ML post-processing. The lower-level
+    ``CredSweeper.file_scan()`` method scans one content provider and returns candidates
+    without running ML post-processing. ``MlValidator.validate_groups()`` accepts groups
+    of candidates and returns one decision and probability for each group. Candidates in
+    the same group share the same ML prediction. The ML validation example above invokes
+    the validator explicitly, while the normal ``CredSweeper.run()`` workflow performs
+    ML post-processing automatically.
 
 Configurations
 --------------

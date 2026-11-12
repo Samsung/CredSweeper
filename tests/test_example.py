@@ -6,6 +6,19 @@ from pathlib import Path
 from unittest import TestCase
 
 
+def example_bytes_scanning() -> None:
+    import io
+
+    from credsweeper import CredSweeper, FilesProvider
+
+    to_scan = b"line one\npassword='cackle!'"
+    cred_sweeper = CredSweeper()
+    content_provider = FilesProvider([("example.py", io.BytesIO(to_scan))])
+    cred_sweeper.run(content_provider=content_provider)
+    for candidate in cred_sweeper.credential_manager.get_credentials():
+        print(candidate)
+
+
 def example_ml_validation() -> None:
     import io
 
@@ -43,18 +56,27 @@ def example_ml_validation() -> None:
 
 class TestExample(TestCase):
 
+    def _assert_example_is_in_guide(self, example_function) -> None:
+        source_lines, _ = inspect.getsourcelines(example_function)
+        example_source = textwrap.dedent("".join(source_lines[1:])).strip("\n")
+        expected_code = "\n".join(f"    {line}" if line else "" for line in example_source.splitlines())
+
+        guide_path = Path(__file__).resolve().parents[1] / "docs" / "source" / "guide.rst"
+        guide_text = guide_path.read_text(encoding="utf-8")
+        self.assertIn(expected_code, guide_text)
+
+    def test_guide_example_bytes_scanning_p(self) -> None:
+        output = StringIO()
+        with redirect_stdout(output):
+            example_bytes_scanning()
+
+        self.assertIn("cackle!", output.getvalue())
+        self._assert_example_is_in_guide(example_bytes_scanning)
+
     def test_guide_example_ml_validation_p(self) -> None:
         output = StringIO()
         with redirect_stdout(output):
             example_ml_validation()
 
         self.assertIn("cackle!", output.getvalue())
-
-        source_lines, _ = inspect.getsourcelines(example_ml_validation)
-        example_source = textwrap.dedent("".join(source_lines[1:])).strip("\n")
-        expected_code = "\n".join(f"    {line}" if line else "" for line in example_source.splitlines())
-
-        guide_path = Path(__file__).resolve().parents[1] / "docs" / "source" / "guide.rst"
-        guide_text = guide_path.read_text(encoding="utf-8")
-
-        self.assertIn(expected_code, guide_text)
+        self._assert_example_is_in_guide(example_ml_validation)
