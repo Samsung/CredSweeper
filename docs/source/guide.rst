@@ -172,8 +172,7 @@ Get CLI output only:
 
 .. code-block:: text
 
-    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9149653911590576 | line_data_list: [path: tests/samples/password.gradle | line_num: 1 | value: 'cackle!' | line: 'password = "cackle!"']
-
+    rule: Password | severity: high | confidence: moderate | ml_probability: <probability> | line_data_list: [path: example.py | line_num: 2 | value: 'cackle!' | line: 'password = "cackle!"']
 
 Exclude outputs using CLI:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -232,6 +231,12 @@ Minimal example for scanning bytes:
     for candidate in cred_sweeper.credential_manager.get_credentials():
         print(candidate)
 
+Example output:
+
+.. code-block:: text
+
+    rule: Password | severity: high | confidence: moderate | ml_probability: 0.9943822622299194 | line_data_list: [path: example.py | line_num: 2 | value: 'cackle!' | line: 'password='cackle!'']
+
 ML validation of scanned candidates:
 
 The following example scans the content, groups candidates by ``CandidateKey``,
@@ -245,7 +250,7 @@ to ML-enabled candidates.
     from credsweeper import CredSweeper, FilesProvider, MlValidator, ThresholdPreset
     from credsweeper.credentials.candidate_key import CandidateKey
 
-    to_scan = b"line one\npassword='cackle!'"
+    to_scan = b'line one\npassword = "cackle!"'
     cred_sweeper = CredSweeper()
     files_provider = FilesProvider([("example.py", io.BytesIO(to_scan))])
     content_providers = files_provider.get_scannable_files(cred_sweeper.config)
@@ -272,6 +277,12 @@ to ML-enabled candidates.
                 if candidate.use_ml:
                     candidate.ml_probability = float(probability)
                     print(candidate)
+
+Example output:
+
+.. code-block:: text
+
+    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
 
 .. note::
     ``CredSweeper.run()`` performs scanning and ML post-processing. The lower-level

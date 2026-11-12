@@ -1,4 +1,5 @@
 import inspect
+import re
 import textwrap
 from contextlib import redirect_stdout
 from io import StringIO
@@ -25,7 +26,7 @@ def example_ml_validation() -> None:
     from credsweeper import CredSweeper, FilesProvider, MlValidator, ThresholdPreset
     from credsweeper.credentials.candidate_key import CandidateKey
 
-    to_scan = b"line one\npassword='cackle!'"
+    to_scan = b'line one\npassword = "cackle!"'
     cred_sweeper = CredSweeper()
     files_provider = FilesProvider([("example.py", io.BytesIO(to_scan))])
     content_providers = files_provider.get_scannable_files(cred_sweeper.config)
@@ -56,14 +57,33 @@ def example_ml_validation() -> None:
 
 class TestExample(TestCase):
 
+    def _read_guide(self) -> str:
+        guide_path = Path(__file__).resolve().parents[1] / "docs" / "source" / "guide.rst"
+        return guide_path.read_text(encoding="utf-8")
+
     def _assert_example_is_in_guide(self, example_function) -> None:
         source_lines, _ = inspect.getsourcelines(example_function)
         example_source = textwrap.dedent("".join(source_lines[1:])).strip("\n")
         expected_code = "\n".join(f"    {line}" if line else "" for line in example_source.splitlines())
+        self.assertIn(expected_code, self._read_guide())
 
-        guide_path = Path(__file__).resolve().parents[1] / "docs" / "source" / "guide.rst"
-        guide_text = guide_path.read_text(encoding="utf-8")
-        self.assertIn(expected_code, guide_text)
+    @staticmethod
+    def _normalize_probability(value: str) -> str:
+        return re.sub(
+            r"ml_probability: [0-9.eE+-]+",
+            "ml_probability: <probability>",
+            value,
+        )
+
+    def _assert_result_is_in_guide(self, output: str) -> None:
+        result_lines = [line.strip() for line in output.splitlines() if line.strip().startswith("rule: Password |")]
+        self.assertTrue(result_lines, msg=f"No password result was printed. Output: {output!r}")
+
+        # ML probabilities can vary slightly between environments. Compare the
+        # complete result line while normalizing only the probability value.
+        normalized_guide = self._normalize_probability(self._read_guide())
+        for result_line in result_lines:
+            self.assertIn(self._normalize_probability(result_line), normalized_guide)
 
     def test_guide_example_bytes_scanning_p(self) -> None:
         output = StringIO()
@@ -72,6 +92,7 @@ class TestExample(TestCase):
 
         self.assertIn("cackle!", output.getvalue())
         self._assert_example_is_in_guide(example_bytes_scanning)
+        self._assert_result_is_in_guide(output.getvalue())
 
     def test_guide_example_ml_validation_p(self) -> None:
         output = StringIO()
@@ -80,3 +101,4 @@ class TestExample(TestCase):
 
         self.assertIn("cackle!", output.getvalue())
         self._assert_example_is_in_guide(example_ml_validation)
+        self._assert_result_is_in_guide(output.getvalue())
