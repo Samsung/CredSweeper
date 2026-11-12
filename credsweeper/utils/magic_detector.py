@@ -97,6 +97,8 @@ class MagicDetector:
                 (b"CWS",
                  re.compile(b"CWS[\x06-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")
                  ),
+                # CachedDateTimeZone
+                (b"C\x00", re.compile(b"C\x00[\x02-\x0A]\x00[\x03-\x06\x0A][A-Z]{2,4}T[A-Za-z-]*\x00")),
             ],
             0x44: [
                 # .dds file
@@ -109,6 +111,8 @@ class MagicDetector:
                  ),
                 # https://grub.gibibit.com/New_font_format
                 (b"FILE\x00\x00\x00\x04PFF2", None),
+                # FixedDateTimeZone
+                (b"F\x00", re.compile(b"F\x00[\x03\x05\x06][A-Z][A-Z][TC]")),
             ],
             0x47: [
                 # GIF
@@ -151,6 +155,8 @@ class MagicDetector:
             0x50: [
                 # GIT: pack-*.pack
                 (b"PACK\x00\x00\x00", None),
+                # PrecalculatedDateTimeZone
+                (b"P\x00", re.compile(b"P\x00[\x02-\x05]\x00[\x03-\x04][A-Z]{2,4}T\x00")),
             ],
             0x52: [
                 # RIFF va
