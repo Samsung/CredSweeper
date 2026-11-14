@@ -273,6 +273,10 @@ class MagicDetector:
                 # Serialized Java Data
                 (b"\xAC\xED\x00\x05", re.compile(b"\xAC\xED\x00\x05[\x70-\x7E]")),
             ],
+            0xC5: [
+                # DOS EPS Binary File
+                (b"\xC5\xD0\xD3\xC6", None),
+            ],
             0xCE: [
                 # Mach-O Executable (reverse 32 bit)
                 (b"\xCE\xFA\xED\xFE", None),
