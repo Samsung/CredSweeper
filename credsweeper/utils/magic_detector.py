@@ -209,7 +209,7 @@ class MagicDetector:
             0x67: [
                 # gimp
                 (b"gimp xcf",
-                 re.compile(b"gimp xcf (file|v001|v002)\x00"
+                 re.compile(b"gimp xcf (file|v[0-9]{3})\x00"
                             b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
                 # https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#glb-file-format-specification
                 (b"glTF\x02\x00\x00\x00", None),
