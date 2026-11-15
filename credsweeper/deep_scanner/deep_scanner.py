@@ -19,6 +19,7 @@ from credsweeper.deep_scanner.gzip_scanner import GzipScanner
 from credsweeper.deep_scanner.html_scanner import HtmlScanner
 from credsweeper.deep_scanner.jclass_scanner import JclassScanner
 from credsweeper.deep_scanner.jks_scanner import JksScanner
+from credsweeper.deep_scanner.jmod_scanner import JmodScanner
 from credsweeper.deep_scanner.lang_scanner import LangScanner
 from credsweeper.deep_scanner.lexer_scanner import LexerScanner
 from credsweeper.deep_scanner.lz4_scanner import LZ4Scanner
@@ -74,6 +75,7 @@ class DeepScanner(
     HtmlScanner,  #
     JclassScanner,  #
     JksScanner,  #
+    JmodScanner,  #
     LangScanner,  #
     LexerScanner,  #
     LzmaScanner,  #
@@ -113,7 +115,7 @@ class DeepScanner(
     BINARY_SCANNERS = (JksScanner, PdfScanner, SnkScanner, Sqlite3Scanner, CrxScanner, Bzip2Scanner, LzmaScanner,
                        GzipScanner, ZstdScanner, SquashfsScanner, GritScanner, DebScanner, RpmScanner, PngScanner,
                        JclassScanner, PkcsScanner, XlsScanner, TarScanner, PickleScanner, DexScanner, PlistScanner,
-                       RtfScanner, PycacheScanner, CpioScanner, LZ4Scanner, ArscScanner)
+                       RtfScanner, PycacheScanner, CpioScanner, LZ4Scanner, ArscScanner, JmodScanner)
 
     shelf = None
 

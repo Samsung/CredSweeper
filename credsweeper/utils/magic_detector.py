@@ -36,6 +36,10 @@ class MagicDetector:
                 # https://fontforge.org/docs/techref/pcf-format.html
                 (b"\x01fcp", None),
             ],
+            0x02: [
+                # Binary CMap
+                (b"\x02\xE0RCopyright", None),
+            ],
             0x03: [
                 # Android Binary XML
                 (b"\x03\x00\x08\x00", None),
@@ -97,6 +101,8 @@ class MagicDetector:
                 (b"CWS",
                  re.compile(b"CWS[\x06-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")
                  ),
+                # CachedDateTimeZone
+                (b"C\x00", re.compile(b"C\x00[\x02-\x0A]\x00[\x03-\x06\x0A][A-Z]{2,4}T[A-Za-z-]*\x00")),
             ],
             0x44: [
                 # .dds file
@@ -109,6 +115,8 @@ class MagicDetector:
                  ),
                 # https://grub.gibibit.com/New_font_format
                 (b"FILE\x00\x00\x00\x04PFF2", None),
+                # FixedDateTimeZone
+                (b"F\x00", re.compile(b"F\x00[\x03\x05\x06][A-Z][A-Z][TC]")),
             ],
             0x47: [
                 # GIF
@@ -151,6 +159,10 @@ class MagicDetector:
             0x50: [
                 # GIT: pack-*.pack
                 (b"PACK\x00\x00\x00", None),
+                # PrecalculatedDateTimeZone
+                (b"P\x00", re.compile(b"P\x00[\x02-\x05]\x00[\x03-\x04][A-Z]{2,4}T\x00")),
+                # PKM format for ETC1 texture
+                (b"PKM 10\x00\x00", None),
             ],
             0x52: [
                 # RIFF va
@@ -197,10 +209,12 @@ class MagicDetector:
             0x67: [
                 # gimp
                 (b"gimp xcf",
-                 re.compile(b"gimp xcf (file|v001|v002)\x00"
+                 re.compile(b"gimp xcf (file|v[0-9]{3})\x00"
                             b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
                 # https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#glb-file-format-specification
                 (b"glTF\x02\x00\x00\x00", None),
+                # GD2 images
+                (b"gd2\x00\x00", None),
             ],
             0x69: [
                 # icon image up to 24Mb
@@ -258,6 +272,10 @@ class MagicDetector:
             0xAC: [
                 # Serialized Java Data
                 (b"\xAC\xED\x00\x05", re.compile(b"\xAC\xED\x00\x05[\x70-\x7E]")),
+            ],
+            0xC5: [
+                # DOS EPS Binary File
+                (b"\xC5\xD0\xD3\xC6", None),
             ],
             0xCE: [
                 # Mach-O Executable (reverse 32 bit)
