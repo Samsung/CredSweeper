@@ -36,6 +36,10 @@ class MagicDetector:
                 # https://fontforge.org/docs/techref/pcf-format.html
                 (b"\x01fcp", None),
             ],
+            0x02: [
+                # Binary CMap
+                (b"\x02\xE0RCopyright", None),
+            ],
             0x03: [
                 # Android Binary XML
                 (b"\x03\x00\x08\x00", None),
@@ -157,6 +161,8 @@ class MagicDetector:
                 (b"PACK\x00\x00\x00", None),
                 # PrecalculatedDateTimeZone
                 (b"P\x00", re.compile(b"P\x00[\x02-\x05]\x00[\x03-\x04][A-Z]{2,4}T\x00")),
+                # PKM format for ETC1 texture
+                (b"PKM 10\x00\x00", None),
             ],
             0x52: [
                 # RIFF va
@@ -203,10 +209,12 @@ class MagicDetector:
             0x67: [
                 # gimp
                 (b"gimp xcf",
-                 re.compile(b"gimp xcf (file|v001|v002)\x00"
+                 re.compile(b"gimp xcf (file|v[0-9]{3})\x00"
                             b"[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
                 # https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#glb-file-format-specification
                 (b"glTF\x02\x00\x00\x00", None),
+                # GD2 images
+                (b"gd2\x00\x00", None),
             ],
             0x69: [
                 # icon image up to 24Mb
@@ -264,6 +272,10 @@ class MagicDetector:
             0xAC: [
                 # Serialized Java Data
                 (b"\xAC\xED\x00\x05", re.compile(b"\xAC\xED\x00\x05[\x70-\x7E]")),
+            ],
+            0xC5: [
+                # DOS EPS Binary File
+                (b"\xC5\xD0\xD3\xC6", None),
             ],
             0xCE: [
                 # Mach-O Executable (reverse 32 bit)

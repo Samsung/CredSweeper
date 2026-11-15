@@ -140,6 +140,14 @@ credsweeper.deep\_scanner.jks\_scanner module
    :show-inheritance:
    :undoc-members:
 
+credsweeper.deep\_scanner.jmod\_scanner module
+----------------------------------------------
+
+.. automodule:: credsweeper.deep_scanner.jmod_scanner
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 credsweeper.deep\_scanner.lang\_scanner module
 ----------------------------------------------
 

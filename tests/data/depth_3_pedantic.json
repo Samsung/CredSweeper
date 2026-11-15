@@ -20066,6 +20066,279 @@
         ]
     },
     {
+        "rule": "API",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": 0.806,
+        "line_data_list": [
+            {
+                "line": "api : /apiv5/njdfhih34tgf67fee/dfsd5y4yuyy",
+                "line_num": 1,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "api",
+                "variable_start": 0,
+                "variable_end": 3,
+                "value": "/apiv5/njdfhih34tgf67fee/dfsd5y4yuyy",
+                "value_start": 6,
+                "value_end": 42,
+                "entropy": 4.18354
+            }
+        ]
+    },
+    {
+        "rule": "Auth",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "Authorization: Basic dXJhbnVzOkhkI2YhNzhyX2UzMiU=",
+                "line_num": 2,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "Authorization",
+                "variable_start": 0,
+                "variable_end": 13,
+                "value": "dXJhbnVzOkhkI2YhNzhyX2UzMiU=",
+                "value_start": 21,
+                "value_end": 49,
+                "entropy": 4.06611
+            }
+        ]
+    },
+    {
+        "rule": "Basic Authorization",
+        "severity": "medium",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "Authorization: Basic dXJhbnVzOkhkI2YhNzhyX2UzMiU=",
+                "line_num": 2,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "Basic",
+                "variable_start": 15,
+                "variable_end": 20,
+                "value": "dXJhbnVzOkhkI2YhNzhyX2UzMiU=",
+                "value_start": 21,
+                "value_end": 49,
+                "entropy": 4.06611
+            }
+        ]
+    },
+    {
+        "rule": "Credential",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "credentials : \"uranus:Hd#f!78r_e36%\"",
+                "line_num": 3,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "credentials",
+                "variable_start": 0,
+                "variable_end": 11,
+                "value": "uranus:Hd#f!78r_e36%",
+                "value_start": 15,
+                "value_end": 35,
+                "entropy": 4.12193
+            }
+        ]
+    },
+    {
+        "rule": "Key",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "key=3afed66d207deeea90039a4d0ee33946853d3d029ffc631fdc6778a237fa56cf",
+                "line_num": 4,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "key",
+                "variable_start": 0,
+                "variable_end": 3,
+                "value": "3afed66d207deeea90039a4d0ee33946853d3d029ffc631fdc6778a237fa56cf",
+                "value_start": 4,
+                "value_end": 68,
+                "entropy": 3.73578
+            }
+        ]
+    },
+    {
+        "rule": "Nonce",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "nonce=ebaafc3071b460229164a386ece8b3bc",
+                "line_num": 5,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "nonce",
+                "variable_start": 0,
+                "variable_end": 5,
+                "value": "ebaafc3071b460229164a386ece8b3bc",
+                "value_start": 6,
+                "value_end": 38,
+                "entropy": 3.69455
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "password:=Hd#f!78r_e35%",
+                "line_num": 6,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "password",
+                "variable_start": 0,
+                "variable_end": 8,
+                "value": "Hd#f!78r_e35%",
+                "value_start": 10,
+                "value_end": 23,
+                "entropy": 3.70044
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.996,
+        "line_data_list": [
+            {
+                "line": "pswr=Hd#f!78r_e34%",
+                "line_num": 7,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "pswr",
+                "variable_start": 0,
+                "variable_end": 4,
+                "value": "Hd#f!78r_e34%",
+                "value_start": 5,
+                "value_end": 18,
+                "entropy": 3.70044
+            }
+        ]
+    },
+    {
+        "rule": "Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "pw:Hd#f!78r_e33%",
+                "line_num": 8,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "pw",
+                "variable_start": 0,
+                "variable_end": 2,
+                "value": "Hd#f!78r_e33%",
+                "value_start": 3,
+                "value_end": 16,
+                "entropy": 3.54659
+            }
+        ]
+    },
+    {
+        "rule": "Salt",
+        "severity": "low",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "salt='3999476d61ad2abd20de90569b58e809'",
+                "line_num": 9,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "salt",
+                "variable_start": 0,
+                "variable_end": 4,
+                "value": "3999476d61ad2abd20de90569b58e809",
+                "value_start": 6,
+                "value_end": 38,
+                "entropy": 3.59314
+            }
+        ]
+    },
+    {
+        "rule": "Secret",
+        "severity": "medium",
+        "confidence": "moderate",
+        "ml_probability": 1.0,
+        "line_data_list": [
+            {
+                "line": "secret:57e43c7ce992812c1d7e35521b49e0478f5ddfb911520597e98ed7a0eb3c8b7bc5057e119cba2cd1ea77f42553b2c8631387a3707e86545632bbd720eb60274b",
+                "line_num": 10,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "secret",
+                "variable_start": 0,
+                "variable_end": 6,
+                "value": "57e43c7ce992812c1d7e35521b49e0478f5ddfb911520597e98ed7a0eb3c8b7bc5057e119cba2cd1ea77f42553b2c8631387a3707e86545632bbd720eb60274b",
+                "value_start": 7,
+                "value_end": 135,
+                "entropy": 3.889
+            }
+        ]
+    },
+    {
+        "rule": "Token",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.998,
+        "line_data_list": [
+            {
+                "line": "token=5beda731-c24c-47f5-aa69-d365fed0205e",
+                "line_num": 11,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": "token",
+                "variable_start": 0,
+                "variable_end": 5,
+                "value": "5beda731-c24c-47f5-aa69-d365fed0205e",
+                "value_start": 6,
+                "value_end": 42,
+                "entropy": 3.8848
+            }
+        ]
+    },
+    {
+        "rule": "UUID",
+        "severity": "info",
+        "confidence": "strong",
+        "ml_probability": null,
+        "line_data_list": [
+            {
+                "line": "token=5beda731-c24c-47f5-aa69-d365fed0205e",
+                "line_num": 11,
+                "path": "./tests/samples/sample.jmod",
+                "info": "FILE:./tests/samples/sample.jmod|JMOD:sample|TEXT",
+                "variable": null,
+                "variable_start": -2,
+                "variable_end": -2,
+                "value": "5beda731-c24c-47f5-aa69-d365fed0205e",
+                "value_start": 6,
+                "value_end": 42,
+                "entropy": 3.8848
+            }
+        ]
+    },
+    {
         "rule": "Token",
         "severity": "high",
         "confidence": "moderate",
