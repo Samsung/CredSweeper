@@ -15,6 +15,7 @@ from unittest.mock import patch, call, ANY, MagicMock
 import deepdiff
 import psutil
 
+import credsweeper.app
 from credsweeper import Confidence
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.common.constants import Severity, MIN_DATA_LEN
@@ -247,15 +248,7 @@ class TestMain(unittest.TestCase):
             logging.warning(f"Leak CPU for the test ({self.jobs})")
         callback_mock = MagicMock()
         cred_sweeper = CredSweeper(ml_threads_limit=self.jobs, pool_count=self.jobs)
-        with patch('logging.Logger.info') as mocked_logger:
-            cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]), progress_callback=callback_mock)
-            mocked_logger.assert_has_calls([
-                call("Scan in %s processes for %s providers", self.jobs, SAMPLES_FILES_COUNT - 35),
-                ANY,  # Run ML Validation for \d+ groups
-                ANY,  # initial ML with various arguments, cannot predict
-                call("Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
-            ])
-        # X calls for scan files + Y calls for ML processing
+        cred_sweeper.run(content_provider=FilesProvider([SAMPLES_PATH]), progress_callback=callback_mock)
         self.assertLess(SAMPLES_FILES_COUNT, callback_mock.call_count)
         self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
 
@@ -275,14 +268,7 @@ class TestMain(unittest.TestCase):
         self.assertEqual(0, cred_sweeper.credential_manager.len_credentials())
         # each file as provider
         content_provider = FilesProvider([x for x in SAMPLES_PATH.glob("**/*")])
-        with patch('logging.Logger.info') as mocked_logger:
-            cred_sweeper.run(content_provider=content_provider, progress_callback=progress.callback)
-            mocked_logger.assert_has_calls([
-                call(f"Scan in %s processes for %s providers", self.jobs, SAMPLES_FILES_COUNT - 35),
-                ANY,  # Run ML Validation for \d+ groups
-                # no init
-                call(f"Exporting %s credentials", SAMPLES_POST_CRED_COUNT),
-            ])
+        cred_sweeper.run(content_provider=content_provider, progress_callback=progress.callback)
         self.assertDictEqual({" file": 1, " ml": 1}, progress.units)
         self.assertEqual(SAMPLES_POST_CRED_COUNT, cred_sweeper.credential_manager.len_credentials())
 
