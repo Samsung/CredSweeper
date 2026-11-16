@@ -33,7 +33,7 @@ class JmodScanner(ZipScanner, ABC):
             candidates = []
             recursive_limit_size -= len(data_provider.data)
             stream = io.BytesIO(data_provider.data)
-            stream.read(4)
+            stream.seek(4)
             for filename, filedata in ZipScanner.walk_zip(stream, recursive_limit_size, self.config):
                 jmod_content_provider = DataContentProvider(data=filedata,
                                                             file_path=data_provider.file_path,

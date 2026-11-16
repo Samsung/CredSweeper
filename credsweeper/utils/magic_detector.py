@@ -31,6 +31,8 @@ class MagicDetector:
                 (b"\x00asm", None),
                 # weird case
                 (b"\x00\x00\xff\xff\x00\x00\x64\x86", None),
+                # ICC profile (International Color Consortium)
+                (b"\x00", re.compile(b"\x00[\x00-\xFF]{35}acsp")),
             ],
             0x01: [
                 # https://fontforge.org/docs/techref/pcf-format.html
