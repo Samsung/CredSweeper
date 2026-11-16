@@ -5,7 +5,6 @@ import unittest
 from typing import List
 from unittest import mock
 
-import git
 from humanfriendly import parse_size
 
 from credsweeper.config.config import Config

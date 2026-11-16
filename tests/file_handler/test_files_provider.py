@@ -10,7 +10,7 @@ import pytest
 
 from credsweeper.common.constants import UTF_16_LE
 from credsweeper.file_handler.files_provider import FilesProvider
-from tests import AZ_DATA, AZ_STRING, SAMPLES_PATH, TESTS_PATH
+from tests import AZ_DATA, AZ_STRING, TESTS_PATH
 
 
 class TestFilesProvider(unittest.TestCase):

@@ -15,7 +15,6 @@ from unittest.mock import patch, call, ANY, MagicMock
 import deepdiff
 import psutil
 
-import credsweeper.app
 from credsweeper import Confidence
 from credsweeper.app import APP_PATH, CredSweeper
 from credsweeper.common.constants import Severity, MIN_DATA_LEN
