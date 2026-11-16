@@ -172,8 +172,7 @@ Get CLI output only:
 
 .. code-block:: text
 
-    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9149653911590576 | line_data_list: [path: tests/samples/password.gradle | line_num: 1 | value: 'cackle!' | line: 'password = "cackle!"']
-
+    rule: Password | severity: high | confidence: moderate | ml_probability: <probability> | line_data_list: [path: example.py | line_num: 2 | value: 'cackle!' | line: 'password = "cackle!"']
 
 Exclude outputs using CLI:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -217,70 +216,82 @@ Then specify your config in CLI:
 Use as a python library
 -----------------------
 
-Minimal example for scanning line list:
-
-.. code-block:: python
-
-    from credsweeper import CredSweeper, StringContentProvider
-
-
-    to_scan = ["line one", "password='in_line_2'"]
-    cred_sweeper = CredSweeper()
-    provider = StringContentProvider(to_scan)
-    results = cred_sweeper.file_scan(provider)
-    for r in results:
-        print(r)
-
-.. code-block:: text
-
-    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 1 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
-
 Minimal example for scanning bytes:
 
 .. code-block:: python
 
-    from credsweeper import CredSweeper, ByteContentProvider
+    import io
 
+    from credsweeper import CredSweeper, FilesProvider
 
     to_scan = b"line one\npassword='cackle!'"
     cred_sweeper = CredSweeper()
-    provider = ByteContentProvider(to_scan)
-    results = cred_sweeper.file_scan(provider)
-    for r in results:
-        print(r)
+    content_provider = FilesProvider([("example.py", io.BytesIO(to_scan))])
+    cred_sweeper.run(content_provider=content_provider)
+    for candidate in cred_sweeper.credential_manager.get_credentials():
+        print(candidate)
+
+Example output:
 
 .. code-block:: text
 
-    rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
+    rule: Password | severity: high | confidence: moderate | ml_probability: 0.9943822622299194 | line_data_list: [path: example.py | line_num: 2 | value: 'cackle!' | line: 'password='cackle!'']
 
+ML validation of scanned candidates:
 
-Minimal example for the ML validation:
+The following example scans the content, groups candidates by ``CandidateKey``,
+selects groups that require ML validation, and applies the returned probabilities
+to ML-enabled candidates.
 
 .. code-block:: python
 
-    from credsweeper import CredSweeper, StringContentProvider, MlValidator, ThresholdPreset
+    import io
 
+    from credsweeper import CredSweeper, FilesProvider, MlValidator, ThresholdPreset
+    from credsweeper.credentials.candidate_key import CandidateKey
 
-    to_scan = ["line one", "password='cackle!'", "secret='template'"]
+    to_scan = b'line one\npassword = "cackle!"'
     cred_sweeper = CredSweeper()
-    provider = StringContentProvider(to_scan)
+    files_provider = FilesProvider([("example.py", io.BytesIO(to_scan))])
+    content_providers = files_provider.get_scannable_files(cred_sweeper.config)
+    candidates = cred_sweeper.file_scan(content_providers[0])
 
-    # You can select lower or higher threshold to get more or less reports respectively
-    threshold = ThresholdPreset.medium
-    validator = MlValidator(threshold=threshold)
+    grouped_candidates = {}
+    for candidate in candidates:
+        key = CandidateKey(candidate.line_data_list[0])
+        grouped_candidates.setdefault(key, []).append(candidate)
 
-    results = cred_sweeper.file_scan(provider)
-    for candidate in results:
-        # For each results detected by a CredSweeper, you can validate them using MlValidator
-        is_credential, with_probability = validator.validate(candidate)
-        if is_credential:
-            print(candidate)
+    groups_for_ml = [(key, group) for key, group in grouped_candidates.items()
+                     if any(candidate.use_ml for candidate in group)]
 
-Note that `"secret='template'"` is not reported due to failing check by the `MlValidator`.
+    validator = MlValidator(threshold=ThresholdPreset.medium)
+    is_credential, probabilities = validator.validate_groups(
+        groups_for_ml,
+        batch_size=16,
+        progress_callback=None,
+    )
+
+    for (_, group), accepted, probability in zip(groups_for_ml, is_credential, probabilities):
+        if accepted:
+            for candidate in group:
+                if candidate.use_ml:
+                    candidate.ml_probability = float(probability)
+                    print(candidate)
+
+Example output:
 
 .. code-block:: text
 
     rule: Password | severity: medium | confidence: moderate | ml_probability: 0.9857242107391357 | line_data_list: [line: 'password = "cackle!"' | line_num: 2 | path:  | value: 'cackle!' | entropy_validation: BASE64STDPAD_CHARS 2.120590 False]
+
+.. note::
+    ``CredSweeper.run()`` performs scanning and ML post-processing. The lower-level
+    ``CredSweeper.file_scan()`` method scans one content provider and returns candidates
+    without running ML post-processing. ``MlValidator.validate_groups()`` accepts groups
+    of candidates and returns one decision and probability for each group. Candidates in
+    the same group share the same ML prediction. The ML validation example above invokes
+    the validator explicitly, while the normal ``CredSweeper.run()`` workflow performs
+    ML post-processing automatically.
 
 Configurations
 --------------
