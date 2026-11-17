@@ -14,7 +14,7 @@ class TestDoc(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_secret_pair_p(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "doc_secret_pair"])
+        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "doc_secret_pair-utf16be-bom"])
         self.cred_sweeper.run(content_provider=content_provider)
         found_credentials = self.cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(40, len(found_credentials))
@@ -22,7 +22,7 @@ class TestDoc(unittest.TestCase):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
     def test_passwd_pair_p(self) -> None:
-        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "doc_passwd_pair"])
+        content_provider: AbstractProvider = FilesProvider([SAMPLES_PATH / "doc_passwd_pair-utf16le-bom"])
         self.cred_sweeper.run(content_provider=content_provider)
         found_credentials = self.cred_sweeper.credential_manager.get_credentials()
         self.assertEqual(76, len(found_credentials))
