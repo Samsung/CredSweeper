@@ -4187,12 +4187,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.988,
         "line_data_list": [
             {
                 "line": "Password:Prl23Db#@",
                 "line_num": 1,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "Password",
                 "variable_start": 0,
@@ -4208,12 +4208,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.993,
         "line_data_list": [
             {
                 "line": "pw:Prl23Db#@",
                 "line_num": 3,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 0,
@@ -4229,12 +4229,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.987,
         "line_data_list": [
             {
                 "line": "Password=Prl23Db#@",
                 "line_num": 4,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "Password",
                 "variable_start": 0,
@@ -4250,12 +4250,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.996,
         "line_data_list": [
             {
                 "line": "pwd:Prl23Db#@",
                 "line_num": 5,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "pwd",
                 "variable_start": 0,
@@ -4271,12 +4271,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.997,
         "line_data_list": [
             {
                 "line": "ANY_password=Prl23Db#@",
                 "line_num": 8,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "ANY_password",
                 "variable_start": 0,
@@ -4292,12 +4292,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.997,
+        "ml_probability": 0.988,
         "line_data_list": [
             {
                 "line": "pass:Prl23Db#@",
                 "line_num": 10,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "pass",
                 "variable_start": 0,
@@ -4313,12 +4313,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "ANY-password=Prl23Db#@",
                 "line_num": 11,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "ANY-password",
                 "variable_start": 0,
@@ -4339,7 +4339,7 @@
             {
                 "line": "master@98.76.54.32 password:Prl23Db#@",
                 "line_num": 14,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 19,
@@ -4355,12 +4355,12 @@
         "rule": "CMD Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "--Password Prl23Db#@",
                 "line_num": 15,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "Password",
                 "variable_start": 2,
@@ -4376,12 +4376,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.996,
+        "ml_probability": 0.989,
         "line_data_list": [
             {
                 "line": "ANY_PW:Prl23Db#@",
                 "line_num": 17,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "ANY_PW",
                 "variable_start": 0,
@@ -4402,7 +4402,7 @@
             {
                 "line": "default password:Prl23Db#@",
                 "line_num": 18,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 8,
@@ -4423,7 +4423,7 @@
             {
                 "line": "\"password\":\"Prl23Db#@\"",
                 "line_num": 21,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 1,
@@ -4439,12 +4439,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.997,
+        "ml_probability": 0.99,
         "line_data_list": [
             {
                 "line": "Passwd:Prl23Db#@ Prl23Db#@",
                 "line_num": 23,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "Passwd",
                 "variable_start": 0,
@@ -4460,12 +4460,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.5,
+        "ml_probability": 0.219,
         "line_data_list": [
             {
                 "line": "PW:Prl23Db#@,password:Prl23Db#@",
                 "line_num": 24,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "PW",
                 "variable_start": 0,
@@ -4481,12 +4481,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "PW:Prl23Db#@,password:Prl23Db#@",
                 "line_num": 24,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 13,
@@ -4502,12 +4502,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "password:Prl23Db#@,\ube44\ubc88:Prl23Db#@",
                 "line_num": 25,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 0,
@@ -4523,12 +4523,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.997,
+        "ml_probability": 0.989,
         "line_data_list": [
             {
                 "line": "passwd=Prl23Db#@",
                 "line_num": 26,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "passwd",
                 "variable_start": 0,
@@ -4544,12 +4544,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "password:Prl23Db#@, paasword:Prl23Db#@",
                 "line_num": 30,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 0,
@@ -4565,12 +4565,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.988,
         "line_data_list": [
             {
                 "line": "password:Prl23Db#@,ANYPassword:Prl23Db#@",
                 "line_num": 31,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 0,
@@ -4586,12 +4586,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.995,
         "line_data_list": [
             {
                 "line": "password:Prl23Db#@,ANYPassword:Prl23Db#@",
                 "line_num": 31,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "ANYPassword",
                 "variable_start": 19,
@@ -4607,12 +4607,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.997,
+        "ml_probability": 0.983,
         "line_data_list": [
             {
                 "line": "Password:Prl23Db#@,pwd=Prl23Db#@",
                 "line_num": 32,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "Password",
                 "variable_start": 0,
@@ -4628,12 +4628,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.98,
+        "ml_probability": 0.926,
         "line_data_list": [
             {
                 "line": "Password:Prl23Db#@,pwd=Prl23Db#@",
                 "line_num": 32,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "pwd",
                 "variable_start": 19,
@@ -4654,7 +4654,7 @@
             {
                 "line": "-password \"Prl23Db#@\"",
                 "line_num": 33,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 1,
@@ -4670,12 +4670,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.997,
         "line_data_list": [
             {
                 "line": "ANY_password:Prl23Db#@",
                 "line_num": 34,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "ANY_password",
                 "variable_start": 0,
@@ -4691,12 +4691,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "--password=Prl23Db#@",
                 "line_num": 37,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 2,
@@ -4712,12 +4712,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "root/Prl23Db#@,root password:Prl23Db#@",
                 "line_num": 38,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 20,
@@ -4738,7 +4738,7 @@
             {
                 "line": "Prl23Db#@ username:Prl23Db#@,Prl23Db#@ password:Prl23Db#@",
                 "line_num": 40,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 39,
@@ -4754,12 +4754,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "Prl23Db#@:password:Prl23Db#@",
                 "line_num": 41,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 10,
@@ -4775,12 +4775,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "ANYpassword=Prl23Db#@",
                 "line_num": 45,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "ANYpassword",
                 "variable_start": 0,
@@ -4796,12 +4796,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.997,
         "line_data_list": [
             {
                 "line": "passwords:Prl23Db#@",
                 "line_num": 46,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "passwords",
                 "variable_start": 0,
@@ -4817,12 +4817,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.994,
         "line_data_list": [
             {
                 "line": "password=>Prl23Db#@",
                 "line_num": 48,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 0,
@@ -4838,12 +4838,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.997,
+        "ml_probability": 0.984,
         "line_data_list": [
             {
                 "line": "# password: keep empty",
                 "line_num": 56,
-                "path": "./tests/samples/doc_passwd_pair.utf16le-bom",
+                "path": "./tests/samples/doc_passwd_pair-utf16le-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 2,
@@ -4864,7 +4864,7 @@
             {
                 "line": "ANY-Token:AIhq5Xyb1Gga9Q0",
                 "line_num": 1,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "ANY-Token",
                 "variable_start": 0,
@@ -4885,7 +4885,7 @@
             {
                 "line": "token:AIhq5Xyb1Gga9Q2",
                 "line_num": 3,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "token",
                 "variable_start": 0,
@@ -4906,7 +4906,7 @@
             {
                 "line": "SECRET KEY:AIhq5Xyb1Gga9Q3",
                 "line_num": 4,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "KEY",
                 "variable_start": 7,
@@ -4927,7 +4927,7 @@
             {
                 "line": "SECRET KEY:AIhq5Xyb1Gga9Q3",
                 "line_num": 4,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "SECRET KEY",
                 "variable_start": 0,
@@ -4948,7 +4948,7 @@
             {
                 "line": "secret=AIhq5Xyb1Gga9Q4",
                 "line_num": 5,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "secret",
                 "variable_start": 0,
@@ -4969,7 +4969,7 @@
             {
                 "line": "--token AIhq5Xyb1Gga9Q5",
                 "line_num": 6,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "token",
                 "variable_start": 2,
@@ -4990,7 +4990,7 @@
             {
                 "line": "secret:AIhq5Xyb1Gga9Q6",
                 "line_num": 7,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "secret",
                 "variable_start": 0,
@@ -5011,7 +5011,7 @@
             {
                 "line": "ANY_token=AIhq5Xyb1Gga9Q7",
                 "line_num": 8,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "ANY_token",
                 "variable_start": 0,
@@ -5032,7 +5032,7 @@
             {
                 "line": "-secret AIhq5Xyb1Gga9Q10",
                 "line_num": 11,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "secret",
                 "variable_start": 1,
@@ -5053,7 +5053,7 @@
             {
                 "line": "ANY.secret=AIhq5Xyb1Gga9Q19",
                 "line_num": 20,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "ANY.secret",
                 "variable_start": 0,
@@ -5074,7 +5074,7 @@
             {
                 "line": "--secret=AIhq5Xyb1Gga9Q21",
                 "line_num": 22,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "secret",
                 "variable_start": 2,
@@ -5095,7 +5095,7 @@
             {
                 "line": "ANY_secret:AIhq5Xyb1Gga9Q22",
                 "line_num": 23,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "ANY_secret",
                 "variable_start": 0,
@@ -5116,7 +5116,7 @@
             {
                 "line": "-Token:AIhq5Xyb1Gga9Q23",
                 "line_num": 24,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "Token",
                 "variable_start": 1,
@@ -5137,7 +5137,7 @@
             {
                 "line": "API Secret:AIhq5Xyb1Gga9Q24",
                 "line_num": 25,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "API Secret",
                 "variable_start": 0,
@@ -5158,7 +5158,7 @@
             {
                 "line": "API Secret:AIhq5Xyb1Gga9Q24",
                 "line_num": 25,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "Secret",
                 "variable_start": 4,
@@ -5179,7 +5179,7 @@
             {
                 "line": "access key:AIhq5Xyb1Gga9Q26",
                 "line_num": 27,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "key",
                 "variable_start": 7,
@@ -5200,7 +5200,7 @@
             {
                 "line": "Secret Key:AIhq5Xyb1Gga9Q27",
                 "line_num": 28,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "Key",
                 "variable_start": 7,
@@ -5221,7 +5221,7 @@
             {
                 "line": "Secret Key:AIhq5Xyb1Gga9Q27",
                 "line_num": 28,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "Secret Key",
                 "variable_start": 0,
@@ -5242,7 +5242,7 @@
             {
                 "line": "ANY_key=AIhq5Xyb1Gga9Q29",
                 "line_num": 30,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "ANY_key",
                 "variable_start": 0,
@@ -5263,7 +5263,7 @@
             {
                 "line": "secret-ANYkey:AIhq5Xyb1Gga9Q30",
                 "line_num": 31,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "secret-ANYkey",
                 "variable_start": 0,
@@ -5284,7 +5284,7 @@
             {
                 "line": "secret-ANYkey:AIhq5Xyb1Gga9Q30",
                 "line_num": 31,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "secret-ANYkey",
                 "variable_start": 0,
@@ -5305,7 +5305,7 @@
             {
                 "line": "ANY_id=AIhq5Xyb1Gga9Q31 ANY_token=AIhq5Xyb1Gga9Q31",
                 "line_num": 32,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "ANY_token",
                 "variable_start": 24,
@@ -5326,7 +5326,7 @@
             {
                 "line": "access_token:AIhq5Xyb1Gga9Q33",
                 "line_num": 34,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "access_token",
                 "variable_start": 0,
@@ -5347,7 +5347,7 @@
             {
                 "line": "Authentication key:AIhq5Xyb1Gga9Q35",
                 "line_num": 36,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "key",
                 "variable_start": 15,
@@ -5368,7 +5368,7 @@
             {
                 "line": "Authentication key:AIhq5Xyb1Gga9Q35",
                 "line_num": 36,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "Authentication key",
                 "variable_start": 0,
@@ -5384,12 +5384,12 @@
         "rule": "Key",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.002,
+        "ml_probability": 0.001,
         "line_data_list": [
             {
                 "line": "page.action?spaceKey=LOGIC&title=QUANTUM\",",
                 "line_num": 39,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "spaceKey",
                 "variable_start": 12,
@@ -5410,7 +5410,7 @@
             {
                 "line": "Enter token : This is a query parameter",
                 "line_num": 40,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "token",
                 "variable_start": 6,
@@ -5431,7 +5431,7 @@
             {
                 "line": "\"key\":\"attached_file_0\"",
                 "line_num": 41,
-                "path": "./tests/samples/doc_secret_pair.utf16be-bom",
+                "path": "./tests/samples/doc_secret_pair-utf16be-bom",
                 "info": "",
                 "variable": "key",
                 "variable_start": 1,
@@ -5452,7 +5452,7 @@
             {
                 "line": "master@98.76.54.32(pw:IhqSb1Gg)",
                 "line_num": 4,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 19,
@@ -5468,12 +5468,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.994,
+        "ml_probability": 0.964,
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@example.com mailto:{1} PW:IhqSb1Gg",
                 "line_num": 5,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PW",
                 "variable_start": 39,
@@ -5489,12 +5489,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.887,
+        "ml_probability": 0.414,
         "line_data_list": [
             {
                 "line": "Password:master/IhqSb1Gg",
                 "line_num": 6,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "Password",
                 "variable_start": 0,
@@ -5510,12 +5510,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (PW:IhqSb1Gg)",
                 "line_num": 7,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PW",
                 "variable_start": 41,
@@ -5536,7 +5536,7 @@
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} password:IhqSb1Gg",
                 "line_num": 8,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 40,
@@ -5557,7 +5557,7 @@
             {
                 "line": "ssh -P IhqSb1Gg gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
                 "line_num": 12,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 53,
@@ -5573,12 +5573,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.45,
+        "ml_probability": 0.111,
         "line_data_list": [
             {
                 "line": "ID/Pass:xxxx:master/IhqSb1Gg,xxxx:master/IhqSb1Gg",
                 "line_num": 14,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "Pass",
                 "variable_start": 3,
@@ -5599,7 +5599,7 @@
             {
                 "line": "gildong.hong@98.76.54.32 pwd:IhqSb1Gg",
                 "line_num": 16,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pwd",
                 "variable_start": 25,
@@ -5615,12 +5615,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.891,
+        "ml_probability": 0.602,
         "line_data_list": [
             {
                 "line": "\uacc4\uc815:master(PW:IhqSb1Gg)",
                 "line_num": 17,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PW",
                 "variable_start": 10,
@@ -5636,12 +5636,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "98.76.54.32(pw:IhqSb1Gg)",
                 "line_num": 18,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 12,
@@ -5657,12 +5657,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "98.76.54.32/pw:IhqSb1Gg",
                 "line_num": 20,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 12,
@@ -5678,12 +5678,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@example.com mailto:{1}/pw:IhqSb1Gg",
                 "line_num": 21,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 39,
@@ -5699,12 +5699,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.995,
+        "ml_probability": 0.97,
         "line_data_list": [
             {
                 "line": "ID:gildong.hong@any.example.com mailto:{1} PWD:IhqSb1Gg",
                 "line_num": 22,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PWD",
                 "variable_start": 43,
@@ -5725,7 +5725,7 @@
             {
                 "line": "sftp gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg)",
                 "line_num": 23,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 42,
@@ -5746,7 +5746,7 @@
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (pw:IhqSb1Gg)",
                 "line_num": 24,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 37,
@@ -5762,12 +5762,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.997,
         "line_data_list": [
             {
                 "line": "-id:gildong.hong@example.com mailto:{1} -pwd:IhqSb1Gg",
                 "line_num": 25,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pwd",
                 "variable_start": 41,
@@ -5788,7 +5788,7 @@
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
                 "line_num": 26,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 41,
@@ -5809,7 +5809,7 @@
             {
                 "line": "id:gildong.hong@example.com mailto:{1} password:IhqSb1Gg",
                 "line_num": 29,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 39,
@@ -5825,12 +5825,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.997,
         "line_data_list": [
             {
                 "line": "ANY_password,default:IhqSb1Gg",
                 "line_num": 32,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "ANY_password,default",
                 "variable_start": 0,
@@ -5846,12 +5846,12 @@
         "rule": "Secret",
         "severity": "medium",
         "confidence": "moderate",
-        "ml_probability": 0.998,
+        "ml_probability": 0.996,
         "line_data_list": [
             {
                 "line": "Key(ANYSecret):IhqSb1Gg",
                 "line_num": 33,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "ANYSecret)",
                 "variable_start": 4,
@@ -5867,12 +5867,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "98.76.54.32 ANY_PW:IhqSb1Gg",
                 "line_num": 35,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "ANY_PW",
                 "variable_start": 12,
@@ -5888,12 +5888,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.995,
         "line_data_list": [
             {
                 "line": "98.76.54.32(ID/PW:IhqSb1Gg)",
                 "line_num": 37,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PW",
                 "variable_start": 15,
@@ -5914,7 +5914,7 @@
             {
                 "line": "gildong.hong@98.76.54.32 (pwd:IhqSb1Gg)",
                 "line_num": 39,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pwd",
                 "variable_start": 26,
@@ -5930,12 +5930,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.996,
         "line_data_list": [
             {
                 "line": "password for master:IhqSb1Gg",
                 "line_num": 44,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "password for master",
                 "variable_start": 0,
@@ -5951,12 +5951,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.465,
+        "ml_probability": 0.116,
         "line_data_list": [
             {
                 "line": "ID/Pass:xxxx:master/IhqSb1Gg xxxx:master/IhqSb1Gg",
                 "line_num": 46,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "Pass",
                 "variable_start": 3,
@@ -5977,7 +5977,7 @@
             {
                 "line": "gildong.hong@98.76.54.32,pw:IhqSb1Gg",
                 "line_num": 48,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 25,
@@ -5993,12 +5993,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "98.76.54.32:xxxx(PW:IhqSb1Gg)",
                 "line_num": 52,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PW",
                 "variable_start": 17,
@@ -6014,12 +6014,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.835,
+        "ml_probability": 0.286,
         "line_data_list": [
             {
                 "line": "\uacc4\uc815/Password-xxxx:master/IhqSb1Gg",
                 "line_num": 56,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "Password-xxxx",
                 "variable_start": 3,
@@ -6035,12 +6035,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "gildong.hong@98.76.54.32 PW:IhqSb1Gg",
                 "line_num": 57,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PW",
                 "variable_start": 25,
@@ -6056,12 +6056,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "ANY_user:xxxx ANY_pwd:IhqSb1Gg",
                 "line_num": 62,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "ANY_pwd",
                 "variable_start": 14,
@@ -6082,7 +6082,7 @@
             {
                 "line": "Acount name:xxxx Initial Password:IhqSb1Gg",
                 "line_num": 63,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "Password",
                 "variable_start": 25,
@@ -6098,12 +6098,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.997,
         "line_data_list": [
             {
                 "line": "Access wifi:xxxx(PW:IhqSb1Gg)",
                 "line_num": 64,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PW",
                 "variable_start": 17,
@@ -6124,7 +6124,7 @@
             {
                 "line": "-User:master -PasswordANY:IhqSb1Gg",
                 "line_num": 67,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PasswordANY",
                 "variable_start": 14,
@@ -6140,12 +6140,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.253,
+        "ml_probability": 0.052,
         "line_data_list": [
             {
                 "line": "98.76.54.32(ID/PW:master/IhqSb1Gg)",
                 "line_num": 71,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PW",
                 "variable_start": 15,
@@ -6161,12 +6161,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.042,
+        "ml_probability": 0.012,
         "line_data_list": [
             {
                 "line": "(ID&PWD):master/IhqSb1Gg",
                 "line_num": 72,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PWD)",
                 "variable_start": 4,
@@ -6187,7 +6187,7 @@
             {
                 "line": "master@98.76.54.32(pw:IhqSb1Gg)",
                 "line_num": 74,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 19,
@@ -6203,12 +6203,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.999,
         "line_data_list": [
             {
                 "line": "master@98.76.54.32,PW:IhqSb1Gg",
                 "line_num": 75,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PW",
                 "variable_start": 19,
@@ -6229,7 +6229,7 @@
             {
                 "line": "98.76.54.32 pw:IhqSb1Gg",
                 "line_num": 76,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 12,
@@ -6245,12 +6245,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 0.999,
+        "ml_probability": 0.996,
         "line_data_list": [
             {
                 "line": "config:xxxx,PW:IhqSb1Gg",
                 "line_num": 79,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "PW",
                 "variable_start": 12,
@@ -6271,7 +6271,7 @@
             {
                 "line": "scp gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
                 "line_num": 83,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 40,
@@ -6292,7 +6292,7 @@
             {
                 "line": "id:gildong.hong@xxx.com mailto:{1} pw:IhqSb1Gg",
                 "line_num": 84,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 35,
@@ -6313,7 +6313,7 @@
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
                 "line_num": 85,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 36,
@@ -6334,7 +6334,7 @@
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1},pw:IhqSb1Gg",
                 "line_num": 86,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 40,
@@ -6355,7 +6355,7 @@
             {
                 "line": "(ssh gildong.hong@98.76.54.32 mailto{1}) pwd:IhqSb1Gg",
                 "line_num": 88,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pwd",
                 "variable_start": 41,
@@ -6376,7 +6376,7 @@
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1}, pw:IhqSb1Gg",
                 "line_num": 91,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 41,
@@ -6397,7 +6397,7 @@
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} (pwd:IhqSb1Gg)",
                 "line_num": 94,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pwd",
                 "variable_start": 41,
@@ -6418,7 +6418,7 @@
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (password:IhqSb1Gg)",
                 "line_num": 95,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 37,
@@ -6439,7 +6439,7 @@
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} Password:IhqSb1Gg",
                 "line_num": 97,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "Password",
                 "variable_start": 36,
@@ -6460,7 +6460,7 @@
             {
                 "line": "gildong.hong@98.76.54.32 mailto:{1} (pass:IhqSb1Gg)",
                 "line_num": 98,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pass",
                 "variable_start": 37,
@@ -6481,7 +6481,7 @@
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} pw:IhqSb1Gg",
                 "line_num": 101,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 40,
@@ -6502,7 +6502,7 @@
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1} pass:IhqSb1Gg",
                 "line_num": 102,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pass",
                 "variable_start": 40,
@@ -6523,7 +6523,7 @@
             {
                 "line": "id:gildong.hong@xxx.com mailto:{1}/password:IhqSb1Gg",
                 "line_num": 103,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 35,
@@ -6544,7 +6544,7 @@
             {
                 "line": "ssh gildong.hong@98.76.54.32 mailto:{1}/password:IhqSb1Gg",
                 "line_num": 105,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "password",
                 "variable_start": 40,
@@ -6560,12 +6560,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "-ANYID:gildong.hong@example.com mailto:{1} -pw:IhqSb1Gg",
                 "line_num": 106,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 44,
@@ -6586,7 +6586,7 @@
             {
                 "line": "ID:gildong.hong@xxxx.net mailto:{1} pw:IhqSb1Gg",
                 "line_num": 107,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 36,
@@ -6602,12 +6602,12 @@
         "rule": "Password",
         "severity": "high",
         "confidence": "moderate",
-        "ml_probability": 1.0,
+        "ml_probability": 0.998,
         "line_data_list": [
             {
                 "line": "http://98.76.54.32:xxx(pw:IhqSb1Gg)",
                 "line_num": 109,
-                "path": "./tests/samples/doc_various.utf8-bom",
+                "path": "./tests/samples/doc_various-utf8-bom",
                 "info": "",
                 "variable": "pw",
                 "variable_start": 23,
