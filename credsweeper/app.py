@@ -394,8 +394,7 @@ class CredSweeper:
         try:
             for scan_results in pool.imap_unordered(self.files_scan,
                                                     (content_providers[x::pool_count] for x in range(pool_count))):
-                for cred in scan_results:
-                    self.credential_manager.append_credential(cred)
+                self.credential_manager.extend_credentials(scan_results)
         except KeyboardInterrupt:
             logger.warning("Interrupted")
             pool.terminate()

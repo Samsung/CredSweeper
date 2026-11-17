@@ -1748,6 +1748,27 @@
         ]
     },
     {
+        "rule": "CURL User Password",
+        "severity": "high",
+        "confidence": "moderate",
+        "ml_probability": 0.999,
+        "line_data_list": [
+            {
+                "line": "curl -U \"root:oMvB0aPi\" # Detected",
+                "line_num": 3,
+                "path": "./tests/samples/curl_user_password",
+                "info": "",
+                "variable": "curl",
+                "variable_start": 0,
+                "variable_end": 4,
+                "value": "oMvB0aPi",
+                "value_start": 14,
+                "value_end": 22,
+                "entropy": 3.0
+            }
+        ]
+    },
+    {
         "rule": "Databricks Access Token",
         "severity": "medium",
         "confidence": "strong",
