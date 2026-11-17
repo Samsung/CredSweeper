@@ -104,7 +104,7 @@ class MagicDetector:
                  re.compile(b"CWS[\x06-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")
                  ),
                 # CachedDateTimeZone
-                (b"C\x00", re.compile(b"C\x00[\x02-\x0A]\x00[\x03-\x06\x0A][A-Z]{2,4}T[A-Za-z-]*\x00")),
+                (b"C\x00", re.compile(b"C\x00[\x02-\x0A]\x00[\x03-\x06\x0A\x0B](WIB|UTC|[A-Z]{2,4}T[A-Za-z-]*)\x00")),
             ],
             0x44: [
                 # .dds file
@@ -131,6 +131,8 @@ class MagicDetector:
                 # TIFF little endian
                 (b"II",
                  re.compile(b"II[+*]\x00[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+                # DNG Camera Profile
+                (b"IIRC\x08\x00\x00\x00", None),
                 # jxr
                 (b"II\xBC\x01", None),
                 # ID2v3 for various media (e.g. MP3)
@@ -162,7 +164,7 @@ class MagicDetector:
                 # GIT: pack-*.pack
                 (b"PACK\x00\x00\x00", None),
                 # PrecalculatedDateTimeZone
-                (b"P\x00", re.compile(b"P\x00[\x02-\x05]\x00[\x03-\x04][A-Z]{2,4}T\x00")),
+                (b"P\x00", re.compile(b"P\x00[\x02-\x05]\x00[\x03-\x04](zzz|[A-Z]{2,4}T)\x00")),
                 # PKM format for ETC1 texture
                 (b"PKM 10\x00\x00", None),
             ],
