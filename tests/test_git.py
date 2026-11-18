@@ -291,6 +291,60 @@ class TestGit(unittest.TestCase):
             report = Util.json_load(git_report_filename)
             self.assertLessEqual(1, len(report))
 
+    def test_git_generate_missing_xlsx_report(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, "report.json")
+            xlsx_filename = os.path.join(tmp_dir, "report.xlsx")
+            commit_sha1 = "9d3df94e8257240aa2b98dee47dc17992c0b7476"
+            ref = "b7b09c8cdec2904dbb6f77eec2aa6abaef975252"
+
+            # First scan: generate JSON only.
+            args_json_only = [
+                "--ml_threshold", "0", "--git",
+                str(self.temp_dir_path), "--ref", ref, "--save-json", json_filename
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(args_json_only))
+
+            json_report = os.path.join(tmp_dir, f"report.{commit_sha1}.json")
+            xlsx_report = os.path.join(tmp_dir, f"report.{commit_sha1}.xlsx")
+            self.assertTrue(os.path.exists(json_report))
+            self.assertFalse(os.path.exists(xlsx_report))
+
+            # Second scan: request both formats. The missing XLSX must be created.
+            args_both = [
+                "--ml_threshold", "0", "--git",
+                str(self.temp_dir_path), "--ref", ref, "--save-json", json_filename, "--save-xlsx", xlsx_filename
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(args_both))
+            self.assertTrue(os.path.exists(xlsx_report))
+
+    def test_git_generate_missing_json_report(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            json_filename = os.path.join(tmp_dir, "report.json")
+            xlsx_filename = os.path.join(tmp_dir, "report.xlsx")
+            commit_sha1 = "9d3df94e8257240aa2b98dee47dc17992c0b7476"
+            ref = "b7b09c8cdec2904dbb6f77eec2aa6abaef975252"
+
+            # First scan: generate XLSX only.
+            args_xlsx_only = [
+                "--ml_threshold", "0", "--git",
+                str(self.temp_dir_path), "--ref", ref, "--save-xlsx", xlsx_filename
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(args_xlsx_only))
+
+            json_report = os.path.join(tmp_dir, f"report.{commit_sha1}.json")
+            xlsx_report = os.path.join(tmp_dir, f"report.{commit_sha1}.xlsx")
+            self.assertTrue(os.path.exists(xlsx_report))
+            self.assertFalse(os.path.exists(json_report))
+
+            # Second scan: request both formats. The missing JSON must be created.
+            args_both = [
+                "--ml_threshold", "0", "--git",
+                str(self.temp_dir_path), "--ref", ref, "--save-json", json_filename, "--save-xlsx", xlsx_filename
+            ]
+            self.assertEqual(EXIT_SUCCESS, main(args_both))
+            self.assertTrue(os.path.exists(json_report))
+
     def test_git_no_ref_p(self) -> None:
         # local branch of repository without remote is scanned when no --ref provided
         with tempfile.TemporaryDirectory() as tmp_dir:

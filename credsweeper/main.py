@@ -173,21 +173,23 @@ def drill(args: Namespace) -> Tuple[int, int]:
             if commit.parents:
                 # add parents only when they were not skipped or scanned previously
                 to_scan.update(x.hexsha for x in commit.parents if x.hexsha not in skipped and x.hexsha not in scanned)
-            # check whether the commit has been checked and the report is present
-            skip_already_scanned = False
+            # Skip only when every requested report already exists.
+            skip_already_scanned = bool(args.json_filename or args.xlsx_filename)
             if args.json_filename:
                 json_path = Path(args.json_filename)
                 json_path = json_path.with_suffix(f".{commit_sha1}{json_path.suffix}")
                 if json_path.exists():
-                    skip_already_scanned = True
+                    credsweeper.json_filename = None
                 else:
+                    skip_already_scanned = False
                     credsweeper.json_filename = json_path
             if args.xlsx_filename:
                 xlsx_path = Path(args.xlsx_filename)
                 xlsx_path = xlsx_path.with_suffix(f".{commit_sha1}{xlsx_path.suffix}")
                 if xlsx_path.exists():
-                    skip_already_scanned = True
+                    credsweeper.xlsx_filename = None
                 else:
+                    skip_already_scanned = False
                     credsweeper.xlsx_filename = xlsx_path
             if skip_already_scanned:
                 skipped.add(commit_sha1)
