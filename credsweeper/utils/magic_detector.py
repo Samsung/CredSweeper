@@ -104,7 +104,7 @@ class MagicDetector:
                  re.compile(b"CWS[\x06-\x2B][^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")
                  ),
                 # CachedDateTimeZone
-                (b"C\x00", re.compile(b"C\x00[\x02-\x0A]\x00[\x03-\x06\x0A][A-Z]{2,4}T[A-Za-z-]*\x00")),
+                (b"C\x00", re.compile(b"C\x00[\x02-\x0A]\x00[\x03-\x06\x0A\x0B](WIB|UTC|[A-Z]{2,4}T[A-Za-z-]*)\x00")),
             ],
             0x44: [
                 # .dds file
@@ -131,6 +131,8 @@ class MagicDetector:
                 # TIFF little endian
                 (b"II",
                  re.compile(b"II[+*]\x00[^\x00-\x08\x0C\x0E\x1F\x80-\xFF]{0,4096}[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+                # DNG Camera Profile
+                (b"IIRC\x08\x00\x00\x00", None),
                 # jxr
                 (b"II\xBC\x01", None),
                 # ID2v3 for various media (e.g. MP3)
@@ -162,7 +164,7 @@ class MagicDetector:
                 # GIT: pack-*.pack
                 (b"PACK\x00\x00\x00", None),
                 # PrecalculatedDateTimeZone
-                (b"P\x00", re.compile(b"P\x00[\x02-\x05]\x00[\x03-\x04][A-Z]{2,4}T\x00")),
+                (b"P\x00", re.compile(b"P\x00[\x02-\x05]\x00[\x03-\x04](zzz|[A-Z]{2,4}T)\x00")),
                 # PKM format for ETC1 texture
                 (b"PKM 10\x00\x00", None),
             ],
@@ -223,7 +225,7 @@ class MagicDetector:
                 (b"icns\x00",
                  re.compile(b"icns\x00[\x00-\xFF]{3}"
                             b"(IC(ON|N#)|ic([hms][#48]|s[bB]|l[48]|p[456]|0[45789]|1[0-4])"
-                            b"|is32|s8mk|il32|l8mk|ih32|h8mk|it32|t8mk|sb24|SB24)")),
+                            b"|is32|s8mk|il32|l8mk|ih32|h8mk|it32|t8mk|sb24|SB24|TOC)")),
                 # Magick Image File Format
                 (b"id=ImageMagick",
                  re.compile(b"id=ImageMagick[\x09\x0A\x0D\x20-\x7E\xA0-\xFF]+"
@@ -315,6 +317,12 @@ class MagicDetector:
                 # https://github.com/llvm/llvm-project/blob/main/llvm/include/llvm/ProfileData/InstrProf.h
                 (b"\xFFlprofi\x81", None),
             ]
+        },
+        0x2: {
+            0xDA: [
+                # ICU Data File https://unicode-org.github.io/icu/userguide/icu_data/
+                (b"\xDA'", None),
+            ],
         },
         0x22: {
             0x4C: [
