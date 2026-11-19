@@ -31,7 +31,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredData
-          ref: 0b1940e171725ad8937311120b191602608a4801
+          ref: 2faad4f03c32c3ff1fe3e7d129fa60913b475ba4
 
       - name: Markup hashing
         run: |
@@ -50,7 +50,7 @@ jobs:
 
       - name: Set up Python 3.11
         if: steps.cache-data.outputs.cache-hit != 'true'
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0 - 2026.10.22
         with:
           python-version: "3.11"
 
@@ -87,7 +87,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredData
-          ref: 0b1940e171725ad8937311120b191602608a4801
+          ref: 2faad4f03c32c3ff1fe3e7d129fa60913b475ba4
 
       - name: Markup hashing
         run: |
@@ -113,7 +113,7 @@ jobs:
         run: ls -al . && ls -al data
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0 - 2026.10.22
         with:
           python-version: "3.11"
 
@@ -190,7 +190,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredData
-          ref: 0b1940e171725ad8937311120b191602608a4801
+          ref: 2faad4f03c32c3ff1fe3e7d129fa60913b475ba4
 
       - name: Markup hashing
         run: |
@@ -216,7 +216,7 @@ jobs:
         run: rm -rf data/0* data/2* data/7* data/8* data/a* data/b* data/d* data/e* data/f*
 
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0 - 2026.10.22
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -378,7 +378,7 @@ jobs:
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0 - 2026.06.18
         with:
           repository: Samsung/CredData
-          ref: 0b1940e171725ad8937311120b191602608a4801
+          ref: 2faad4f03c32c3ff1fe3e7d129fa60913b475ba4
 
       - name: Markup hashing
         run: |
@@ -408,7 +408,7 @@ jobs:
           mv meta ${{ github.workspace }}/CredData/
 
       - name: Set up Python 3.11
-        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0 - 2026.06.24
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0 - 2026.10.22
         with:
           python-version: "3.11"
 
