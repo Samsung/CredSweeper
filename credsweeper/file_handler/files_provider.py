@@ -1,5 +1,6 @@
 import io
 import logging
+import os
 from pathlib import Path
 from typing import List, Optional, Union, Tuple, Sequence
 
@@ -44,7 +45,9 @@ class FilesProvider(AbstractProvider):
             True if file is ignored by git. False otherwise
 
         """
-        parent_directory = Path(path).parent
+        # git check-ignore resolves a relative path from the repository root, not from the current directory
+        abs_path = Path(os.path.abspath(path))
+        parent_directory = abs_path.parent
 
         # Iterate over file path to find nearest ".git" directory
         while True:
@@ -59,7 +62,7 @@ class FilesProvider(AbstractProvider):
                     self.located_repos[parent_directory] = repo
 
                 # Return True if there is an ignored file in 'path' and False if any.
-                return bool(repo.ignored(path))
+                return bool(repo.ignored(abs_path))
 
             except (InvalidGitRepositoryError, NoSuchPathError):
                 new_parent = parent_directory.parent

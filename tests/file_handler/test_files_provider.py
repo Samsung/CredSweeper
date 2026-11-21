@@ -110,3 +110,23 @@ class TestFilesProvider(unittest.TestCase):
             self.assertFalse(provider.is_git_ignored(dir_path / "password.txt"))
             # not ignored
             self.assertFalse(provider.is_git_ignored(dir_path / "src" / "dir" / "file.cpp"))
+
+    def test_is_git_ignored_relative_p(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            dir_path = Path(tmp_dir)
+            git.Repo.init(dir_path)
+            (dir_path / "src").mkdir()
+            with open(dir_path / ".gitignore", "w") as f:
+                f.write("*.log\nsrc/local.cfg\n")
+            provider = FilesProvider(MagicMock())
+            cwd = os.getcwd()
+            try:
+                # relative paths given from a subdirectory of the repository
+                os.chdir(dir_path / "src")
+                self.assertTrue(provider.is_git_ignored("local.cfg"))
+                self.assertTrue(provider.is_git_ignored(Path("local.cfg")))
+                self.assertTrue(provider.is_git_ignored("../system.log"))
+                self.assertFalse(provider.is_git_ignored("main.cpp"))
+                self.assertFalse(provider.is_git_ignored("../src/main.cpp"))
+            finally:
+                os.chdir(cwd)
