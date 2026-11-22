@@ -14,6 +14,11 @@ from tests import AZ_DATA, AZ_STRING, TESTS_PATH
 
 
 class TestFilesProvider(unittest.TestCase):
+    def setUp(self) -> None:
+        self.cwd = os.getcwd()
+
+    def tearDown(self) -> None:
+        os.chdir(self.cwd)
 
     def test_get_scannable_files_io_p(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -119,14 +124,12 @@ class TestFilesProvider(unittest.TestCase):
             with open(dir_path / ".gitignore", "w") as f:
                 f.write("*.log\nsrc/local.cfg\n")
             provider = FilesProvider(MagicMock())
-            cwd = os.getcwd()
-            try:
-                # relative paths given from a subdirectory of the repository
-                os.chdir(dir_path / "src")
-                self.assertTrue(provider.is_git_ignored("local.cfg"))
-                self.assertTrue(provider.is_git_ignored(Path("local.cfg")))
-                self.assertTrue(provider.is_git_ignored("../system.log"))
-                self.assertFalse(provider.is_git_ignored("main.cpp"))
-                self.assertFalse(provider.is_git_ignored("../src/main.cpp"))
-            finally:
-                os.chdir(cwd)
+            # relative paths given from a subdirectory of the repository
+            os.chdir(dir_path / "src")
+            self.assertTrue(provider.is_git_ignored("local.cfg"))
+            self.assertTrue(provider.is_git_ignored(Path("local.cfg")))
+            self.assertTrue(provider.is_git_ignored("../system.log"))
+            self.assertTrue(provider.is_git_ignored("main.log"))
+            self.assertTrue(provider.is_git_ignored(Path("main.log")))
+            self.assertFalse(provider.is_git_ignored("main.cpp"))
+            self.assertFalse(provider.is_git_ignored("../src/main.cpp"))

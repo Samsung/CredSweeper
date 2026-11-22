@@ -46,7 +46,7 @@ class FilesProvider(AbstractProvider):
 
         """
         # git check-ignore resolves a relative path from the repository root, not from the current directory
-        abs_path = Path(os.path.abspath(path))
+        abs_path = path.absolute() if isinstance(path, Path) else Path(path).absolute()
         parent_directory = abs_path.parent
 
         # Iterate over file path to find nearest ".git" directory
