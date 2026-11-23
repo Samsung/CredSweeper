@@ -100,7 +100,7 @@ def main():
     if os.getenv('DO_ATHERIS_INSTRUMENT'):
         atheris.instrument_all()
     atheris.Setup(  #
-        sys.argv + [f"-max_len={INPUT_DATA_SIZE}"],  # -rss_limit_mb=6912
+        sys.argv + [f"-max_len={INPUT_DATA_SIZE}", "-report_slow_units=300", "-timeout=3600"],  # -rss_limit_mb=6912
         fuzz_credsweeper_scan,  #
         internal_libfuzzer=True,  #
         enable_python_coverage=True)
