@@ -37,6 +37,10 @@ class MagicDetector:
             0x01: [
                 # https://fontforge.org/docs/techref/pcf-format.html
                 (b"\x01fcp", None),
+                # XCOFF32
+                (b"\x01\xDF", None),
+                # XCOFF64
+                (b"\x01\xF7", None),
             ],
             0x02: [
                 # Binary CMap
@@ -138,6 +142,10 @@ class MagicDetector:
                 # ID2v3 for various media (e.g. MP3)
                 (b"ID3", re.compile(b"ID3[\x02\x03\x04]\x00\x00\x00")),
             ],
+            0x4C: [
+                # x86 32-bit PE
+                (b"L\x01", re.compile(b"L\x01[\x00-\xFF]*[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
+            ],
             0x4D: [
                 # TIFF big endian
                 (b"MM",
@@ -152,6 +160,10 @@ class MagicDetector:
                 (b"MTME\x00\x00\x00", None),
                 # MIDI sound file
                 (b"MThd\x00\x00\x00", None),
+                # MCUFont
+                (b"MCUF\x00\x00", None),
+                # .tlb files
+                (b"MSFT\x02\x00\x01\x00", None),
             ],
             0x4F: [
                 # OGG
@@ -188,6 +200,10 @@ class MagicDetector:
                 # SVM Metafile
                 (b"VCLMTF\x01\x00", None),
             ],
+            0x57: [
+                # .wmfw files
+                (b"WMFW", re.compile(b"WMFW[\x01-\xFF]\x00\x00\x00")),
+            ],
             0x58: [
                 # https://www-archive.mozilla.org/scriptable/typelib_file
                 (b"XPCOM\nTypeLib\r\n\x1A", None),
@@ -209,6 +225,10 @@ class MagicDetector:
                  ),
                 # FLAC magic number and seven used types https://www.rfc-editor.org/info/rfc9639/#metadata-block-header
                 (b"fLaC", re.compile(b"fLaC[\x00-\x06]")),
+            ],
+            0x64: [
+                # AMD64 PE
+                (b"d\x86", re.compile(b"d\x86[\x00-\x08\x0C\x0E\x1F\x80-\xFF]*[\x00-\x08\x0C\x0E\x1F\x80-\xFF]")),
             ],
             0x67: [
                 # gimp
