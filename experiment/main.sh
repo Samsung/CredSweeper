@@ -50,7 +50,6 @@ elif [ ! 0 -lt ${JOBS} ]; then
     exit 1
 fi
 
-
 WORK_DIR="${CREDSWEEPER_DIR}/experiment"
 cd "${WORK_DIR}"
 RESULT_DIR="${WORK_DIR}/results"
@@ -60,23 +59,23 @@ mkdir -vp "${RESULT_DIR}"
 #TUNER=--tuner
 # set env DOC to apply doc dataset
 #DOC=--doc
-"${CREDSWEEPER_DIR}"/.venv/bin/python main.py --data "${CREDDATA_DIR}" --jobs ${JOBS} ${TUNER} ${DOC} --batch_size ${BATCH} | tee "${RESULT_DIR}/${NOW}.train.log"
+"${CREDSWEEPER_DIR}"/.venv/bin/python main.py --data "${CREDDATA_DIR}" --stamp ${NOW} --jobs ${JOBS} ${TUNER} ${DOC} --batch_size ${BATCH} 2>&1 | tee "${RESULT_DIR}/${NOW}.train.log"
 error_code=${PIPESTATUS}
 if [ 0 -ne ${error_code} ]; then exit ${error_code}; fi
 
 cd "${CREDSWEEPER_DIR}"
-report_file=${RESULT_DIR}/${NOW}.json
+report_file="${RESULT_DIR}/${NOW}.output.json"
 if [ -z "${TESTDATA_DIR}" ]; then
     echo "Used CREDDATA_DIR=${CREDDATA_DIR} for BenchMark and train rules only"
-    ${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper ${DOC} --sort  --rules ${CREDSWEEPER_DIR}/experiment/results/train_config.yaml --path "${CREDDATA_DIR}/data" --log info --jobs ${JOBS}  --subtext --save-json ${report_file} --no-stdout
+    ${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper ${DOC} --sort  --rules ${CREDSWEEPER_DIR}/experiment/results/train_config.yaml --path "${CREDDATA_DIR}/data" --log info --jobs ${JOBS} --subtext --save-json ${report_file} --no-stdout --ml_config "${RESULT_DIR}/${NOW}.ml_config.json" --ml_model "${RESULT_DIR}/${NOW}.ml_model.onnx"
     cd "${CREDDATA_DIR}"
 else
     echo "TESTDATA_DIR=${TESTDATA_DIR}"
-    ${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper ${DOC} --sort --path "${TESTDATA_DIR}/data" --log info --jobs ${JOBS}  --subtext --save-json ${report_file} --no-stdout
+    ${CREDSWEEPER_DIR}/.venv/bin/python -m credsweeper ${DOC} --sort --path "${TESTDATA_DIR}/data" --log info --jobs ${JOBS}  --subtext --save-json ${report_file} --no-stdout --ml_config "${RESULT_DIR}/${NOW}.ml_config.json" --ml_model "${RESULT_DIR}/${NOW}.ml_model.onnx"
     cd "${TESTDATA_DIR}"
 fi
 
-.venv/bin/python -m benchmark --scanner credsweeper --load ${report_file} | tee ${CREDSWEEPER_DIR}/.ci/benchmark.txt
+.venv/bin/python -m benchmark --scanner credsweeper --load ${report_file} 2>&1 | tee "${RESULT_DIR}/${NOW}.benchmark.txt"
 
 SPENT_SECONDS=$(( $(date +%s) - ${START_TIME} ))
 if [ 86400 -lt ${SPENT_SECONDS} ];then

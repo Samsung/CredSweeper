@@ -1,5 +1,5 @@
 {
-    "char_set": "\u001b\t\n\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+    "char_set": "\t\n\r\u001b !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
     "features": [
         {
             "comment": "INFO=0.0, LOW=0.25, MEDIUM=0.5, HIGH=0.75, CRITICAL=1.0",
@@ -120,7 +120,7 @@
             "comment": "VariableNotAllowedNameCheck - hash mentioned",
             "kwargs": {
                 "attribute": "variable",
-                "pattern": "(?i:( h1$|md5|sha[_-]?(224|256|384|512)))"
+                "pattern": "(?i:(\\bh1$|md5|sha[_-]?(224|256|384|512)))"
             },
             "type": "SearchInAttribute"
         },
@@ -152,7 +152,7 @@
             "comment": "VariableNotAllowedNameCheck - key rule",
             "kwargs": {
                 "attribute": "variable",
-                "pattern": "(?i:(?:uniq(?:ue)?|escap(?:e|ing)|resources?|projects?|filters?|pub(?:lic)?)_?keys?)"
+                "pattern": "(?i:(?:hot|range|hash|context|files?|filters?|resources?|projects?|uniq(?:ue)?|escap(?:e|ing)|quer(?:y|ies)?|search(ing)?|pub(?:lic)?)[_-]?keys?)"
             },
             "type": "SearchInAttribute"
         },
@@ -160,7 +160,7 @@
             "comment": "VariableNotAllowedNameCheck - word at end",
             "kwargs": {
                 "attribute": "variable",
-                "pattern": "(?i:(icon|label|mode|field|format|number|sum|size|len(gth)?|name|type|manager|algorithm|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate|code|fingerprint)s?$)"
+                "pattern": "(?i:(icon|label|mode|field|format|number|sum|size|len(gth)?|name|type|manager|algo(rithm)?|charset|method|map|digest|pattern|view|error|date(time)?|time(stamp)?|tag|version|hash|rate|code|fingerprint)s?$)"
             },
             "type": "SearchInAttribute"
         },
@@ -186,6 +186,7 @@
                     "!!!",
                     "_at",
                     "_len",
+                    "aes",
                     "256",
                     "512",
                     "access",
@@ -207,6 +208,7 @@
                     "filter",
                     "fingerprint",
                     "guid",
+                    "h1",
                     "hash",
                     "keyguid",
                     "keyid",
@@ -224,6 +226,7 @@
                     "param",
                     "pass",
                     "path",
+                    "private",
                     "project",
                     "public",
                     "pw",
@@ -261,6 +264,7 @@
                     "${",
                     "{$",
                     "(",
+                    "-----begin",
                     "->",
                     ".",
                     "...",
@@ -299,6 +303,7 @@
                     "oprst",
                     "other",
                     "pass",
+                    "private",
                     "public",
                     "pwd",
                     "redacted",
@@ -642,7 +647,6 @@
                     ".properties",
                     ".proto",
                     ".ps1",
-                    ".purs",
                     ".pxd",
                     ".py",
                     ".pyi",
@@ -670,6 +674,7 @@
                     ".storyboard",
                     ".strings",
                     ".sty",
+                    ".sum",
                     ".swift",
                     ".t",
                     ".td",
@@ -710,6 +715,7 @@
                     "CMD Password",
                     "CMD Secret",
                     "CMD Token",
+                    "CURL Options",
                     "CURL User Password",
                     "Credential",
                     "Key",
