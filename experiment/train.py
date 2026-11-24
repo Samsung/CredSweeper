@@ -1,11 +1,9 @@
 import hashlib
 import os
-import pathlib
 import pickle
 import random
 import subprocess
 import sys
-from datetime import datetime
 
 import keras_tuner as kt
 import numpy as np
@@ -17,25 +15,30 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import compute_class_weight
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 
+from constants import RESULTS_DIR
+from credsweeper import MlValidator
+from credsweeper.utils.util import Util
 from data_loader import read_detected_data, read_metadata, join_label, get_y_labels
+from experiment.constants import THIS_DIR
 from experiment.evaluate_model import evaluate_model
 from features import prepare_data
 from hyperparameters import HP_DICT
 from log_callback import LogCallback
 from ml_model import MlModel
-from model_config_preprocess import model_config_preprocess, ML_CONFIG_PATH
+from model_config_preprocess import model_config_preprocess
 from plot import save_plot
-from prepare_data import prepare_train_data, RESULTS_DIR
+from prepare_data import prepare_train_data
 
 
 def train(
     cred_data_location: str,
+    stamp: str,
     jobs: int,
     epochs: int,
     batch_size: int,
     patience: int,
     doc_target: bool,
-    use_tuner: bool,
+    tuner_trials: int,
     eval_test: bool,
     eval_train: bool,
     eval_full: bool,
@@ -45,10 +48,6 @@ def train(
     np.random.seed(random.randint(1, 0xffffffff))
 
     print(f"Memory at start: {LogCallback.get_memory_info()}", flush=True)
-
-    subprocess.check_call(f"md5sum {ML_CONFIG_PATH.absolute()}", shell=True)  # dbg
-
-    current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
@@ -74,22 +73,8 @@ def train(
         del detected_data
         del meta_data
 
-    # workaround for CI step
-    trial_cnt = 3
-    while 0 < trial_cnt:
-        trial_cnt -= 1
-        # there are 2 times possible fails due ml config might be updated
-        try:
-            thresholds = model_config_preprocess(df_all, doc_target)
-            break
-        except RuntimeError as exc:
-            if "RESTART:" in str(exc) and 0 <= trial_cnt:
-                print(str(exc), flush=True)
-                continue
-            else:
-                raise exc
-    else:
-        raise RuntimeError("Something went wrong")
+    ml_config_path = RESULTS_DIR / f"{stamp}.ml_config.json"
+    thresholds = model_config_preprocess(df_all, doc_target, ml_config_path, cred_data_location)
 
     # random split
     df_train, df_test = train_test_split(df_all, test_size=0.15, random_state=random.randint(1, 1 << 32))
@@ -99,12 +84,12 @@ def train(
     print(f"Test size: {len_df_test}", flush=True)
 
     print(f"Prepare full data", flush=True)
-    x_full_line, x_full_variable, x_full_value, x_full_features = prepare_data(df_all)
+    x_full_line, x_full_variable, x_full_value, x_full_features = prepare_data(df_all, ml_config_path)
     y_full: ndarray = get_y_labels(df_all)
     del df_all
 
-    print(f"Prepare train data", flush=True)
-    x_train_line, x_train_variable, x_train_value, x_train_features = prepare_data(df_train)
+    print("Prepare train data", flush=True)
+    x_train_line, x_train_variable, x_train_value, x_train_features = prepare_data(df_train, ml_config_path)
     print("x_train_value dtype ", x_train_value.dtype, flush=True)  # dbg
     print("x_train_features dtype", x_train_features.dtype, flush=True)  # dbg
     y_train = get_y_labels(df_train)
@@ -123,7 +108,7 @@ def train(
     print(f"class_weight: {class_weight}", flush=True)  # information about class weights
 
     print(f"Prepare test data", flush=True)
-    x_test_line, x_test_variable, x_test_value, x_test_features = prepare_data(df_test)
+    x_test_line, x_test_variable, x_test_value, x_test_features = prepare_data(df_test, ml_config_path)
     y_test = get_y_labels(df_test)
     print(f"Class-1 prop on test: {np.mean(y_test):.4f}", flush=True)
     del df_test
@@ -131,7 +116,7 @@ def train(
     print(f"Memory before search / compile: {LogCallback.get_memory_info()}", flush=True)
 
     log_callback = LogCallback()
-    if use_tuner:
+    if tuner_trials:
         print(f"Tuner initial dict:{HP_DICT}", flush=True)
         tuner_kwargs = {k: v[0] for k, v in HP_DICT.items()}
         print(f"Tuner kwargs:{tuner_kwargs}", flush=True)
@@ -140,10 +125,10 @@ def train(
             hypermodel=MlModel(x_full_line.shape, x_full_variable.shape, x_full_value.shape, x_full_features.shape,
                                **tuner_kwargs),
             objective='val_loss',
-            directory=str(RESULTS_DIR / f"{current_time}.tuner"),
+            directory=str(RESULTS_DIR / f"{stamp}.tuner"),
             project_name='ml_tuning',
             seed=random.randint(1, 0xffffffff),
-            max_trials=30,
+            max_trials=tuner_trials,
         )
         search_early_stopping = EarlyStopping(monitor="val_loss",
                                               patience=patience,
@@ -187,7 +172,7 @@ def train(
                                    mode="min",
                                    restore_best_weights=True,
                                    verbose=1)
-    model_checkpoint = ModelCheckpoint(filepath=str(RESULTS_DIR / f"{current_time}.best_model.keras"),
+    model_checkpoint = ModelCheckpoint(filepath=str(RESULTS_DIR / f"{stamp}.best_model.keras"),
                                        monitor="val_loss",
                                        save_best_only=True,
                                        mode="min",
@@ -211,11 +196,11 @@ def train(
 
     print(f"Memory after train: {LogCallback.get_memory_info()}", flush=True)
 
-    with open(RESULTS_DIR / f"{current_time}.history.pickle", "wb") as f:
+    with open(RESULTS_DIR / f"{stamp}.history.pickle", "wb") as f:
         pickle.dump(fit_history, f)
 
-    model_file_name = RESULTS_DIR / f"ml_model_at-{current_time}"
-    keras_model.export(model_file_name, verbose=True, include_optimizer=False)
+    model_path = RESULTS_DIR / f"{stamp}.model"
+    keras_model.export(model_path, verbose=True, include_optimizer=False)
 
     if eval_test:
         print(f"Validate results on the test subset. Size: {len(y_test)} {np.mean(y_test):.4f}", flush=True)
@@ -246,29 +231,32 @@ def train(
         del x_full_features
         del y_full
 
-    onnx_model_file = pathlib.Path(__file__).parent.parent / "credsweeper" / "ml_model" / "ml_model.onnx"
+    onnx_model_file = RESULTS_DIR / f"{stamp}.ml_model.onnx"
     # convert the model to onnx right now
-    convert_args = f"{sys.executable} -m tf2onnx.convert --saved-model {model_file_name.absolute()}" \
-                   f" --output {str(onnx_model_file)} --verbose"
-    subprocess.check_call(convert_args, shell=True, cwd=pathlib.Path(__file__).parent)
+    convert_args = [
+        sys.executable, "-m", "tf2onnx.convert", "--saved-model",
+        str(model_path.absolute()), "--output",
+        str(onnx_model_file.absolute()), "--verbose"
+    ]
+    subprocess.run(convert_args, check=True, cwd=THIS_DIR)
     with open(onnx_model_file, "rb") as f:
         onnx_md5 = hashlib.md5(f.read()).hexdigest()
-        print(f"ml_model.onnx:{onnx_md5}", flush=True)
+        print(f"{onnx_model_file}:{onnx_md5}", flush=True)
 
-    with open(ML_CONFIG_PATH, "rb") as f:
+    with open(ml_config_path, "rb") as f:
         config_md5 = hashlib.md5(f.read()).hexdigest()
-        print(f"ml_config.json:{config_md5}", flush=True)
+        print(f"{ml_config_path}:{config_md5}", flush=True)
 
     best_epoch = 1 + np.argmin(np.array(fit_history.history['val_loss']))
 
     # ml history analysis
     save_plot(
-        stamp=current_time,
+        stamp=stamp,
         title=f"batch:{batch_size} train:{len_df_train} test:{len_df_test} weights:{class_weights}",
         history=fit_history,
         dir_path=RESULTS_DIR,
         best_epoch=int(best_epoch),
-        info=f"ml_config.json:{config_md5} ml_model.onnx:{onnx_md5} best_epoch:{best_epoch}",
+        info=f"{ml_config_path}:{config_md5} ml_model.onnx:{onnx_md5} best_epoch:{best_epoch}",
     )
 
-    return str(model_file_name.absolute())
+    return str(model_path.absolute())
