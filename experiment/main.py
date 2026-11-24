@@ -99,5 +99,4 @@ def main(argv) -> int:
 
 
 if __name__ == "__main__":
-    #assert hashlib.md5(MlValidator._default_config.read_bytes()).hexdigest() == "326a4f7543f5cee73e92e05289362664" # todo dbg
     sys.exit(main(sys.argv))
