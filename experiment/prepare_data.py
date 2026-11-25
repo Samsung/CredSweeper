@@ -17,17 +17,24 @@ def execute_scanner(dataset_location: str, report_file_str: str, train_rules_str
     """Execute CredSweeper as a separate process to make sure no global states is shared with training script"""
     command_args = [
         sys.executable,
-        "-m", "credsweeper",
+        "-m",
+        "credsweeper",
         "--banner",
-        "--jobs", str(jobs),
-        "--path", f"{dataset_location}/data",
-        "--save-json", report_file_str,
-        "--rules", train_rules_str,
+        "--jobs",
+        str(jobs),
+        "--path",
+        f"{dataset_location}/data",
+        "--save-json",
+        report_file_str,
+        "--rules",
+        train_rules_str,
         "--pedantic",
-        "--ml_threshold", "0",
+        "--ml_threshold",
+        "0",
         "--sort",
         "--subtext",
-        "--log", "info",
+        "--log",
+        "info",
         "--no-stdout",
     ]
     if doc_target:
@@ -44,9 +51,12 @@ def data_checksum(dir_path: Path) -> str:
                 with open(os.path.join(root, file), "rb") as f:
                     file_data = f.read()
                     data = b''.join([
-                        root.encode(UTF_8), b'\0',
-                        file.encode(UTF_8), b'\0',
-                        str(len(file_data)).encode(UTF_8), b'\0',
+                        root.encode(UTF_8),
+                        b'\0',
+                        file.encode(UTF_8),
+                        b'\0',
+                        str(len(file_data)).encode(UTF_8),
+                        b'\0',
                         file_data,
                     ])
                     hashes.append(hashlib.md5(data).digest())

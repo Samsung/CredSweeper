@@ -208,8 +208,7 @@ def join_label(detected_data: Dict[Identifier, Dict], meta_data: Dict[Identifier
         elif positive_markup := positive_lines.get((index[0], index[1])):
             print(f"WARNING: {index} is not in meta!"
                   f" {Fore.LIGHTRED_EX}CHECK THE NEGATIVE CASE{Style.RESET_ALL}"
-                  f" {positive_markup}\n" +
-                  get_colored_line(line_data),
+                  f" {positive_markup}\n" + get_colored_line(line_data),
                   flush=True)
         else:
             print(f"WARNING: {index} is not in meta!!! {Fore.RED}IT WILL BE USED AS NEGATIVE CASE{Style.RESET_ALL}\n" +

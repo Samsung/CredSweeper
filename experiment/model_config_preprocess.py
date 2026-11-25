@@ -110,11 +110,12 @@ def get_thresholds(ml_config_path: pathlib.Path) -> Dict[str, float]:
     return thresholds
 
 
-def model_config_preprocess(df_all: pd.DataFrame,
-                            doc_target: bool,
-                            ml_config_path: pathlib.Path,
-                            cred_data_location: str,
-                            ) -> Dict[str, float]:
+def model_config_preprocess(
+    df_all: pd.DataFrame,
+    doc_target: bool,
+    ml_config_path: pathlib.Path,
+    cred_data_location: str,
+) -> Dict[str, float]:
     # use default model for preprocessing
     ml_config_path.write_bytes(MlValidator._default_config.read_bytes())
     allowed_extensions_path = pathlib.Path(cred_data_location) / "allowed_extensions.json"

@@ -51,10 +51,7 @@ def main(argv) -> int:
                         dest="patience",
                         metavar="POSITIVE_INT")
     parser.add_argument("--doc", help="use doc target", dest="doc_target", action=BooleanOptionalAction, default=False)
-    parser.add_argument("--tuner",
-                        help="use keras tuner for X trials",
-                        dest="tuner_trials",
-                        default=0)
+    parser.add_argument("--tuner", help="use keras tuner for X trials", dest="tuner_trials", default=0)
     parser.add_argument("--eval-test",
                         help="evaluate model for test dataset",
                         dest="eval_test",
