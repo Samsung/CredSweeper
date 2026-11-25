@@ -1,3 +1,4 @@
+import pathlib
 from typing import Tuple, Union
 
 import numpy as np
@@ -90,10 +91,11 @@ def get_features(line_data: Union[dict, pd.Series],
     return line_input, variable_input, value_input, extracted_features
 
 
-def prepare_data(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def prepare_data(df: pd.DataFrame, ml_config: pathlib.Path) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Get features from a DataFrame detection using CredSweeper.MlValidator module"""
 
-    ml_validator = MlValidator(0.5)  # MLValidator object loads config (MAY be updated!) with features
+    # MLValidator uses the train config
+    ml_validator = MlValidator(0.5, ml_config=ml_config)
 
     x_size = len(df)
     x_line_input = np.zeros(shape=[x_size, MlValidator.MAX_LEN, ml_validator.num_classes], dtype=np.float32)

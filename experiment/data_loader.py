@@ -1,5 +1,4 @@
 import contextlib
-import json
 import os
 import pathlib
 from copy import deepcopy
@@ -10,11 +9,10 @@ import numpy as np
 import pandas as pd
 from colorama import Fore, Style, Back
 
-from credsweeper.common.constants import ML_HUNK
 from credsweeper.utils.util import Util
 
 # path, line_number, val_start, val_end
-identifier = Tuple[str, int, int, int]
+Identifier = Tuple[str, int, int, int]
 
 
 def transform_to_meta_path(file_path: pathlib.Path):
@@ -31,10 +29,10 @@ def transform_to_meta_path(file_path: pathlib.Path):
     return meta_path
 
 
-def read_detected_data(file_path: pathlib.Path) -> Dict[identifier, Dict]:
+def read_detected_data(file_path: pathlib.Path) -> Dict[Identifier, Dict]:
     print(f"Reading detections from {file_path}", flush=True)
-    with open(file_path) as f:
-        detections = json.load(f)
+    detections = Util.json_load(file_path)
+    assert detections, "Something went wrong reading detections"
 
     detected_lines = {}
 
@@ -62,7 +60,7 @@ def read_detected_data(file_path: pathlib.Path) -> Dict[identifier, Dict]:
     return detected_lines
 
 
-def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
+def read_metadata(meta_dir: str) -> Dict[Identifier, Dict]:
     print(f"Reading meta from {meta_dir}", flush=True)
     meta_lines = {}
     j = 0
@@ -72,48 +70,53 @@ def read_metadata(meta_dir: str) -> Dict[identifier, Dict]:
         if not file_path.endswith(".csv"):
             print(f"skip garbage: {csv_file}", flush=True)
             continue
+        print(f"read meta: {csv_file}", flush=True)
         try:
+            # read full meta
             df = pd.read_csv(csv_file,
                              dtype={
+                                 "Id": int,
+                                 "FileID": str,
+                                 "Domain": str,
                                  "RepoName": str,
+                                 "FilePath": str,
+                                 "LineStart": int,
+                                 "LineEnd": int,
                                  "GroundTruth": str,
+                                 "ValueStart": pd.Int64Dtype(),
+                                 "ValueEnd": pd.Int64Dtype(),
+                                 "CryptographyKey": str,
+                                 "PredefinedPattern": str,
                                  "Category": str,
-                                 "LineStart": "Int64",
-                                 "LineEnd": "Int64",
-                                 "ValueStart": "Int64",
-                                 "ValueEnd": "Int64",
                              })
         except Exception as exc:
             print(csv_file, exc, flush=True)
             raise
-        # Int64 is important to change with NaN
-        df["LineStart"] = df["LineStart"].fillna(-1).astype(int)
-        df["LineEnd"] = df["LineEnd"].fillna(-1).astype(int)
+        # Int64Dtype is important to change with NaN for optional value positions. Line position must be always int.
         df["ValueStart"] = df["ValueStart"].fillna(-1).astype(int)
         df["ValueEnd"] = df["ValueEnd"].fillna(-1).astype(int)
         # all templates are false
         df.loc[df["GroundTruth"] != 'T', "GroundTruth"] = 'F'
         for _, row in df.iterrows():
             j += 1
+            # MULTI_PATTERN_RULES in CredData
             if row["LineStart"] != row["LineEnd"] \
-                    or all(x in ["AWS Multi", "Google Multi"] for x in row["Category"].split(':')):
+                    or all(x in {"AWS Multi", "Google Multi", "JWK", "Alibaba Multi", "Twilio Multi"} for x in
+                           row["Category"].split(':')):
                 # print(f"WARNING: skip not ml category {row['FilePath']},{line_start},{line_end}"
                 #      f",{row['GroundTruth']},{row['Category']}", flush=True)
                 continue
             assert 'F' == row["GroundTruth"] or 'T' == row["GroundTruth"] and 0 <= row["ValueStart"], row
 
             meta_path = transform_to_meta_path(row["FilePath"])
-            index = meta_path, row['LineStart'], row['ValueStart'], row['ValueEnd']
+            index = (meta_path, row['LineStart'], row['ValueStart'], row['ValueEnd'])
             if index not in meta_lines:
                 row_data = row.to_dict()
                 row_data["Used"] = False
                 row_data["FilePath"] = meta_path
                 meta_lines[index] = row_data
-            else:
-                print(
-                    f"WARNING: {index} already in meta_lines {row['GroundTruth']} {row['Category']}"
-                    f"\n{meta_lines[index]}",
-                    flush=True)
+            elif row["GroundTruth"] != meta_lines[index]["GroundTruth"]:
+                print(f"WARNING: {row} conflicts with meta_lines\n{meta_lines[index]}", flush=True)
 
     print(f"Loaded {len(meta_lines)} lines from meta of {j} total", flush=True)
 
@@ -139,19 +142,24 @@ def get_colored_line(line_data: Dict[str, Any]) -> str:
                            + Style.RESET_ALL \
                            + colored_line[var_end:]
 
-    colored_sub_line = Util.subtext(colored_line, line_data['value_start'], ML_HUNK)
+    line_start = 0 if var_start <= 32 else var_start - 32
+    line_len = len(line_data['line'])
+    colored_line_len = len(colored_line)
+    line_end = val_end + colored_line_len - line_len + 32
+    if colored_line_len < line_end:
+        line_end = colored_line_len
+    colored_sub_line = colored_line[line_start:line_end]
     return f"{colored_sub_line}{Style.RESET_ALL}"
 
 
-def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier, Dict],
+def join_label(detected_data: Dict[Identifier, Dict], meta_data: Dict[Identifier, Dict],
                cred_data_location: str) -> pd.DataFrame:
 
     @cache
     def read_text(path) -> list[str]:
-        with open(path, "r", encoding="utf8") as f:
-            return f.read().replace("\r\n", '\n').replace('\r', '\n').split('\n')
+        return Util.read_file(path)
 
-    positive_lines = set((x[0], x[1]) for x, y in meta_data.items() if 'T' == y["GroundTruth"])
+    positive_lines = {(x[0], x[1]): y for x, y in meta_data.items() if 'T' == y["GroundTruth"]}
     values = []
     detected_rules: Set[str] = set()
     for index, line_data in detected_data.items():
@@ -160,6 +168,9 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
         text = read_text(f'{cred_data_location}/{line_data["path"]}')
         line = text[line_data["line_num"] - 1]
         line_data["line"] = line
+        if line_data["variable"] is None:
+            # convert to str to avoid NaN for DOC rules
+            line_data["variable"] = ''
         if not line_data["value"]:
             print(f"WARNING: empty value\n{line_data}", flush=True)
             continue
@@ -194,12 +205,13 @@ def join_label(detected_data: Dict[identifier, Dict], meta_data: Dict[identifier
                 print(f"3.CHECK CATEGORIES\n{markup_rules}, {line_data['RuleName']}\n{str(markup)}" +
                       get_colored_line(line_data),
                       flush=True)
-        elif (index[0], index[1]) in positive_lines:
-            print(f"WARNING: {index} is not in meta!!! {Fore.LIGHTRED_EX}CHECK THE NEGATIVE CASE{Style.RESET_ALL}\n" +
-                  get_colored_line(line_data),
+        elif positive_markup := positive_lines.get((index[0], index[1])):
+            print(f"WARNING: {index} is not in meta!"
+                  f" {Fore.LIGHTRED_EX}CHECK THE NEGATIVE CASE{Style.RESET_ALL}"
+                  f" {positive_markup}\n" + get_colored_line(line_data),
                   flush=True)
         else:
-            print(f"WARNING: {index} is not in meta!!! IT WILL BE USED AS NEGATIVE CASE\n" +
+            print(f"WARNING: {index} is not in meta!!! {Fore.RED}IT WILL BE USED AS NEGATIVE CASE{Style.RESET_ALL}\n" +
                   get_colored_line(line_data),
                   flush=True)
         # check the value in detected data

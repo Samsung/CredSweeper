@@ -1,7 +1,10 @@
+import hashlib
 import os
 import random
 import sys
 from argparse import ArgumentParser, BooleanOptionalAction
+
+from credsweeper import MlValidator
 
 os.environ["KERAS_BACKEND"] = "tensorflow"
 
@@ -16,6 +19,12 @@ def main(argv) -> int:
                         help="CredData location",
                         dest="cred_data_location",
                         metavar="PATH",
+                        required=True)
+    parser.add_argument("-s",
+                        "--stamp",
+                        nargs="?",
+                        help="any string to identify the training job",
+                        dest="stamp",
                         required=True)
     parser.add_argument("-j",
                         "--jobs",
@@ -42,11 +51,7 @@ def main(argv) -> int:
                         dest="patience",
                         metavar="POSITIVE_INT")
     parser.add_argument("--doc", help="use doc target", dest="doc_target", action=BooleanOptionalAction, default=False)
-    parser.add_argument("--tuner",
-                        help="use keras tuner",
-                        dest="use_tuner",
-                        action=BooleanOptionalAction,
-                        default=False)
+    parser.add_argument("--tuner", help="use keras tuner for X trials", dest="tuner_trials", default=0)
     parser.add_argument("--eval-test",
                         help="evaluate model for test dataset",
                         dest="eval_test",
@@ -64,19 +69,20 @@ def main(argv) -> int:
                         default=False)
     args = parser.parse_args(argv[1:])
 
-    fixed_seed = 20251216
+    fixed_seed = 20261019
     print(f"Fixed seed:{fixed_seed}", flush=True)
     random.seed(fixed_seed)
 
     print(args, flush=True)  # dbg
     _model_file_name = train(
         cred_data_location=args.cred_data_location,
+        stamp=args.stamp,
         jobs=int(args.jobs),
         epochs=int(args.epochs),
         batch_size=int(args.batch_size),
         patience=int(args.patience),
         doc_target=bool(args.doc_target),
-        use_tuner=bool(args.use_tuner),
+        tuner_trials=int(args.tuner_trials),
         eval_test=bool(args.eval_test),
         eval_train=bool(args.eval_train),
         eval_full=bool(args.eval_full),
