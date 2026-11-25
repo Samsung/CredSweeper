@@ -49,22 +49,22 @@ class TestMlValidator(unittest.TestCase):
         candidate.line_data_list[0].value = "Ahga%$FiQ@Ei8"
 
         decision, probability = self.validate(candidate)
-        self.assertAlmostEqual(0.9873854517936707, probability, delta=ML_DELTA)
+        self.assertAlmostEqual(0.9993234872817993, probability, delta=ML_DELTA)
 
         candidate.line_data_list[0].path = "main.yaml"
         candidate.line_data_list[0].file_type = ".yaml"
         decision, probability = self.validate(candidate)
-        self.assertAlmostEqual(0.9031195044517517, probability, delta=ML_DELTA)
+        self.assertAlmostEqual(0.9967386722564697, probability, delta=ML_DELTA)
 
         candidate.line_data_list[0].path = "main.zip"
         candidate.line_data_list[0].file_type = ".zip"
         decision, probability = self.validate(candidate)
-        self.assertAlmostEqual(0.8412226438522339, probability, delta=ML_DELTA)
+        self.assertAlmostEqual(0.9918076992034912, probability, delta=ML_DELTA)
 
         candidate.line_data_list[0].path = "main.txt"
         candidate.line_data_list[0].file_type = ".txt"
         decision, probability = self.validate(candidate)
-        self.assertAlmostEqual(0.8234410285949707, probability, delta=ML_DELTA)
+        self.assertAlmostEqual(0.9934371709823608, probability, delta=ML_DELTA)
 
     def test_ml_validator_auxiliary_p(self):
         candidate = Candidate.get_dummy_candidate(self.config, "mycred", "", "", "Secret")
@@ -82,25 +82,25 @@ class TestMlValidator(unittest.TestCase):
         candidate_key = CandidateKey(candidate.line_data_list[0])
         sample_as_batch = [(candidate_key, [candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2, None)
-        self.assertAlmostEqual(0.591613233089447, probability_batch[0], delta=ML_DELTA)
+        self.assertAlmostEqual(0.684991717338562, probability_batch[0], delta=ML_DELTA)
 
         # auxiliary rule which was not trained - keeps the same ML probability
         aux_candidate.rule_name = "PASSWD_PAIR"
         sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2, None)
-        self.assertAlmostEqual(0.591613233089447, probability_batch[0], delta=ML_DELTA)
+        self.assertAlmostEqual(0.684991717338562, probability_batch[0], delta=ML_DELTA)
 
         # auxiliary rule in train increases ML probability
         aux_candidate.rule_name = "Token"
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2, None)
-        self.assertAlmostEqual(0.6740559339523315, probability_batch[0], delta=ML_DELTA)
+        self.assertAlmostEqual(0.7861512899398804, probability_batch[0], delta=ML_DELTA)
 
         # which real line may be
         candidate.line_data_list[0].line = "secret=func(token=238475614782)"
         aux_candidate.line_data_list[0].line = "secret=func(token=238475614782)"
         aux_candidate.line_data_list[0].variable = "token"
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2, None)
-        self.assertAlmostEqual(0.5733864307403564, probability_batch[0], delta=ML_DELTA)
+        self.assertAlmostEqual(0.8465301990509033, probability_batch[0], delta=ML_DELTA)
 
     def test_ml_validator_auxiliary_n(self):
         candidate = Candidate.get_dummy_candidate(self.config, "secret", "", "", "Secret")
@@ -118,14 +118,14 @@ class TestMlValidator(unittest.TestCase):
         candidate_key = CandidateKey(candidate.line_data_list[0])
         sample_as_batch = [(candidate_key, [candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2, None)
-        self.assertAlmostEqual(0.9967529773712158, probability_batch[0], delta=ML_DELTA)
+        self.assertAlmostEqual(0.9063237905502319, probability_batch[0], delta=ML_DELTA)
 
         # auxiliary rule in train does not increase ML probability yet - will be used after next train
 
         aux_candidate.rule_name = "UUID"
         sample_as_batch = [(candidate_key, [candidate, aux_candidate])]
         is_cred_batch, probability_batch = self.ml_validator.validate_groups(sample_as_batch, 2, None)
-        self.assertAlmostEqual(0.9967529773712158, probability_batch[0], delta=ML_DELTA)
+        self.assertAlmostEqual(0.9063237905502319, probability_batch[0], delta=ML_DELTA)
 
     def test_extract_features_n(self):
         candidate1 = Candidate.get_dummy_candidate(self.config, "___.x3", ".x3", "", "")
