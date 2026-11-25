@@ -441,16 +441,20 @@ jobs:
           # check whether credsweeper is available as module
           python -m credsweeper --banner
           # use only 2 epochs for the test
-          python main.py --data ${{ github.workspace }}/CredData --jobs $(( 2 * $(nproc) )) --epochs 2
-          git diff # dbg
-          # crc32 should be changed
-          python -m credsweeper --banner
+          stamp=$(date +%Y%m%d_%H%M%S)
+          python main.py --data ${{ github.workspace }}/CredData --jobs $(( 2 * $(nproc) )) --epochs 2 --stamp $stamp
           # train artifacts check
-          if [ 3 -gt $(ls -1 results | grep '\.png\|\.yaml\|\.json' | wc -l) ]; then
+          if [ 4 -gt $(ls -1 results | grep '\.png\|\.yaml\|\.json\|\.onnx' | wc -l) ]; then
             ls -1 results
             echo "Not all artifacts were found"
             exit 1
           fi
+          # apply the artifacts for code
+          mv -vf results/$stamp.ml_model.onnx ../credsweeper/ml_validator/ml_model.onnx
+          mv -vf results/$stamp.ml_config.json ../credsweeper/ml_validator/ml_config.json
+          git diff # dbg
+          # crc32 should be changed
+          python -m credsweeper --banner
           # run quick scan
           python -m credsweeper --jobs $(nproc) --ml_threads_limit $(nproc) --ml_providers AzureExecutionProvider,CPUExecutionProvider --log debug --path ../tests/samples --no-stdout --save-json
           NEW_MODEL_FOUND_SAMPLES=$(jq '.|length' output.json)
