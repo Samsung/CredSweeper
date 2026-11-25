@@ -406,6 +406,7 @@ jobs:
           mkdir -vp ${{ github.workspace }}/CredData
           mv data ${{ github.workspace }}/CredData/
           mv meta ${{ github.workspace }}/CredData/
+          mv -v allowed_extensions.json ${{ github.workspace }}/CredData/allowed_extensions.json
 
       - name: Set up Python 3.11
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0 - 2026.10.22
