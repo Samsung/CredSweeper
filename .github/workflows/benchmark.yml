@@ -451,8 +451,8 @@ jobs:
             exit 1
           fi
           # apply the artifacts for code
-          mv -vf results/$stamp.ml_model.onnx ../credsweeper/ml_validator/ml_model.onnx
-          mv -vf results/$stamp.ml_config.json ../credsweeper/ml_validator/ml_config.json
+          mv -vf results/$stamp.ml_model.onnx ../credsweeper/ml_model/ml_model.onnx
+          mv -vf results/$stamp.ml_config.json ../credsweeper/ml_model/ml_config.json
           git diff # dbg
           # crc32 should be changed
           python -m credsweeper --banner
